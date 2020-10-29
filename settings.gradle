@@ -1,2 +1,4 @@
+include ':picturecontrol'
+include ':lib_common'
 include ':app'
 rootProject.name = "FramApp"
