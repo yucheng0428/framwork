@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_5">5dp</dimen>
+    <dimen name="padding_15">15dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+    <dimen name="common_circle_width">50dp</dimen>
+    <dimen name="progress_circle_radius">10dp</dimen>
+    <dimen name="attach_item_width">70dp</dimen>
+    <dimen name="padding_3">3dp</dimen>
+    <dimen name="textsize_17">17dp</dimen>
+</resources>

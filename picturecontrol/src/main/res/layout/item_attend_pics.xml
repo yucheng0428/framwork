@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/padding_5"
+    android:orientation="vertical">
+
+    <com.lib.picturecontrol.views.UploadAbleImageView
+        android:id="@+id/iv_pic"
+        android:layout_width="@dimen/attach_item_width"
+        android:layout_height="@dimen/attach_item_width" />
+    <!--<ImageView
+        android:id="@+id/iv_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp"
+        android:visibility="gone"
+        android:src="@mipmap/choose_img_del" />-->
+
+</FrameLayout>

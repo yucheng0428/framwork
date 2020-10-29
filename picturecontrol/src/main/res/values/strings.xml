@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Picturecontrol</string>
+    <string name="btn_fujian">附件</string>
+    <string name="btn_take_pic">拍照</string>
+    <string name="btn_album">相册</string>
+
+    <!--文件选择器-->
+    <string name="tx_file_size">已选%1$s</string>
+    <string name="tx_file_send">发送(%1$s/9)</string>
+    <string name="tx_file_count">共%1$s个文件</string>
+    <string name="appproval_attach">上传附件</string>
+</resources>

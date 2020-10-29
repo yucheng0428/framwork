@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/album_title_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_248bfe"
+        android:gravity="top" >
+
+        <com.lib.picturecontrol.views.FilterImageView
+            android:id="@+id/album_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btn_return_selector" />
+
+        <TextView
+            android:id="@+id/album_title"
+            style="@style/title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/padding_15"
+            android:layout_marginRight="@dimen/padding_15"
+            android:ellipsize="middle"
+            android:gravity="center_vertical"
+            android:maxLength="12"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/album_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/padding_10"
+            android:background="@drawable/album_finish"
+            android:enabled="true"
+            android:gravity="center"
+            android:minWidth="50dip"
+            android:text="完成"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:horizontalSpacing="7.5dip"
+        android:numColumns="3"
+        android:verticalSpacing="7.5dip" />
+
+    <FrameLayout
+        android:id="@+id/pagerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <com.lib.picturecontrol.album.AlbumViewPager
+            android:id="@+id/albumviewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/color_999999" />
+
+        <RelativeLayout
+            android:id="@+id/album_item_header_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@color/bg_blue" >
+
+            <ImageView
+                android:id="@+id/header_bar_photo_back"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="5.0dip"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_back2" />
+
+            <TextView
+                android:id="@+id/header_bar_photo_count"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_toRightOf="@id/header_bar_photo_back"
+                android:gravity="center"
+                android:paddingLeft="20dip"
+                android:paddingRight="@dimen/padding_10"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="22.0sp" />
+
+            <TextView
+                android:id="@+id/header_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="30dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_10"
+                android:background="@drawable/album_finish"
+                android:enabled="true"
+                android:gravity="center"
+                android:minWidth="50dip"
+                android:text="完成"
+                android:textColor="#ffffff" />
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/padding_20"
+                android:layout_toLeftOf="@id/header_finish"
+                android:background="@drawable/picture_setting_album_checkbox"
+                android:button="@null"
+                android:checked="false"
+                android:focusable="false" />
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

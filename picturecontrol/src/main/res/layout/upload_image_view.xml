@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progress="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+    <ImageView
+        android:id="@+id/iv_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop" />
+
+    <com.lib.picturecontrol.views.ImageDeleteView
+        android:id="@+id/iv_del"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="invisible"
+        android:layout_gravity="right"/>
+
+    <FrameLayout
+        android:id="@+id/layout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <com.lib.picturecontrol.views.MaskView
+            android:id="@+id/mask_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <com.lib.picturecontrol.views.RoundProgressBar
+            android:id="@+id/rp_progres"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            progress:backColor="#ffffff"
+            progress:progressTextColor="@color/color_0093dd"
+            progress:progressTextSize="9sp"
+            progress:roundColor="#C6E2FF"
+            progress:roundProgressColor="@color/color_0093dd"
+            progress:roundWidth="6dp"
+            progress:startAngle="0" />
+    </FrameLayout>
+</FrameLayout>
