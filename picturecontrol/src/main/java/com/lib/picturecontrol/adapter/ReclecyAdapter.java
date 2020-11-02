@@ -126,9 +126,9 @@ public class ReclecyAdapter extends SimpleRecAdapter<ApprovalAttachBean, Reclecy
                 if (!data.contains(ADDPIC)) {
                     data.add(data.size(), ADDPIC);
                 }
-                delListener.delPic(item);
                 data.remove(position);
                 notifyDataSetChanged();
+                delListener.delPic(item);
             }
         });
         //图片点击

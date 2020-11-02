@@ -79,14 +79,14 @@ public class LocalAlbum extends BaseActivity {
 
 	@Override
 	protected int layoutId() {
-		return R2.layout.local_album;
+		return R.layout.local_album;
 	}
 
 
 	@Override
 	protected void initUIData(Bundle bundle) {
 		Animation animation = AnimationUtils.loadAnimation(this,
-				R2.anim.rotate_loading);
+				R.anim.rotate_loading);
 		progress.startAnimation(animation);
 		tvTitle.setText("选择图片");
 		// ivRight.setImageResource(R.drawable.btn_posts_camera_l);

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent=new Intent(MainActivity.this, com.lib.picturecontrol.MainActivity.class);
                 startActivity(intent);
+                MainActivity.this.finish();
             }
         });
     }

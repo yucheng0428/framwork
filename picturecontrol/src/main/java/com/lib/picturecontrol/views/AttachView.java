@@ -419,7 +419,9 @@ public class AttachView extends LinearLayout
 
     @Override
     public void delPic(ApprovalAttachBean bean) {
-        aNum = (gAdapter.getDataSource().size() - 1);
+        if(gAdapter.getDataSource().contains(ReclecyAdapter.ADDPIC)){
+            aNum = (gAdapter.getDataSource().size() - 1);
+        }
         num.setText(String.format("(%1$d/%2$d)", aNum, maxNum));
     }
 
