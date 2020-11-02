@@ -1,3 +1,4 @@
+include ':beacon_lib'
 include ':picturecontrol'
 include ':lib_common'
 include ':app'
