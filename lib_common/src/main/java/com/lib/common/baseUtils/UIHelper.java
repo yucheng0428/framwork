@@ -33,7 +33,7 @@ public class UIHelper {
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		toast = new Toast(context);
 		view = inflater.inflate(R.layout.toast_layout, null);
-		toast.setGravity(Gravity.CENTER,0,0);
+		toast.setGravity(Gravity.BOTTOM,0,0);
 		tvContent = (TextView)view.findViewById(R.id.tvContent);
 		
 	}
