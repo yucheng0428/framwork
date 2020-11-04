@@ -33,11 +33,8 @@ import butterknife.Unbinder;
  * @date 2018/9/29 10:30
  * @Description
  */
-public abstract class BaseActivity extends FragmentActivity implements EasyPermission.PermissionCallback {
+public abstract class BaseActivity extends FragmentActivity {
     public Activity mActivity;
-    private int mRequestCode;
-    private String[] mPermissions;
-    public PermissionCallBackM mPermissionCallBack;
     public ProgressDialog mProgressDialog;
     Unbinder unbinder;
 
@@ -161,64 +158,6 @@ public abstract class BaseActivity extends FragmentActivity implements EasyPermi
         return super.onKeyDown(keyCode, event);
     }
 
-    // rationale: 申请授权理由
-    public void requestPermission(int requestCode, String[] permissions, String rationale, PermissionCallBackM permissionCallback) {
-        this.mRequestCode = requestCode;
-        this.mPermissionCallBack = permissionCallback;
-        this.mPermissions = permissions;
-
-        EasyPermission.with(this).addRequestCode(requestCode).permissions(permissions).rationale(rationale).request();
-    }
-
-    @SuppressLint({"NewApi", "Override"})
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        /*
-         * 从Settings界面跳转回来，标准代码，就这么写
-         */
-        if (requestCode == EasyPermission.SETTINGS_REQ_CODE) {
-            if (EasyPermission.hasPermissions(this, mPermissions)) {
-                // 已授权，处理业务逻辑
-                onEasyPermissionGranted(mRequestCode, mPermissions);
-            } else {
-                onEasyPermissionDenied(mRequestCode, mPermissions);
-            }
-        }
-    }
-
-    @Override
-    public void onEasyPermissionGranted(int requestCode, String... perms) {
-        if (mPermissionCallBack != null) {
-            mPermissionCallBack.onPermissionGrantedM(requestCode, perms);
-        }
-    }
-
-    @Override
-    public void onEasyPermissionDenied(final int requestCode, final String... perms) {
-        // rationale: Never Ask Again后的提示信息
-        if (EasyPermission.checkDeniedPermissionsNeverAskAgain(this, "无法使用,请设置权限" + "设置里授权", android.R.string.ok, android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mPermissionCallBack != null) {
-                    mPermissionCallBack.onPermissionDeniedM(requestCode, perms);
-                }
-            }
-        }, perms)) {
-            return;
-        }
-
-        if (mPermissionCallBack != null) {
-            mPermissionCallBack.onPermissionDeniedM(requestCode, perms);
-        }
-    }
 
 
     @Override

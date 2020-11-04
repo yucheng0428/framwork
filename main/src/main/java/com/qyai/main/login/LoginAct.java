@@ -12,8 +12,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.BaseMvp.BaseMvpAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
+import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.qyai.main.Common;
 import com.qyai.main.R;
@@ -54,6 +56,8 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         et_password.setText(psw);
         et_user.setText(userName);
         setScreenModel(2);
+        Common.openGPSSEtting(mActivity);
+        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
     }
 
 

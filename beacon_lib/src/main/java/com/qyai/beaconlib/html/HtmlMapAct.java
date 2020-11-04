@@ -62,6 +62,7 @@ public class HtmlMapAct extends BaseMvpHeadAct<HtmlView, HtmlPersener> implement
 
     @Override
     protected void initUIData() {
+
         EventBus.getDefault().register(this);
         hideIvRight(View.VISIBLE);
         setIvRightSrc(R.mipmap.add_attention_bg);
