@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lib.common.base.BaseActivity;
 import com.lib.common.baseUtils.IntentKey;
 import com.lib.common.baseUtils.SPValueUtil;
@@ -50,6 +51,8 @@ import butterknife.OnItemClick;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
+
+@Route(path = "/picture/localAlbum")
 public class LocalAlbum extends BaseActivity {
 
 	@BindView(R2.id.local_album_list)
@@ -162,6 +165,9 @@ public class LocalAlbum extends BaseActivity {
 	@OnClick({ R2.id.ivLeft })
 	public void onCK(View v) {
 		if (v.getId() == R.id.ivLeft) {
+			Intent intent=new Intent();
+			intent.putExtra("data","我是回调数据");
+			setResult(1001,intent);
 			finish();
 		}
 	}

@@ -6,6 +6,12 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+        //阿里路由配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     buildToolsVersion rootProject.ext.buildToolsVersion
 
@@ -44,8 +50,8 @@ dependencies {
     api "com.github.bumptech.glide:glide:$rootProject.glideVersion"
 
     //router
-    api "com.alibaba:arouter-api:$rootProject.routerVersion"
-
+    implementation "com.alibaba:arouter-api:$rootProject.arouterVersion"
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.acompilerVersion"//ARouter
     //butterknife 注解
     api "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
@@ -61,6 +67,6 @@ dependencies {
 
     api "androidx.recyclerview:recyclerview:$rootProject.recyclerviewVersion"
 
-    api "org.greenrobot:eventbus:$rootProject.eventbusVersion";
+    api "org.greenrobot:eventbus:$rootProject.eventbusVersion"
 
 }

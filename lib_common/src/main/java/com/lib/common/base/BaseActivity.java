@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.R;
 import com.lib.common.baseUtils.Utils;
 import com.lib.common.baseUtils.permssion.EasyPermission;
@@ -66,6 +67,7 @@ public abstract class BaseActivity extends FragmentActivity implements EasyPermi
         mActivity = this;
         setTranslucentStatusColor(setColor());
         setScreenModel(screenModel());
+        ARouter.getInstance().inject(this);
         ViewManager.getInstance().addActivity(this);
         setContentView(layoutId());
         unbinder = ButterKnife.bind(this);

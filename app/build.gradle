@@ -11,6 +11,11 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -36,8 +41,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    if(!isModule.toBoolean()){
+    if (!isModule.toBoolean()) {
         implementation project(path: ':picturecontrol')
         implementation project(path: ':beacon_lib')
+        implementation project(path: ':main')
     }
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+    implementation "com.alibaba:arouter-api:$rootProject.arouterVersion"
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.acompilerVersion"//ARouter
 }

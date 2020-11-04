@@ -1,58 +1,66 @@
 package com.qyai.framapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.lib.common.base.BaseActivity;
+import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import java.util.concurrent.TimeUnit;
 
-import android.view.View;
+import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
-import android.view.Menu;
-import android.view.MenuItem;
-
-public class MainActivity extends AppCompatActivity {
-
+@Route(path = "/test/main")
+public class MainActivity extends BaseActivity {
+    @BindView(R.id.tv_time)
+    TextView text_time;
+    Disposable disposable;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent=new Intent(MainActivity.this, com.lib.picturecontrol.MainActivity.class);
-                startActivity(intent);
-                MainActivity.this.finish();
-            }
-        });
+    protected int layoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void initUIData(Bundle bundle) {
+        disposable = Observable.interval(0, 1, TimeUnit.SECONDS)
+                .map(new Function<Long, Long>() {
+                    @Override
+                    public Long apply(Long aLong) throws Exception {
+                        return 3 - (aLong + 1);
+                    }
+                })
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(final Long count) throws Exception {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                text_time.setText(count+"");
+                            }
+                        });
+                        if (count == 0) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ARouter.getInstance().build("/main/login")
+                                            .withString("userName", "043640")
+                                            .withString("psw", "888888")
+                                            .navigation();
+                                }
+                            });
+
+                            if (disposable != null) {
+                                disposable.dispose();
+                            }
+                            mActivity.finish();
+                        }
+                    }
+                });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
