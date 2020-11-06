@@ -1,7 +1,6 @@
 package com.qyai.framapp;
 
 import android.Manifest;
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -13,7 +12,6 @@ import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.picturecontrol.album.LocalImageHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.qyai.main.Common;
 
 import android.widget.TextView;
 
