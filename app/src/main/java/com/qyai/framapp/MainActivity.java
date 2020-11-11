@@ -9,7 +9,6 @@ import com.lib.common.base.BaseActivity;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.Utils;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
-import com.lib.picturecontrol.album.LocalImageHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -50,7 +49,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void init() {
-        LocalImageHelper.init(MyApplication.getInstance());
+//        LocalImageHelper.init(MyApplication.getInstance());
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(mActivity));
         adLoading();
     }

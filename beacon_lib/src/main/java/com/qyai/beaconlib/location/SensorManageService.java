@@ -27,7 +27,6 @@ import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.qyai.beaconlib.Interface.OnBeaconUpdateListener;
-import com.qyai.beaconlib.MyApplication;
 import com.qyai.beaconlib.R;
 import com.qyai.beaconlib.beaconSensor.DBleScanner;
 import com.qyai.beaconlib.bean.Beacon;

@@ -20,8 +20,11 @@ import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.qyai.main.Common;
 import com.qyai.main.R;
 import com.qyai.main.R2;
+import com.qyai.main.bracelet.SechAct;
 import com.qyai.main.home.HomeAct;
 import com.qyai.main.login.bean.UserEvent;
+import com.yucheng.ycbtsdk.AITools;
+import com.yucheng.ycbtsdk.YCBTClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +58,8 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     protected void initUIData(Bundle bundle) {
         et_password.setText(psw);
         et_user.setText(userName);
+        YCBTClient.initClient(getApplicationContext(), false);
+        AITools.getInstance().Init();
         setScreenModel(2);
         Common.openGPSSEtting(mActivity);
         PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
@@ -104,7 +109,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getToken() + "");
         SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
         SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, getUserName());
-        Intent intent = new Intent(LoginAct.this, HomeAct.class);
+        Intent intent = new Intent(LoginAct.this, SechAct.class);
         startActivity(intent);
         finish();
         btn_login.setEnabled(true);

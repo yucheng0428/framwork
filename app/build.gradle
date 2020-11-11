@@ -41,10 +41,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    if (!isModule.toBoolean()) {
-        implementation project(path: ':picturecontrol')
-        implementation project(path: ':beacon_lib')
+    if (!isModuleMian.toBoolean()) {
         implementation project(path: ':main')
+    }
+    if (!isModuleBeacon.toBoolean()) {
+        implementation project(path: ':beacon_lib')
+    }
+    if (!isModulePic.toBoolean()) {
+        implementation project(path: ':picturecontrol')
     }
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
     implementation "com.alibaba:arouter-api:$rootProject.arouterVersion"

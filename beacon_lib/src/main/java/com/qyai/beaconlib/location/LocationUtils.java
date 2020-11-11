@@ -1,7 +1,7 @@
 package com.qyai.beaconlib.location;
 
 
-import com.qyai.beaconlib.MyApplication;
+import com.qyai.beaconlib.debug.MyApplication;
 import com.qyai.beaconlib.R;
 
 /**

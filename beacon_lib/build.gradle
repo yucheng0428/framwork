@@ -1,5 +1,5 @@
 apply plugin: 'com.jakewharton.butterknife'
-if (isModule.toBoolean()) {
+if (isModuleBeacon.toBoolean()) {
     apply plugin: 'com.android.application'
 }else {
     apply plugin: "com.android.library"
@@ -10,7 +10,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        if (isModule.toBoolean()) {
+        if (isModuleBeacon.toBoolean()) {
             // 独立调试时添加 applicationId ，集成调试时移除
             applicationId "com.qyai.beaconlib"
         }
@@ -36,10 +36,13 @@ android {
     sourceSets {
         main {
             // 独立调试与集成调试时使用不同的 AndroidManifest.xml 文件
-            if (isModule.toBoolean()) {
+            if (isModuleBeacon.toBoolean()) {
                 manifest.srcFile 'src/main/moduleManifest/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    exclude 'debug/**'
+                }
             }
         }
     }
@@ -69,3 +72,17 @@ dependencies {
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.acompilerVersion"//ARouter
 
 }
+task makeJar(type:Copy) {
+//删除存在的jar
+    delete "build/lib/test.jar"
+//设置拷贝文件
+    from("build/intermediates/bundles/release")
+//打进jar后文件目录
+    into("build/libs/")
+//将classes.jar放入build/libs目录下
+//include,exclude参数来设置过滤
+    include("classes.jar")
+//重命名为test.jar
+    rename("classes.jar","test.jar")
+}
+makeJar.dependsOn(build)

@@ -1,5 +1,6 @@
 package com.lib.common.baseUtils;
 
+import android.Manifest;
 import android.os.Environment;
 
 /**
@@ -30,7 +31,16 @@ public class Constants {
         return isDebug;
     }
 
+    public static final String[] permissionList = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.FOREGROUND_SERVICE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.BLUETOOTH_ADMIN
 
+    };
 
 
 }

@@ -1,14 +1,15 @@
 apply plugin: 'com.jakewharton.butterknife'
-if (isModule.toBoolean()) {
+if (isModuleMian.toBoolean()) {
     apply plugin: 'com.android.application'
 }else {
     apply plugin: "com.android.library"
+
 }
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     defaultConfig {
-        if (isModule.toBoolean()) {
+        if (isModuleMian.toBoolean()) {
             // 独立调试时添加 applicationId ，集成调试时移除
             applicationId "com.qyai.main"
         }
@@ -21,6 +22,12 @@ android {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
+        }
+        ndk {
+            moduleName "libnew_native_lib"
+            //声明启用Android日志, 在c/c++的源文件中使用的#include <android/log.h> 日志将得到输出
+            ldLibs "log"
+            abiFilters "armeabi-v7a", "x86", "x86_64", "arm64-v8a"
         }
     }
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -37,15 +44,24 @@ android {
     }
     sourceSets {
         main {
+            jniLibs.srcDirs = ['libs']
             // 独立调试与集成调试时使用不同的 AndroidManifest.xml 文件
-            if (isModule.toBoolean()) {
+            if (isModuleMian.toBoolean()) {
                 manifest.srcFile 'src/main/moduleManifest/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    exclude 'debug/**'
+                }
             }
         }
     }
 
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
@@ -59,7 +75,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
-
     implementation "com.alibaba:arouter-api:$rootProject.arouterVersion"
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.acompilerVersion"//ARouter
+    implementation(name: 'ycbtsdk-release', ext: 'aar')
 }

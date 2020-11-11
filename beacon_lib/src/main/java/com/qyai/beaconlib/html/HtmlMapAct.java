@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lib.common.BaseMvp.BaseMvpHeadAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
 import com.lib.common.baseUtils.SPValueUtil;
@@ -30,6 +31,7 @@ import java.util.Map;
 import butterknife.BindView;
 
 @CreateMvpPresenter(HtmlPersener.class)
+@Route(path = "/beacon/HtmlMapAct")
 public class HtmlMapAct extends BaseMvpHeadAct<HtmlView, HtmlPersener> implements HtmlView {
     @BindView(R2.id.mWebContainer)
     LinearLayout mWebContainer;

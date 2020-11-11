@@ -15,10 +15,10 @@ ReqFileUtils 是对图片上传地址 和过程做处理的工具类
 netHttp网络请求框架Retrfit,rxjava,butterknife注解，用的Retrofit2,所以请求封装的是FlowabBaseSubscrber,
 HttpService 是OKhttp,Retrofit单例工具封装，基本请求直接用它调用方法就可以了
 动态权限工具，permssion,建议使用这个获取权限PermissionCheckUtils.requestPermissions(activity, Constants.REQUEST_CODE, new String[]); // 动态请求权限
-Base中封装了 act,frgm,application基类
+Base中封装了 actitity,fragment,application基类
 Basemvp抽象 封装基类 具体的说明后面我再仔细阅读修改后写个详细的说明
 scanning 是二维扫描集成,功能的是健全的，看需求对应做修改吧
-widgt 是几个列表选择框 
+widgt 是几个列表选择框,地理位置,时间等可扩展优化 
 update是一个应用升级工具的封装
 
 
@@ -27,7 +27,7 @@ update是一个应用升级工具的封装
 assets 静态地图资源文件
 beaconSensor是信标的处理工具包，具体代码是SDK里拿的不详细说明 有问题自己翻代码读逻辑。
 bean里面是一些实体类，主要是地图坐标，蓝牙信标的参数
-location里面是几个服务，有保活，拉起，定位上传服务，主要的业务逻辑基本就在定位上传服务中SensorManageService，如果后面有什么电源，保活优化的需求就看看其他的类
+location里面是几个服务，有保活，拉起，定位上传服务，主要的业务逻辑基本就在定位上传服务中SensorManageService，关于电源优化，保活优化的方案实现可以在这里做一些调整优化。
 html是个专门展示地图的工具webview,里面主要展示地图，然后与地图js做交互，说的通俗点就是H5页面与原生WEBView交互
 
 
@@ -36,5 +36,27 @@ html是个专门展示地图的工具webview,里面主要展示地图，然后�
 现在就两个通用的功能在里面， 一个登陆一个主页，后面如果用的时候 换新分支 最好开新项目
 
 #说明
-该框架里面集成了阿里的路由，每个模块也做了对应的单独运行的配置，通过seeting中的开关控制，可单独调试每个模块，也可集成调式。
-目前封装的效果完成初步的代码封装 抽样，libcommon还有不少可优化的代码，目前libcommon有点臃肿，抽样的层度还不够，还需要的好好学习设计模式来抽象调整框架的精简度
+该框架里面集成了阿里的路由，每个模块也做了对应的单独运行的配置，通过gradle.properties中的开关控制，可单独调试每个模块，也可集成调式。
+目前封装的效果完成初步的代码封装 抽样，libcommon还有不少可优化的代码，目前libcommon有点臃肿，抽像的程度还有优化空间，可以合理的运用设计模式来抽象调整框架的精简度
+
+　打包jar,arr，在 build.gradle 文件中加入如下代码： 
+https://www.cnblogs.com/xinaixia/p/7660173.html
+
+复制代码
+task clearJar(type: Delete) {
+    delete 'build/TestJar_V1.0.jar' //jar包的名字，随便命名 
+}
+task makeJar(type:org.gradle.api.tasks.bundling.Jar) {
+    //指定生成的jar名 
+    baseName 'TestJar_V1.0'
+    //从哪里打包class文件 
+    from('build/intermediates/bundles/default/')
+    //打包到jar后的目录结构 
+    into('build/')
+    //去掉不需要打包的目录和文件 
+    exclude('test/', 'BuildConfig.class', 'R.class')
+    //去掉R开头的文件  
+    exclude{it.name.startsWith('R');}
+}
+makeJar.dependsOn(clearJar, build)
+

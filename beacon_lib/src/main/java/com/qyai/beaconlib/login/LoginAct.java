@@ -29,7 +29,7 @@ import butterknife.OnClick;
 
 
 @CreateMvpPresenter(LoginPersenter.class)
-@Route(path = "/lib/login")
+@Route(path = "/beacon/login")
 public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements LoginView {
 
     @BindView(R2.id.et_user)
