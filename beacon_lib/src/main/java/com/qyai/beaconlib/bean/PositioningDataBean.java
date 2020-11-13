@@ -3,7 +3,7 @@ package com.qyai.beaconlib.bean;
 import java.util.ArrayList;
 
 public class PositioningDataBean {
-    private ArrayList<SensorEventBean> gsensorInfos;
+    private ArrayList<SensorEventBean> gsensorInfos = new ArrayList<>();
     private ArrayList<ArrayList<Beacon>> rssiData = new ArrayList<>();
     private int direction;
 
@@ -20,7 +20,7 @@ public class PositioningDataBean {
     }
 
     public void addGsensorEvents(ArrayList<SensorEventBean> events) {
-        gsensorInfos = events;
+        gsensorInfos.addAll(events);
     }
 
     public ArrayList<SensorEventBean> getSensorEvents() {

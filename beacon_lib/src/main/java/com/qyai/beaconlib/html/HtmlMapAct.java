@@ -66,17 +66,12 @@ public class HtmlMapAct extends BaseMvpHeadAct<HtmlView, HtmlPersener> implement
     protected void initUIData() {
 
         EventBus.getDefault().register(this);
-        hideIvRight(View.VISIBLE);
         setIvRightSrc(R.mipmap.add_attention_bg);
         setTvTitle("地图");
         SensorManageService.initService(mActivity);
         initWebView();
     }
 
-    @Override
-    public void setOnClickIvRight() {
-        super.setOnClickIvRight();
-    }
 
 
     private void initWebView() {

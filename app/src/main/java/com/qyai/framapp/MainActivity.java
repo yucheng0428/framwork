@@ -75,8 +75,8 @@ public class MainActivity extends BaseActivity {
                             mActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ARouter.getInstance().build("/main/login")
-                                            .withString("userName", "043640")
+                                    ARouter.getInstance().build("/main/bracelet")
+                                            .withString("userName", "SH")
                                             .withString("psw", "888888")
                                             .navigation();
                                 }

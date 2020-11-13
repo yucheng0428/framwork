@@ -12,6 +12,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.IntentKey;
+import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.recyclerView.RecyclerItemCallback;
@@ -19,6 +21,7 @@ import com.qyai.main.Common;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 import com.qyai.main.bracelet.bean.MessageBean;
+import com.qyai.main.bracelet.bean.ReqBraceletInfo;
 import com.qyai.main.bracelet.bean.SyncBloodBean;
 import com.qyai.main.bracelet.bean.SyncHeartBean;
 import com.qyai.main.bracelet.bean.SyncHistiryBean;
@@ -32,9 +35,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     RecyclerView recyclerView;
     MessageAdapter adapter;
     Intent serviceIntent;
-    SyncHistiryBean bean;
     public BraceletReceiver myReceiver;
-
 
     @Override
     public int layoutId() {
@@ -72,7 +73,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BlueToothService.CHANNEL_ID_STRING);
         //注册广播
-       mActivity.registerReceiver(myReceiver, intentFilter);
+        mActivity.registerReceiver(myReceiver, intentFilter);
     }
 
     @Override
@@ -119,7 +120,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
                 break;
 
         }
-        adapter.getDataSource().get(cheackString("断开设备")).setTypeValue(YCBTClient.connectState()==3?"未连接":"已连接");
+        adapter.getDataSource().get(cheackString("断开设备")).setTypeValue(YCBTClient.connectState() == 3 ? "未连接" : "已连接");
         adapter.notifyDataSetChanged();
     }
 
@@ -161,7 +162,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
                     messageBean.setTime(bean.getStartTime() + "");
                     break;
                 case "体温":
-                    messageBean.setTypeValue(bean.getTempIntValue() + "");
+                    messageBean.setTypeValue(bean.getTempFloatValue() + "");
                     messageBean.setTime(bean.getStartTime() + "");
                     break;
                 case "血氧":
@@ -199,7 +200,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
             SyncHistiryBean.DataBean dataBean = bean.getData().get(bean.getData().size() - 1);
             changeModle(dataBean);
         }
-        if(bean!=null&&bean.getData().size()>10){
+        if (bean != null && bean.getData().size() > 10) {
             BraceletApi.getInstance().delectSyncHistoryData(0x0544);
         }
     }
@@ -209,11 +210,11 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         SyncHeartBean heartBean = JSON.parseObject(heartValue, SyncHeartBean.class);
         if (heartBean != null && heartBean.getData().size() > 0) {
             SyncHeartBean.DataBean hBean = heartBean.getData().get(heartBean.getData().size() - 1);
-            int indx=cheackString("心率");
-            adapter.getDataSource().get(indx).setTypeValue(hBean.getHeartValue()+"");
-            adapter.getDataSource().get(indx).setTime(hBean.getHeartStartTime()+"");
+            int indx = cheackString("心率");
+            adapter.getDataSource().get(indx).setTypeValue(hBean.getHeartValue() + "");
+            adapter.getDataSource().get(indx).setTime(hBean.getHeartStartTime() + "");
         }
-        if(heartBean!=null&&heartBean.getData().size()>10){
+        if (heartBean != null && heartBean.getData().size() > 10) {
             BraceletApi.getInstance().delectSyncHistoryData(0x0542);
         }
     }
@@ -223,11 +224,11 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         SyncBloodBean bloodBean = JSON.parseObject(blood, SyncBloodBean.class);
         if (bloodBean != null && bloodBean.getData().size() > 0) {
             SyncBloodBean.DataBean bBean = bloodBean.getData().get(bloodBean.getData().size() - 1);
-            int indx=cheackString("血压");
-            adapter.getDataSource().get(indx).setTypeValue(bBean.getBloodDBP()+"/"+bBean.getBloodSBP());
-            adapter.getDataSource().get(indx).setTime(bBean.getBloodStartTime()+"");
+            int indx = cheackString("血压");
+            adapter.getDataSource().get(indx).setTypeValue(bBean.getBloodDBP() + "/" + bBean.getBloodSBP());
+            adapter.getDataSource().get(indx).setTime(bBean.getBloodStartTime() + "");
         }
-        if(bloodBean!=null&&bloodBean.getData().size()>10){
+        if (bloodBean != null && bloodBean.getData().size() > 10) {
             BraceletApi.getInstance().delectSyncHistoryData(0x0543);
         }
     }

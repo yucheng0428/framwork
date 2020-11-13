@@ -15,10 +15,20 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.alibaba.fastjson.JSON;
 import com.lib.common.baseUtils.LogUtil;
-import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
+
 import com.lib.common.netHttp.HttpServiec;
+import com.lib.common.baseUtils.SPValueUtil;
+
+import com.lib.common.netHttp.OnHttpCallBack;
+import com.qyai.main.Common;
 import com.qyai.main.R;
+import com.qyai.main.bracelet.bean.LactionInfo;
+import com.qyai.main.bracelet.bean.ReqBraceletInfo;
+import com.qyai.main.bracelet.bean.SyncBloodBean;
+import com.qyai.main.bracelet.bean.SyncHeartBean;
+import com.qyai.main.bracelet.bean.SyncHistiryBean;
 import com.yucheng.ycbtsdk.Response.BleConnectResponse;
 import com.yucheng.ycbtsdk.YCBTClient;
 
@@ -52,7 +62,7 @@ public class BlueToothService extends Service {
         public void run() {
             // TODO Auto-generated method stub
             //提交请求
-            syncDataHandler.removeCallbacksAndMessages(null);
+//            syncDataHandler.removeCallbacksAndMessages(null);
             syncData();
 
         }
@@ -62,21 +72,42 @@ public class BlueToothService extends Service {
     Runnable uploadLoaction=new Runnable() {
         @Override
         public void run() {
-            syncDataHandler.removeCallbacksAndMessages(null);
-            Location location=getLastKnownLocation();
-//            HttpServiec.getInstance().postFlowableData(100,Con);
-            Log.e("经纬度","longitude:" + location.getLongitude() + "latitude: " + location.getLatitude());
+//            syncDataHandler.removeCallbacksAndMessages(null);
+            HttpServiec.getInstance().postFlowableData(100, Common.UPLOADLOCATION, getLastKnownLocation(), new OnHttpCallBack() {
+                @Override
+                public void onSuccessful(int id, Object o) {
+
+                }
+
+                @Override
+                public void onFaild(int id, Object o, String err) {
+
+                }
+            },String.class);
+        syncDataHandler.postDelayed(uploadLoaction,5000);
         }
     };
 
     public void syncData() {
         syncDataHandler.postDelayed(syncDataRunnable, 60000);
+        ReqBraceletInfo   info = new ReqBraceletInfo();
+        String code = SPValueUtil.getStringValue(getApplicationContext(), Common.BRACELET_MAC);
+        if (SPValueUtil.isEmpty(code)) {
+            info.setWatchId(code);
+        }
         Intent mIntent = new Intent();
         mIntent.setAction(BlueToothService.CHANNEL_ID_STRING);
         BraceletApi.getInstance().syncHistoryDataAll(0x0509, new BraceletCallBack() {
             @Override
             public void onSuccess(Object o) {
                 mIntent.putExtra("data",(String)o);
+                SyncHistiryBean bean = JSON.parseObject((String)o, SyncHistiryBean.class);
+                if (bean != null && bean.getData().size() > 0) {
+                    SyncHistiryBean.DataBean dataBean = bean.getData().get(bean.getData().size() - 1);
+                    info.setTemperature(dataBean.getTempIntValue() + "");
+                    info.setOxygen(dataBean.getOOValue() + "");
+                    info.setBreathingRate(dataBean.getRespiratoryRateValue() + "");
+                }
                getApplicationContext().sendBroadcast(mIntent);
             }
         });
@@ -84,6 +115,11 @@ public class BlueToothService extends Service {
             @Override
             public void onSuccess(Object o) {
                 mIntent.putExtra("xinlv",(String)o);
+                SyncHeartBean heartBean = JSON.parseObject((String)o, SyncHeartBean.class);
+                if (heartBean != null && heartBean.getData().size() > 0) {
+                    SyncHeartBean.DataBean hBean = heartBean.getData().get(heartBean.getData().size() - 1);
+                    info.setHeartRate(hBean.getHeartValue() + "");
+                }
                getApplicationContext().sendBroadcast(mIntent);
             }
         });
@@ -91,11 +127,36 @@ public class BlueToothService extends Service {
             @Override
             public void onSuccess(Object o) {
                 mIntent.putExtra("xueya",(String)o);
+                SyncBloodBean bloodBean = JSON.parseObject((String)o, SyncBloodBean.class);
+                if (bloodBean != null && bloodBean.getData().size() > 0) {
+                    SyncBloodBean.DataBean bBean = bloodBean.getData().get(bloodBean.getData().size() - 1);
+                    info.setBloodPressureHigh(bBean.getBloodDBP() + "");
+                    info.setBloodPressureLow(bBean.getBloodSBP() + "");
+                }
                 getApplicationContext().sendBroadcast(mIntent);
             }
         });
+        syncDataHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                reqMessage(info);
+            }
+        },5000);
     }
 
+    public void reqMessage(ReqBraceletInfo info){
+        HttpServiec.getInstance().postFlowableData(100, Common.UPLOADBRACELETINFO, info, new OnHttpCallBack() {
+            @Override
+            public void onSuccessful(int id, Object o) {
+
+            }
+
+            @Override
+            public void onFaild(int id, Object o, String err) {
+
+            }
+        },String.class);
+    }
     @Override
     public void onCreate() {
         super.onCreate();
@@ -116,7 +177,7 @@ public class BlueToothService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         YCBTClient.registerBleStateChange(response);
         syncDataHandler.postDelayed(syncDataRunnable, 5000);
-        syncDataHandler.postDelayed(uploadLoaction,1000);
+        syncDataHandler.postDelayed(uploadLoaction,5000);
         return START_STICKY;
     }
 
@@ -138,9 +199,9 @@ public class BlueToothService extends Service {
      * 定位：得到位置对象
      * @return
      */
-    private Location getLastKnownLocation() {
+    private  LactionInfo getLastKnownLocation() {
 
-
+        LactionInfo info=new LactionInfo();
         //获取地理位置管理器
         LocationManager mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         List<String> providers = mLocationManager.getProviders(true);
@@ -155,6 +216,15 @@ public class BlueToothService extends Service {
                 bestLocation = l;
             }
         }
-        return bestLocation;
+        Log.e("经纬度","longitude:" +bestLocation.getLongitude() + "latitude: " + bestLocation.getLatitude());
+        if(bestLocation!=null){
+            info.setLocX(bestLocation.getLatitude()+"");
+            info.setLocY(bestLocation.getLongitude()+"");
+            String code = SPValueUtil.getStringValue(getApplicationContext(), Common.BRACELET_MAC);
+            if (SPValueUtil.isEmpty(code)) {
+                info.setDeviceId(code);
+            }
+        }
+        return info;
     }
 }
