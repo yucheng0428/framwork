@@ -5,7 +5,7 @@ import com.lib.common.BaseMvp.presenter.BasePresenter;
 import com.qyai.main.login.bean.UserEvent;
 
 public class LoginPersenter extends BasePresenter<LoginView> {
-     final String loginUrl="http://47.92.125.30:18200/login/login";
+     final String loginUrl="http://192.168.5.218:16800/login/login";
 
     final LoginModel model;
 

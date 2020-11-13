@@ -16,7 +16,9 @@ public class Common {
     public final static String USER_TOKEN="user_tonken";
     public final static String USER_NAME="userName";
     public final static String USER_PASSWORD="userpsw";
-
+    public final static String BRACELET_MAC="bracelet_mac";
+    public final static String REQ_URL_IP="http://192.168.5.218:16800/";
+    public final static String UPLOADBRACELETINFO=REQ_URL_IP+"bracelet/getBraceletformation";
 
     public static final int GPS_REQUEST_CODE=13222;
 

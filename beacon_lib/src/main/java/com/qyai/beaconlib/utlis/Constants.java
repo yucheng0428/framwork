@@ -25,7 +25,7 @@ public class Constants {
             /**
              * 测试服务器
              */
-            REQUSET_IP="http://47.92.125.30:18200/";
+            REQUSET_IP="http://192.168.5.218:16800/";
             LOGIN_URL=REQUSET_IP+"login/login";
             UPLOADBEACON=REQUSET_IP+"beacon/receivePosition";
         } else {

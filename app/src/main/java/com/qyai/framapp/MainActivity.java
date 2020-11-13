@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     ARouter.getInstance().build("/main/login")
-                                            .withString("userName", "043640")
+                                            .withString("userName", "SH")
                                             .withString("psw", "888888")
                                             .navigation();
                                 }

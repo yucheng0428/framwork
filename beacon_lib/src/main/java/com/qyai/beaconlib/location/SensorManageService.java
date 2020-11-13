@@ -465,7 +465,6 @@ public class SensorManageService extends Service {
         beaconHandler.removeCallbacksAndMessages(null);
         //解绑扫描
         JobSchedulerManager.getJobSchedulerInstance(this.getApplicationContext()).stopJobScheduler();
-        vibrator.cancel();
         cheackBeaconHandler.removeCallbacks(cheackBeaconRunnable);
         Log.e(TAG, "onDestroy()关闭服务");
     }

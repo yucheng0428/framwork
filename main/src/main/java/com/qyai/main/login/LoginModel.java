@@ -21,7 +21,7 @@ public class LoginModel extends BaseModel {
 
     public void LoginReq(final String name, final String password,String LOGIN_URL) {
         Map<Object, Object> para = new HashMap<>();
-        para.put("type", "LoginApp");
+//        para.put("type", "LoginApp");
         para.put("account", name);
         para.put("pwd", md5(password));
         para.put("loginType", "phone");
