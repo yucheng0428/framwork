@@ -15,6 +15,7 @@ import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.recyclerView.RecyclerItemCallback;
+import com.qyai.main.Common;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 import com.qyai.main.bracelet.bean.MessageBean;
@@ -124,6 +125,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
 
 
     private void initService() {
+        Common.openGPSSEtting(mActivity);
         PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Constants.permissionList); // 动态请求权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mActivity.startForegroundService(serviceIntent);
@@ -185,6 +187,8 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     protected void onDestroy() {
         super.onDestroy();
         mActivity.unregisterReceiver(myReceiver);
+        stopService();
+        YCBTClient.disconnectBle();
     }
 
 
@@ -226,5 +230,11 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         if(bloodBean!=null&&bloodBean.getData().size()>10){
             BraceletApi.getInstance().delectSyncHistoryData(0x0543);
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

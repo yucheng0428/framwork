@@ -6,16 +6,23 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import com.lib.common.baseUtils.LogUtil;
+import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
+import com.lib.common.netHttp.HttpServiec;
 import com.qyai.main.R;
 import com.yucheng.ycbtsdk.Response.BleConnectResponse;
 import com.yucheng.ycbtsdk.YCBTClient;
+
+import java.util.List;
 
 public class BlueToothService extends Service {
     public static final String CHANNEL_ID_STRING = "service_01";
@@ -50,6 +57,16 @@ public class BlueToothService extends Service {
 
         }
 
+    };
+
+    Runnable uploadLoaction=new Runnable() {
+        @Override
+        public void run() {
+            syncDataHandler.removeCallbacksAndMessages(null);
+            Location location=getLastKnownLocation();
+//            HttpServiec.getInstance().postFlowableData(100,Con);
+            Log.e("经纬度","longitude:" + location.getLongitude() + "latitude: " + location.getLatitude());
+        }
     };
 
     public void syncData() {
@@ -99,6 +116,7 @@ public class BlueToothService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         YCBTClient.registerBleStateChange(response);
         syncDataHandler.postDelayed(syncDataRunnable, 5000);
+        syncDataHandler.postDelayed(uploadLoaction,1000);
         return START_STICKY;
     }
 
@@ -116,5 +134,27 @@ public class BlueToothService extends Service {
         YCBTClient.unRegisterBleStateChange(response);
     }
 
+    /**
+     * 定位：得到位置对象
+     * @return
+     */
+    private Location getLastKnownLocation() {
 
+
+        //获取地理位置管理器
+        LocationManager mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
 }

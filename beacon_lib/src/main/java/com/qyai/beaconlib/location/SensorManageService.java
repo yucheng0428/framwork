@@ -9,6 +9,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -217,7 +219,8 @@ public class SensorManageService extends Service {
         @Override
         public void run() {
             beaconHandler.removeCallbacksAndMessages(null);
-            prepareBeaconData(this);
+           prepareBeaconData(this);
+
         }
     };
 
@@ -473,6 +476,8 @@ public class SensorManageService extends Service {
     public ReqBeaconInfo changeModle(Beacon beacon) {
         return new ReqBeaconInfo(beacon.major, beacon.minor, beacon.pow + "", SensorManagerUtlis.getInstance().calculateOrientation() + "", beacon.rssi + "");
     }
+
+
 
 }
 
