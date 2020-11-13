@@ -218,8 +218,8 @@ public class BlueToothService extends Service {
         }
         Log.e("经纬度","longitude:" +bestLocation.getLongitude() + "latitude: " + bestLocation.getLatitude());
         if(bestLocation!=null){
-            info.setLocX(bestLocation.getLatitude()+"");
-            info.setLocY(bestLocation.getLongitude()+"");
+            info.setLocX(bestLocation.getLongitude()+"");
+            info.setLocY(bestLocation.getLatitude()+"");
             String code = SPValueUtil.getStringValue(getApplicationContext(), Common.BRACELET_MAC);
             if (SPValueUtil.isEmpty(code)) {
                 info.setDeviceId(code);
