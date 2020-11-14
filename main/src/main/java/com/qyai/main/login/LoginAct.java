@@ -69,9 +69,12 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     @OnClick({R2.id.btn_login})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
-            if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
-                getMvpPresenter().loginding(getUserName(), getPassWord());
-            }
+            Intent intent = new Intent(LoginAct.this, SechAct.class);
+            startActivity(intent);
+            finish();
+//            if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
+//                getMvpPresenter().loginding(getUserName(), getPassWord());
+//            }
         }
 
     }

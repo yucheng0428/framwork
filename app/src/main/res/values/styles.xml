@@ -20,7 +20,7 @@
 
     </style>
     <!-- 设置背景启动-->
-    <style name="AppwindowBackground" parent="android:Theme.NoTitleBar.Fullscreen">
-        <item name="android:windowBackground">@mipmap/launcher_bg</item>
-    </style>
+<!--    <style name="AppwindowBackground" parent="android:Theme.NoTitleBar.Fullscreen">-->
+<!--        <item name="android:windowBackground">@mipmap/launcher_bg</item>-->
+<!--    </style>-->
 </resources>

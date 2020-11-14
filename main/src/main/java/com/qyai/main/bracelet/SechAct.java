@@ -1,8 +1,10 @@
 package com.qyai.main.bracelet;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,8 +37,6 @@ public class SechAct extends BaseHeadActivity {
 
     @Override
     protected void initUIData() {
-        YCBTClient.initClient(getApplicationContext(), false);
-        AITools.getInstance().Init();
         setTvTitle("设备列表");
         setTvRightMsg("搜索");
         hideTvRight(View.VISIBLE);
@@ -53,7 +53,7 @@ public class SechAct extends BaseHeadActivity {
                 SPValueUtil.saveStringValue(mActivity, Common.BRACELET_MAC,model.getDeviceMac());
                 Intent intent=new Intent(mActivity,MessageAct.class);
                 startActivity(intent);
-                adapter.clearData();
+//                adapter.clearData();
             }
         });
     }
