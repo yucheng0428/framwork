@@ -317,6 +317,7 @@ public class BlueToothService extends Service {
             String code = SPValueUtil.getStringValue(getApplicationContext(), Common.BRACELET_MAC);
             if (SPValueUtil.isEmpty(code)) {
                 info.setDeviceId(code);
+                info.setWatchType("bracelet");
             }
         }
         return info;

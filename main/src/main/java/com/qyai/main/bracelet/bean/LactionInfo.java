@@ -5,11 +5,19 @@ import java.io.Serializable;
 public class LactionInfo implements Serializable {
  private    String locX;
    private  String  locY;
-
+ private String watchType;
     private String deviceId;
 
     public String getLocX() {
         return locX;
+    }
+
+    public String getWatchType() {
+        return watchType;
+    }
+
+    public void setWatchType(String watchType) {
+        this.watchType = watchType;
     }
 
     public void setLocX(String locX) {
