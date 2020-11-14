@@ -162,7 +162,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
                     messageBean.setTime(bean.getStartTime() + "");
                     break;
                 case "体温":
-                    messageBean.setTypeValue(bean.getTempFloatValue() + "");
+                    messageBean.setTypeValue(bean.getTempIntValue() + "");
                     messageBean.setTime(bean.getStartTime() + "");
                     break;
                 case "血氧":
@@ -231,6 +231,15 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         if (bloodBean != null && bloodBean.getData().size() > 10) {
             BraceletApi.getInstance().delectSyncHistoryData(0x0543);
         }
+    }
+
+    @Override
+    public void onSuccessLocation(String str) {
+        if(SPValueUtil.isEmpty(str)){
+            int indx = cheackString("血压");
+            adapter.getDataSource().get(indx).setTypeValue(str);
+        }
+        adapter.notifyDataSetChanged();
     }
 
 

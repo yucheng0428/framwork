@@ -31,4 +31,13 @@ public class LactionInfo implements Serializable {
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
+
+    @Override
+    public String toString() {
+        return "LactionInfo{" +
+                "locX='" + locX + '\'' +
+                ", locY='" + locY + '\'' +
+                ", deviceId='" + deviceId + '\'' +
+                '}';
+    }
 }
