@@ -81,16 +81,6 @@ public class BlueToothService extends Service {
 
     };
 
-    Runnable uploadLoaction = new Runnable() {
-        @RequiresApi(api = Build.VERSION_CODES.M)
-        @Override
-        public void run() {
-//            syncDataHandler.removeCallbacksAndMessages(null);
-//
-             sendLoaction(getLocation());
-//            syncDataHandler.postDelayed(uploadLoaction, 1000);
-        }
-    };
 
     public void sendLoaction(LactionInfo info){
         HttpServiec.getInstance().postFlowableData(100, Common.UPLOADLOCATION, info, new OnHttpCallBack() {
@@ -111,6 +101,7 @@ public class BlueToothService extends Service {
         String code = SPValueUtil.getStringValue(getApplicationContext(), Common.BRACELET_MAC);
         if (SPValueUtil.isEmpty(code)) {
             info.setWatchId(code);
+            info.setWatchType("bracelet");
         }
         Intent mIntent = new Intent();
         mIntent.setAction(BlueToothService.CHANNEL_ID_STRING);

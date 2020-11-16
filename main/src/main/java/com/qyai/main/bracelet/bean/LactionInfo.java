@@ -3,9 +3,9 @@ package com.qyai.main.bracelet.bean;
 import java.io.Serializable;
 
 public class LactionInfo implements Serializable {
- private    String locX;
-   private  String  locY;
- private String watchType;
+    private String locX;
+    private String locY;
+    private String watchType;
     private String deviceId;
 
     public String getLocX() {

@@ -29,6 +29,15 @@ public class ReqBraceletInfo implements Serializable {
     private String breathingRate;
     private String temperature;
     private String updateTime;
+    private String watchType;
+
+    public String getWatchType() {
+        return watchType;
+    }
+
+    public void setWatchType(String watchType) {
+        this.watchType = watchType;
+    }
 
     public String getOxygen() {
         return oxygen;
