@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initUIData(Bundle bundle) {
+        setTranslucentNavigationColor(getResources().getColor(R.color.half_transparent));
         PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE,  new String[]{
                 Manifest.permission.CAMERA,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity {
                             mActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ARouter.getInstance().build("/main/bracelet")
+                                    ARouter.getInstance().build("/main/login")
                                             .withString("userName", "SH")
                                             .withString("psw", "888888")
                                             .navigation();
