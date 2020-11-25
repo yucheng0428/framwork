@@ -83,7 +83,7 @@ public class DBleScanner {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void powValue(ScanResult pow) {
-                processBleData(pow.getScanRecord().getBytes(), pow.getRssi(), pow.getTxPower());
+                processBleData(pow.getScanRecord().getBytes(), pow.getRssi(), pow.getScanRecord().getTxPowerLevel());
             }
 
             @Override
