@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.recyclerView.RecyclerItemCallback;
+import com.qyai.beaconlib.location.SensorManageService;
 import com.qyai.main.Common;
 import com.qyai.main.R;
 import com.qyai.main.R2;
@@ -33,11 +36,17 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     RecyclerView recyclerView;
     MessageAdapter adapter;
     Intent serviceIntent;
+    @BindView(R2.id.sw_gps)
+    Switch  sw_gps;
+    @BindView(R2.id.sw_postion)
+    Switch  sw_postion;
+    @BindView(R2.id.sw_bracelet)
+    Switch  sw_bracelet;
     public BraceletReceiver myReceiver;
 
     @Override
     public int layoutId() {
-        return R.layout.activity_sech_view;
+        return R.layout.activity_message_view;
     }
 
     @Override
@@ -61,17 +70,47 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
                 adapter.notifyDataSetChanged();
             }
         });
+        swSetting();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        myReceiver = new BraceletReceiver();
-        myReceiver.setCallBack(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BlueToothService.CHANNEL_ID_STRING);
-        //注册广播
-        mActivity.registerReceiver(myReceiver, intentFilter);
+
+    public void swSetting(){
+        sw_gps.setChecked(true);
+        sw_bracelet.setChecked(true);
+        sw_postion.setChecked(true);
+        initService();
+        SensorManageService.initService(mActivity);
+        GpsLactionUtils.getInstance(mActivity).startGps();
+        sw_gps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    GpsLactionUtils.getInstance(mActivity).startGps();
+                }else {
+                    GpsLactionUtils.getInstance(mActivity).stopGps();
+                }
+            }
+        });
+        sw_postion.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SensorManageService.initService(mActivity);
+                }else {
+                    SensorManageService.stopService(mActivity);
+                }
+            }
+        });
+        sw_bracelet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    initService();
+                }else {
+                    stopService();
+                }
+            }
+        });
     }
 
     @Override
@@ -131,10 +170,17 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         } else {
             mActivity.startService(serviceIntent);
         }
+        myReceiver = new BraceletReceiver();
+        myReceiver.setCallBack(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BlueToothService.CHANNEL_ID_STRING);
+        //注册广播
+        mActivity.registerReceiver(myReceiver, intentFilter);
     }
 
     private void stopService() {
         mActivity.stopService(serviceIntent);
+        mActivity.unregisterReceiver(myReceiver);
     }
 
     public int cheackString(String type) {
@@ -185,7 +231,6 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mActivity.unregisterReceiver(myReceiver);
         stopService();
         YCBTClient.disconnectBle();
     }

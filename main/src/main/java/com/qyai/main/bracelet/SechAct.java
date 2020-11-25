@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.IntentKey;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.qyai.main.Common;
 import com.qyai.main.R;
@@ -37,6 +39,8 @@ public class SechAct extends BaseHeadActivity {
 
     @Override
     protected void initUIData() {
+        Common.openGPSSEtting(mActivity);
+        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
         setTvTitle("设备列表");
         setTvRightMsg("搜索");
         hideTvRight(View.VISIBLE);

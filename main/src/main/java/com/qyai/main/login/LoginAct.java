@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,15 +17,14 @@ import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
+import com.lib.common.dialog.IphoneDialog;
+import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.qyai.main.Common;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 import com.qyai.main.bracelet.SechAct;
-import com.qyai.main.home.HomeAct;
 import com.qyai.main.login.bean.UserEvent;
-import com.yucheng.ycbtsdk.AITools;
-import com.yucheng.ycbtsdk.YCBTClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,11 +43,11 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     EditText et_password;
     @BindView(R2.id.btn_login)
     Button btn_login;
-
     @Autowired
     public String userName;
     @Autowired
     public String psw;
+
     @Override
     protected int layoutId() {
         return R.layout.login;
@@ -56,25 +56,31 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
 
     @Override
     protected void initUIData(Bundle bundle) {
+        setTranslucentNavigationColor(getResources().getColor(R.color.half_transparent));
         et_password.setText(psw);
         et_user.setText(userName);
-        YCBTClient.initClient(getApplicationContext(), false);
-        AITools.getInstance().Init();
         setScreenModel(2);
         Common.openGPSSEtting(mActivity);
         PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
     }
 
 
-    @OnClick({R2.id.btn_login})
+    @OnClick({R2.id.btn_login, R2.id.login_logo})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
-            Intent intent = new Intent(LoginAct.this, SechAct.class);
-            startActivity(intent);
-            finish();
-//            if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
-//                getMvpPresenter().loginding(getUserName(), getPassWord());
-//            }
+            if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
+                getMvpPresenter().loginding(getUserName(), getPassWord());
+            }
+        } else if (v.getId() == R.id.login_logo) {
+            IphoneDialog iphoneDialog = new IphoneDialog(mActivity, new IphoneDialog.IphoneListener() {
+                @Override
+                public void upContent(String string) {
+                    if (string.contains("http://")) {
+                        HttpReq.getInstence().setIp(string);
+                    }
+                }
+            }, true, "输入ip", "http://192.168.10.130:16810/");
+            iphoneDialog.show();
         }
 
     }
