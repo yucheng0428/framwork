@@ -78,7 +78,7 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     public int setColor() {
-        return getResources().getColor(R.color.color_248bfe);
+        return getResources().getColor(R.color.half_transparent);
     }
 
     /**
@@ -249,7 +249,9 @@ public abstract class BaseActivity extends FragmentActivity {
      */
     public void setScreenModel(int model) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES; //设置绘图区域可以进入刘海屏区域
+        if (Build.VERSION.SDK_INT >= 29) {
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES; //设置绘图区域可以进入刘海屏区域
+        }
         getWindow().setAttributes(lp);
         View decorView = getWindow().getDecorView();
         int uiOptions = 0;
