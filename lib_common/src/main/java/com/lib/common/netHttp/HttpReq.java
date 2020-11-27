@@ -18,4 +18,11 @@ public class HttpReq {
     public void setIp(String ip) {
         this.ip = ip;
     }
+
+    @Override
+    public String toString() {
+        return "HttpReq{" +
+                "ip='" + ip + '\'' +
+                '}';
+    }
 }
