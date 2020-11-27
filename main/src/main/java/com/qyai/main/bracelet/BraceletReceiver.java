@@ -19,6 +19,7 @@ public class BraceletReceiver extends BroadcastReceiver {
            callBack.onSuccessAll(intent.getStringExtra("data"));
            callBack.onSuccessBlood(intent.getStringExtra("xueya"));
            callBack.onSuccessHeart(intent.getStringExtra("xinlv"));
+           callBack.onSuccessLocation(intent.getStringExtra("locat"));
        }
     }
 
@@ -27,6 +28,7 @@ public class BraceletReceiver extends BroadcastReceiver {
         void onSuccessAll(String all);
         void onSuccessHeart(String heartValue);
         void onSuccessBlood(String blood);
+        void  onSuccessLocation(String str);
     }
 
 }

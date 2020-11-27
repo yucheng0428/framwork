@@ -44,9 +44,6 @@ dependencies {
     if (!isModuleMian.toBoolean()) {
         implementation project(path: ':main')
     }
-    if (!isModuleBeacon.toBoolean()) {
-        implementation project(path: ':beacon_lib')
-    }
     if (!isModulePic.toBoolean()) {
         implementation project(path: ':picturecontrol')
     }

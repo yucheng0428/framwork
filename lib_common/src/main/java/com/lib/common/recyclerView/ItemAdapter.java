@@ -1,4 +1,4 @@
-package com.qyai.main.bracelet;
+package com.lib.common.recyclerView;
 
 import android.content.Context;
 import android.view.View;
@@ -7,8 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lib.common.recyclerView.SimpleRecAdapter;
-import com.qyai.main.R;
+import com.lib.common.R;
 
 
 public abstract class ItemAdapter<T> extends SimpleRecAdapter<T, ItemAdapter.ViewHolder> {
@@ -32,7 +31,7 @@ public abstract class ItemAdapter<T> extends SimpleRecAdapter<T, ItemAdapter.Vie
         public TextView textView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView=itemView.findViewById(com.lib.common.R.id.tv);
+            textView=itemView.findViewById(R.id.tv);
         }
     }
 }

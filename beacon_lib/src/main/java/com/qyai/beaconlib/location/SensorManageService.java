@@ -17,10 +17,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lib.common.baseUtils.Common;
 import com.qyai.beaconlib.bean.PositioningResultBean;
 import com.qyai.beaconlib.bean.SensorEventBean;
 import com.qyai.beaconlib.login.bean.UserEvent;
-import com.qyai.beaconlib.utlis.Common;
 import com.qyai.beaconlib.utlis.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
@@ -161,8 +161,8 @@ public class SensorManageService extends Service {
 
         //获取登录用户
         UserEvent.UserData data = JSONObject.parseObject(SPValueUtil.getStringValue(getApplicationContext(), Common.USER_DATA), UserEvent.UserData.class);
-        if (!TextUtils.isEmpty(data.getUserId())) {
-            userId = data.getUserId();
+        if (!TextUtils.isEmpty(data.getUserInDeptDTO().getUserId())) {
+            userId = data.getUserInDeptDTO().getUserId();
         }
 
         //启动蓝牙信标扫描器
@@ -217,7 +217,8 @@ public class SensorManageService extends Service {
         @Override
         public void run() {
             beaconHandler.removeCallbacksAndMessages(null);
-            prepareBeaconData(this);
+           prepareBeaconData(this);
+
         }
     };
 
@@ -311,6 +312,7 @@ public class SensorManageService extends Service {
         }
         //根据时间戳进行排序
         if (bRssiList != null && bRssiList.size() > 0) {
+            EventBus.getDefault().post(bRssiList);
             sendBeaconDataToQYServer(bRssiList);
         }
     }
@@ -366,6 +368,11 @@ public class SensorManageService extends Service {
             beaconListToSend.add(beaconList.get(i));
         }
         dataSend.addBeaconList(beaconListToSend);
+        String code = SPValueUtil.getStringValue(getApplicationContext(), Common.BRACELET_MAC);
+        if (SPValueUtil.isEmpty(code)) {
+            // TODO: 2020/11/25  这里加手环id 
+            dataSend.setDeviceId(code);
+        }
         ArrayList<SensorEventBean> list = SensorManagerUtlis.getInstance().getSensorEventslist();
         synchronized (list) {
             Log.v(TAG, "uploadBeacon");
@@ -472,6 +479,8 @@ public class SensorManageService extends Service {
     public ReqBeaconInfo changeModle(Beacon beacon) {
         return new ReqBeaconInfo(beacon.major, beacon.minor, beacon.pow + "", SensorManagerUtlis.getInstance().calculateOrientation() + "", beacon.rssi + "");
     }
+
+
 
 }
 

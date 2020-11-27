@@ -18,48 +18,57 @@ public class ReqBraceletInfo implements Serializable {
      * updateTime : string
      */
 
-    private String bloodOxygen;
-    private String bloodPressureH;
-    private String bloodPressureL;
-    private String braceletId;
+    private String oxygen;
+    private String bloodPressureHigh;
+    private String bloodPressureLow;
+    private String watchId;
     private String code;
     private String createTime;
     private String heartRate;
     private String id;
-    private String respirationRate;
+    private String breathingRate;
     private String temperature;
     private String updateTime;
+    private String watchType;
 
-    public String getBloodOxygen() {
-        return bloodOxygen;
+    public String getWatchType() {
+        return watchType;
     }
 
-    public void setBloodOxygen(String bloodOxygen) {
-        this.bloodOxygen = bloodOxygen;
+    public void setWatchType(String watchType) {
+        this.watchType = watchType;
     }
 
-    public String getBloodPressureH() {
-        return bloodPressureH;
+    public String getOxygen() {
+        return oxygen;
     }
 
-    public void setBloodPressureH(String bloodPressureH) {
-        this.bloodPressureH = bloodPressureH;
+    public void setOxygen(String oxygen) {
+        this.oxygen = oxygen;
     }
 
-    public String getBloodPressureL() {
-        return bloodPressureL;
+    public String getBloodPressureHigh() {
+        return bloodPressureHigh;
     }
 
-    public void setBloodPressureL(String bloodPressureL) {
-        this.bloodPressureL = bloodPressureL;
+    public void setBloodPressureHigh(String bloodPressureHigh) {
+        this.bloodPressureHigh = bloodPressureHigh;
     }
 
-    public String getBraceletId() {
-        return braceletId;
+    public String getBloodPressureLow() {
+        return bloodPressureLow;
     }
 
-    public void setBraceletId(String braceletId) {
-        this.braceletId = braceletId;
+    public void setBloodPressureLow(String bloodPressureLow) {
+        this.bloodPressureLow = bloodPressureLow;
+    }
+
+    public String getWatchId() {
+        return watchId;
+    }
+
+    public void setWatchId(String watchId) {
+        this.watchId = watchId;
     }
 
     public String getCode() {
@@ -94,12 +103,12 @@ public class ReqBraceletInfo implements Serializable {
         this.id = id;
     }
 
-    public String getRespirationRate() {
-        return respirationRate;
+    public String getBreathingRate() {
+        return breathingRate;
     }
 
-    public void setRespirationRate(String respirationRate) {
-        this.respirationRate = respirationRate;
+    public void setBreathingRate(String breathingRate) {
+        this.breathingRate = breathingRate;
     }
 
     public String getTemperature() {

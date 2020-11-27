@@ -1,13 +1,13 @@
 package com.qyai.beaconlib.utlis;
 
+import com.lib.common.netHttp.HttpReq;
+
 public class Constants {
-    public static boolean isDebug = true;
     public static long BEACON_SCAN_TIME = 10000L;
     public static long BEACON_BETWEEN_SCAN_PERIOD = 2L;
     public static final int REQUEST_CODE = 10001;
     public static final int NOTICE_ID = 10001;
     public static final int stopBeaconSearchSuccessFlag = 10;
-    public static String REQUSET_IP;
     public static String UPLOADBEACON;
     public static String ADDBLUETOOTHINFO;//新增蓝牙信标信息
     public static String DELECTBLUETOOTHINFO;//删除蓝牙信标
@@ -21,18 +21,10 @@ public class Constants {
     public static String LOGIN_URL;
     public static final String RESULT_SUCCESS ="000000" ;
     static {
-        if (isDebug) {
             /**
              * 测试服务器
              */
-            REQUSET_IP="http://192.168.5.218:16800/";
-            LOGIN_URL=REQUSET_IP+"login/login";
-            UPLOADBEACON=REQUSET_IP+"beacon/receivePosition";
-        } else {
-            /**
-             * 服务器
-             */
-            REQUSET_IP="http://cjrk.hbcic.net.cn";
-        }
+            LOGIN_URL= HttpReq.getInstence().getIp()+ "login/login";
+            UPLOADBEACON=HttpReq.getInstence().getIp()+"smcBeacon/receivePosition";
     }
 }

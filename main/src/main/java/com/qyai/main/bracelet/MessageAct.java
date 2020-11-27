@@ -4,23 +4,26 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
-import com.lib.common.baseUtils.IntentKey;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.recyclerView.RecyclerItemCallback;
+import com.qyai.beaconlib.location.SensorManageService;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 import com.qyai.main.bracelet.bean.MessageBean;
-import com.qyai.main.bracelet.bean.ReqBraceletInfo;
 import com.qyai.main.bracelet.bean.SyncBloodBean;
 import com.qyai.main.bracelet.bean.SyncHeartBean;
 import com.qyai.main.bracelet.bean.SyncHistiryBean;
@@ -32,14 +35,19 @@ import butterknife.BindView;
 public class MessageAct extends BaseHeadActivity implements BraceletReceiver.ReceiverCallBack {
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
-    MessageAdapter adapter;
+   static MessageAdapter adapter;
     Intent serviceIntent;
-    SyncHistiryBean bean;
+    @BindView(R2.id.sw_gps)
+    Switch  sw_gps;
+    @BindView(R2.id.sw_postion)
+    Switch  sw_postion;
+    @BindView(R2.id.sw_bracelet)
+    Switch  sw_bracelet;
     public BraceletReceiver myReceiver;
 
     @Override
     public int layoutId() {
-        return R.layout.activity_sech_view;
+        return R.layout.activity_message_view;
     }
 
     @Override
@@ -63,17 +71,46 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
                 adapter.notifyDataSetChanged();
             }
         });
+        swSetting();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        myReceiver = new BraceletReceiver();
-        myReceiver.setCallBack(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BlueToothService.CHANNEL_ID_STRING);
-        //注册广播
-        mActivity.registerReceiver(myReceiver, intentFilter);
+
+    public void swSetting(){
+        sw_gps.setChecked(false);
+        sw_bracelet.setChecked(true);
+        sw_postion.setChecked(true);
+        initService();
+        SensorManageService.initService(mActivity);
+        sw_gps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    GpsLactionUtils.getInstance(mActivity).startGps();
+                }else {
+                    GpsLactionUtils.getInstance(mActivity).stopGps();
+                }
+            }
+        });
+        sw_postion.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SensorManageService.initService(mActivity);
+                }else {
+                    SensorManageService.stopService(mActivity);
+                }
+            }
+        });
+        sw_bracelet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    initService();
+                }else {
+                    stopService();
+                }
+            }
+        });
     }
 
     @Override
@@ -85,7 +122,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     @Override
     public void setOnClickTvRight() {
         super.setOnClickTvRight();
-        ARouter.getInstance().build("/beacon/HtmlMapAct")
+        ARouter.getInstance().build("/beacon/BeaconMessageAct")
                 .navigation();
     }
 
@@ -125,20 +162,37 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     }
 
 
+    public static void reshState(){
+        adapter.getDataSource().get(cheackString("断开设备")).setTypeValue(YCBTClient.connectState() == 3 ? "未连接" : "已连接");
+        adapter.notifyDataSetChanged();
+    }
     private void initService() {
+        Common.openGPSSEtting(mActivity);
         PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Constants.permissionList); // 动态请求权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mActivity.startForegroundService(serviceIntent);
         } else {
             mActivity.startService(serviceIntent);
         }
+        myReceiver = new BraceletReceiver();
+        myReceiver.setCallBack(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BlueToothService.CHANNEL_ID_STRING);
+        //注册广播
+        mActivity.registerReceiver(myReceiver, intentFilter);
     }
 
     private void stopService() {
         mActivity.stopService(serviceIntent);
+        SensorManageService.stopService(mActivity);
+        try {
+            mActivity.unregisterReceiver(myReceiver);
+        }catch (IllegalArgumentException e){
+
+        }
     }
 
-    public int cheackString(String type) {
+    public static int cheackString(String type) {
         int pos = 0;
         for (int i = 0; i < adapter.getDataSource().size(); i++) {
             if (adapter.getDataSource().get(i).getTyepName().equals(type)) {
@@ -161,7 +215,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
                     messageBean.setTime(bean.getStartTime() + "");
                     break;
                 case "体温":
-                    messageBean.setTypeValue(bean.getTempFloatValue() + "");
+                    messageBean.setTypeValue(bean.getTempIntValue() + "");
                     messageBean.setTime(bean.getStartTime() + "");
                     break;
                 case "血氧":
@@ -186,7 +240,8 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mActivity.unregisterReceiver(myReceiver);
+        stopService();
+        YCBTClient.disconnectBle();
     }
 
 
@@ -228,5 +283,20 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         if (bloodBean != null && bloodBean.getData().size() > 10) {
             BraceletApi.getInstance().delectSyncHistoryData(0x0543);
         }
+    }
+
+    @Override
+    public void onSuccessLocation(String str) {
+        if(SPValueUtil.isEmpty(str)){
+            int indx = cheackString("血压");
+            adapter.getDataSource().get(indx).setTypeValue(str);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

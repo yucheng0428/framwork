@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initUIData(Bundle bundle) {
+        setTranslucentNavigationColor(getResources().getColor(R.color.half_transparent));
         PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE,  new String[]{
                 Manifest.permission.CAMERA,
                 Manifest.permission.READ_EXTERNAL_STORAGE,

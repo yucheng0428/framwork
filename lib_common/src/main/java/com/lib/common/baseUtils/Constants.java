@@ -23,6 +23,7 @@ public class Constants {
     public static final int REQUEST_CODE = 10001;
 
     public static final String fileUploadUrl="";
+    public  static  final  String REQ_URL_IP="192.168.10.130:16810/";
 
     /**
      * 请求地址

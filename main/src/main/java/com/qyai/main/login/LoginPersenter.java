@@ -2,10 +2,11 @@ package com.qyai.main.login;
 
 
 import com.lib.common.BaseMvp.presenter.BasePresenter;
+import com.lib.common.baseUtils.Constants;
+import com.lib.common.netHttp.HttpReq;
 import com.qyai.main.login.bean.UserEvent;
 
 public class LoginPersenter extends BasePresenter<LoginView> {
-     final String loginUrl="http://192.168.5.218:16800/login/login";
 
     final LoginModel model;
 
@@ -15,7 +16,7 @@ public class LoginPersenter extends BasePresenter<LoginView> {
 
     public void loginding(String name, String password) {
         getMvpView().showLodingDialog();
-        model.LoginReq(name, password,loginUrl);
+        model.LoginReq(name, password,HttpReq.getInstence().getIp() +"login/login");
     }
 
 

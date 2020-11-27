@@ -13,13 +13,14 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSON;
-import com.lib.common.baseUtils.Constants;
-import com.lib.common.baseUtils.IntentKey;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.LogUtil;
-import com.lib.common.baseUtils.SPValueUtil;
+
 import com.lib.common.netHttp.HttpServiec;
+import com.lib.common.baseUtils.SPValueUtil;
+
 import com.lib.common.netHttp.OnHttpCallBack;
-import com.qyai.main.Common;
+import com.qyai.main.Commons;
 import com.qyai.main.R;
 import com.qyai.main.bracelet.bean.ReqBraceletInfo;
 import com.qyai.main.bracelet.bean.SyncBloodBean;
@@ -27,6 +28,7 @@ import com.qyai.main.bracelet.bean.SyncHeartBean;
 import com.qyai.main.bracelet.bean.SyncHistiryBean;
 import com.yucheng.ycbtsdk.Response.BleConnectResponse;
 import com.yucheng.ycbtsdk.YCBTClient;
+
 
 public class BlueToothService extends Service {
     public static final String CHANNEL_ID_STRING = "service_01";
@@ -56,57 +58,69 @@ public class BlueToothService extends Service {
         public void run() {
             // TODO Auto-generated method stub
             //提交请求
-            syncDataHandler.removeCallbacksAndMessages(null);
+//            syncDataHandler.removeCallbacksAndMessages(null);
             syncData();
 
         }
 
     };
 
+    Runnable reshAdapter=new Runnable() {
+        @Override
+        public void run() {
+            if (MessageAct.adapter != null) {
+                LogUtil.e("刷新","状态");
+                MessageAct.reshState();
+            }
+            syncDataHandler.postDelayed(reshAdapter, 3000);
+        }
+    };
+
     public void syncData() {
         syncDataHandler.postDelayed(syncDataRunnable, 60000);
-        ReqBraceletInfo   info = new ReqBraceletInfo();
+        ReqBraceletInfo info = new ReqBraceletInfo();
         String code = SPValueUtil.getStringValue(getApplicationContext(), Common.BRACELET_MAC);
         if (SPValueUtil.isEmpty(code)) {
-            info.setCode(code);
+            info.setWatchId(code);
+            info.setWatchType("bracelet");
         }
         Intent mIntent = new Intent();
         mIntent.setAction(BlueToothService.CHANNEL_ID_STRING);
         BraceletApi.getInstance().syncHistoryDataAll(0x0509, new BraceletCallBack() {
             @Override
             public void onSuccess(Object o) {
-                mIntent.putExtra("data",(String)o);
-                SyncHistiryBean bean = JSON.parseObject((String)o, SyncHistiryBean.class);
+                mIntent.putExtra("data", (String) o);
+                SyncHistiryBean bean = JSON.parseObject((String) o, SyncHistiryBean.class);
                 if (bean != null && bean.getData().size() > 0) {
                     SyncHistiryBean.DataBean dataBean = bean.getData().get(bean.getData().size() - 1);
                     info.setTemperature(dataBean.getTempIntValue() + "");
-                    info.setBloodOxygen(dataBean.getOOValue() + "");
-                    info.setRespirationRate(dataBean.getRespiratoryRateValue() + "");
+                    info.setOxygen(dataBean.getOOValue() + "");
+                    info.setBreathingRate(dataBean.getRespiratoryRateValue() + "");
                 }
-               getApplicationContext().sendBroadcast(mIntent);
+                getApplicationContext().sendBroadcast(mIntent);
             }
         });
         BraceletApi.getInstance().syncHistoryDataAll(0x0506, new BraceletCallBack() {
             @Override
             public void onSuccess(Object o) {
-                mIntent.putExtra("xinlv",(String)o);
-                SyncHeartBean heartBean = JSON.parseObject((String)o, SyncHeartBean.class);
+                mIntent.putExtra("xinlv", (String) o);
+                SyncHeartBean heartBean = JSON.parseObject((String) o, SyncHeartBean.class);
                 if (heartBean != null && heartBean.getData().size() > 0) {
                     SyncHeartBean.DataBean hBean = heartBean.getData().get(heartBean.getData().size() - 1);
                     info.setHeartRate(hBean.getHeartValue() + "");
                 }
-               getApplicationContext().sendBroadcast(mIntent);
+                getApplicationContext().sendBroadcast(mIntent);
             }
         });
         BraceletApi.getInstance().syncHistoryDataAll(0x0508, new BraceletCallBack() {
             @Override
             public void onSuccess(Object o) {
-                mIntent.putExtra("xueya",(String)o);
-                SyncBloodBean bloodBean = JSON.parseObject((String)o, SyncBloodBean.class);
+                mIntent.putExtra("xueya", (String) o);
+                SyncBloodBean bloodBean = JSON.parseObject((String) o, SyncBloodBean.class);
                 if (bloodBean != null && bloodBean.getData().size() > 0) {
                     SyncBloodBean.DataBean bBean = bloodBean.getData().get(bloodBean.getData().size() - 1);
-                    info.setBloodPressureH(bBean.getBloodDBP() + "");
-                    info.setBloodPressureL(bBean.getBloodSBP() + "");
+                    info.setBloodPressureHigh(bBean.getBloodDBP() + "");
+                    info.setBloodPressureLow(bBean.getBloodSBP() + "");
                 }
                 getApplicationContext().sendBroadcast(mIntent);
             }
@@ -116,11 +130,11 @@ public class BlueToothService extends Service {
             public void run() {
                 reqMessage(info);
             }
-        },5000);
+        }, 5000);
     }
 
-    public void reqMessage(ReqBraceletInfo info){
-        HttpServiec.getInstance().postFlowableData(100, Common.UPLOADBRACELETINFO, info, new OnHttpCallBack() {
+    public void reqMessage(ReqBraceletInfo info) {
+        HttpServiec.getInstance().postFlowableData(100, Commons.UPLOADBRACELETINFO, info, new OnHttpCallBack() {
             @Override
             public void onSuccessful(int id, Object o) {
 
@@ -130,8 +144,9 @@ public class BlueToothService extends Service {
             public void onFaild(int id, Object o, String err) {
 
             }
-        },String.class);
+        }, String.class);
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -152,6 +167,7 @@ public class BlueToothService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         YCBTClient.registerBleStateChange(response);
         syncDataHandler.postDelayed(syncDataRunnable, 5000);
+        syncDataHandler.postDelayed(reshAdapter, 3000);
         return START_STICKY;
     }
 
@@ -164,8 +180,8 @@ public class BlueToothService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        syncDataHandler.removeCallbacksAndMessages(syncDataRunnable);
-        LogUtil.e("蓝牙连接服务", "服务关了乐乐");
+        syncDataHandler.removeCallbacksAndMessages(null);
+        LogUtil.e("手环数据同步", "服务关了");
         YCBTClient.unRegisterBleStateChange(response);
     }
 

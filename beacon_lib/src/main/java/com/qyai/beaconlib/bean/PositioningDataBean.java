@@ -6,6 +6,15 @@ public class PositioningDataBean {
     private ArrayList<SensorEventBean> gsensorInfos = new ArrayList<>();
     private ArrayList<ArrayList<Beacon>> rssiData = new ArrayList<>();
     private int direction;
+    private String deviceId;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public int getDirection() {
         return direction;

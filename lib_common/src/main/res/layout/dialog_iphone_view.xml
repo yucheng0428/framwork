@@ -42,7 +42,7 @@
 
         <EditText
             android:id="@+id/ed_contents"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="60dp"
             android:layout_marginLeft="10dp"
@@ -53,7 +53,7 @@
             android:textSize="16dp"
             android:textCursorDrawable="@drawable/editcursor"
             android:background="@null"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/btn_layout"

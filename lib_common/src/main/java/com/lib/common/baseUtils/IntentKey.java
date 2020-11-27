@@ -15,7 +15,6 @@ public interface IntentKey {
     int REQ_UPLAOD = 101;// 拍照
     int REQ_DELECT = 103;// 裁剪
 
-
     /**
      * 点击小图看大图的本地路径或者网络地址
      **/
