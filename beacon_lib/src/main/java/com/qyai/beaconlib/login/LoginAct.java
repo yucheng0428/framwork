@@ -12,6 +12,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.BaseMvp.BaseMvpAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.netHttp.NetHeaderInterceptor;
@@ -19,7 +20,6 @@ import com.qyai.beaconlib.R;
 import com.qyai.beaconlib.R2;
 import com.qyai.beaconlib.html.HtmlMapAct;
 import com.qyai.beaconlib.login.bean.UserEvent;
-import com.qyai.beaconlib.utlis.Common;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,11 +93,11 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     public void loginNext(UserEvent baseBean) {
         UserEvent.UserData userData = baseBean.getData();
         Map<String, String> heard = new HashMap<>();
-        heard.put("token", userData.getToken());
+        heard.put("token", userData.getUserInDeptDTO().getToken());
         NetHeaderInterceptor.getInterceptor().setHeaders(heard);
         String json = JSON.toJSONString(userData);
         SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, json);
-        SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getToken() + "");
+        SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getUserInDeptDTO().getToken() + "");
         SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
         SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, getUserName());
         Intent intent = new Intent(LoginAct.this, HtmlMapAct.class);

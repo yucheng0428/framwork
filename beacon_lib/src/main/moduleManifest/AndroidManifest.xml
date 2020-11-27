@@ -51,7 +51,9 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".location.BeaconMessageAct"
+            android:launchMode="singleTask" />
         <service
             android:name=".location.SensorManageService"
             android:enabled="true"

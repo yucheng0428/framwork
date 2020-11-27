@@ -15,6 +15,9 @@
             android:name=".html.HtmlMapAct"
             android:launchMode="singleTask" />
         <activity
+            android:name=".location.BeaconMessageAct"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".location.LockScreenActivity"
             android:configChanges="orientation|screenSize"
             android:excludeFromRecents="true"
