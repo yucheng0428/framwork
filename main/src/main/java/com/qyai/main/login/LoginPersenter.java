@@ -7,7 +7,6 @@ import com.lib.common.netHttp.HttpReq;
 import com.qyai.main.login.bean.UserEvent;
 
 public class LoginPersenter extends BasePresenter<LoginView> {
-     final String loginUrl= HttpReq.getInstence().getIp() +"login/login";
 
     final LoginModel model;
 
@@ -17,7 +16,7 @@ public class LoginPersenter extends BasePresenter<LoginView> {
 
     public void loginding(String name, String password) {
         getMvpView().showLodingDialog();
-        model.LoginReq(name, password,loginUrl);
+        model.LoginReq(name, password,HttpReq.getInstence().getIp() +"login/login");
     }
 
 

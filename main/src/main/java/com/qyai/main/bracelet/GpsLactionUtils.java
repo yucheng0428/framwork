@@ -1,41 +1,43 @@
 package com.qyai.main.bracelet;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
+import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 
+import com.lib.common.baseUtils.Common;
+import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
-import com.qyai.main.Common;
+import com.qyai.main.Commons;
 import com.qyai.main.bracelet.bean.LactionInfo;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class GpsLactionUtils {
-    public Activity mActivity;
+    public Context mActivity;
     public static  GpsLactionUtils instance;
     public LocationListener locationlistener;
     public GpsStatus.Listener gpsListener;
     public  LocationManager locationManager;
     String locationProvider = null;
 
-    public GpsLactionUtils(Activity activity) {
+    public GpsLactionUtils(Context activity) {
         this.mActivity=activity;
     }
 
-    public static  GpsLactionUtils getInstance(Activity activity){
+    public static  GpsLactionUtils getInstance(Context activity){
         if(instance==null){
             instance=new GpsLactionUtils(activity);
         }
@@ -56,6 +58,7 @@ public class GpsLactionUtils {
         else {
             Toast.makeText(mActivity, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
         }
+        LogUtil.e("Gps","startGps()");
         setInitListener();
         locationManager.addGpsStatusListener(gpsListener);
 //            // 监视地理位置变化，第二个和第三个参数分别为更新的最短时间minTime和最短距离minDistace
@@ -64,15 +67,16 @@ public class GpsLactionUtils {
 
     @SuppressLint("MissingPermission")
     public  void  stopGps(){
+        LogUtil.e("Gps","stopGps()");
         if(locationManager==null){
             return;
         }
-        locationManager.addGpsStatusListener(null);
-//            // 监视地理位置变化，第二个和第三个参数分别为更新的最短时间minTime和最短距离minDistace
-        locationManager.requestLocationUpdates(locationProvider, 1000, 1,locationlistener );
+        locationManager.removeGpsStatusListener(gpsListener);
+        locationlistener=null;
+        locationManager=null;
     }
     public void sendLoaction(LactionInfo info){
-        HttpServiec.getInstance().postFlowableData(100, Common.UPLOADLOCATION, info, new OnHttpCallBack() {
+        HttpServiec.getInstance().postFlowableData(100, Commons.UPLOADLOCATION, info, new OnHttpCallBack() {
             @Override
             public void onSuccessful(int id, Object o) {
 
@@ -90,6 +94,10 @@ public class GpsLactionUtils {
         locationlistener=new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                if (locationManager==null){
+                    return;
+                }
+                LogUtil.e("Gps","onLocationChanged：改变位置");
                 UIHelper.ToastMessage(mActivity.getApplicationContext(), "onLocationChanged：改变位置");
                 sendLoaction(getNewInfo(location));
             }
@@ -99,16 +107,19 @@ public class GpsLactionUtils {
                 switch (i) {
                     //GPS状态为可见时
                     case LocationProvider.AVAILABLE:
+                        LogUtil.e("Gps","onStatusChanged：当前GPS状态为可见状态");
                         UIHelper.ToastMessage(mActivity.getApplicationContext(), "onStatusChanged：当前GPS状态为可见状态");
 
                         break;
                     //GPS状态为服务区外时
                     case LocationProvider.OUT_OF_SERVICE:
+                        LogUtil.e("Gps","onStatusChanged:当前GPS状态为服务区外状态");
                         UIHelper.ToastMessage(mActivity.getApplicationContext(), "onStatusChanged:当前GPS状态为服务区外状态");
 
                         break;
                     //GPS状态为暂停服务时
                     case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                        LogUtil.e("Gps","onStatusChanged:当前GPS状态为暂停服务状态");
                         UIHelper.ToastMessage(mActivity.getApplicationContext(), "onStatusChanged:当前GPS状态为暂停服务状态");
 
                         break;
@@ -128,18 +139,43 @@ public class GpsLactionUtils {
             @Override
             public void onGpsStatusChanged(int event) {
                 switch (event) {
+                    case GpsStatus.GPS_EVENT_FIRST_FIX:
+                        LogUtil.e("Gps", "第一次定位");
+                        break;
+                    // 卫星状态改变
+                    case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+                        if(locationManager==null){
+                            return;
+                        }
+                        LogUtil.e("Gps", "卫星状态改变");
+                        GpsStatus gpsStatus = locationManager.getGpsStatus(null);
+                        // 获取卫星颗数的默认最大值
+                        int maxSatellites = gpsStatus.getMaxSatellites();
+                        // 创建一个迭代器保存所有卫星
+                        Iterator<GpsSatellite> iters = gpsStatus.getSatellites()
+                                .iterator();
+                        int count = 0;
+                        while (iters.hasNext() && count <= maxSatellites) {
+                            GpsSatellite s = iters.next();
+                            count++;
+                        }
+                        LogUtil.e("Gps","搜索到：" + count + "颗卫星");
+                        break;
                     //GPS状态为可见时
                     case LocationProvider.AVAILABLE:
+                        LogUtil.e("Gps","onGpsStatusChanged：当前GPS状态为可见状态");
                         UIHelper.ToastMessage(mActivity.getApplicationContext(), "onGpsStatusChanged：当前GPS状态为可见状态");
 
                         break;
                     //GPS状态为服务区外时
                     case LocationProvider.OUT_OF_SERVICE:
+                        LogUtil.e("Gps","onGpsStatusChanged:当前GPS状态为服务区外状态");
                         UIHelper.ToastMessage(mActivity.getApplicationContext(), "onGpsStatusChanged:当前GPS状态为服务区外状态");
 
                         break;
                     //GPS状态为暂停服务时
                     case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                        LogUtil.e("Gps","onGpsStatusChanged:当前GPS状态为暂停服务状态");
                         UIHelper.ToastMessage(mActivity.getApplicationContext(), "onGpsStatusChanged:当前GPS状态为暂停服务状态");
 
                         break;
@@ -150,7 +186,7 @@ public class GpsLactionUtils {
 
 
     public  LactionInfo getNewInfo(Location location){
-        Log.e("经纬度", "longitude:" + location.getLongitude() + "latitude: " + location.getLatitude());
+        UIHelper.ToastMessage(mActivity,"经纬度longitude:" + location.getLongitude() + "latitude: " + location.getLatitude());
         LactionInfo info=new LactionInfo();
         if (location != null) {
             info.setLocX(location.getLongitude() + "");

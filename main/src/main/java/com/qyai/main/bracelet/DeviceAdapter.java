@@ -3,6 +3,7 @@ package com.qyai.main.bracelet;
 import android.content.Context;
 import android.view.View;
 
+import com.lib.common.recyclerView.ItemAdapter;
 import com.qyai.main.bracelet.bean.DeviceBean;
 
 

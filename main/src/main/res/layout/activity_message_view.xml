@@ -9,28 +9,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_msg_toast"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
     <Switch
+        style="@style/switch_style"
         android:id="@+id/sw_gps"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GPS "
         android:textOff="关闭"
         android:textOn="打开" />
 
     <Switch
+        style="@style/switch_style"
         android:id="@+id/sw_postion"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="定位"
+        android:text="蓝牙定位"
         android:textOff="关闭"
         android:textOn="打开" />
 
     <Switch
+        style="@style/switch_style"
         android:id="@+id/sw_bracelet"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textOff="关闭"
         android:textOn="打开"
-        android:text="手环数据" />
+        android:text="手环健康数据" />
+    </LinearLayout>
 
 </LinearLayout>

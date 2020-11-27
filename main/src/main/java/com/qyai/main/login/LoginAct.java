@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.BaseMvp.BaseMvpAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
@@ -20,7 +21,6 @@ import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.dialog.IphoneDialog;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.NetHeaderInterceptor;
-import com.qyai.main.Common;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 import com.qyai.main.bracelet.SechAct;
@@ -79,7 +79,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
                         HttpReq.getInstence().setIp(string);
                     }
                 }
-            }, true, "输入ip", "http://192.168.10.130:16810/");
+            }, true, "输入ip",  HttpReq.getInstence().getIp());
             iphoneDialog.show();
         }
 
@@ -111,11 +111,11 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     public void loginNext(UserEvent baseBean) {
         UserEvent.UserData userData = baseBean.getData();
         Map<String, String> heard = new HashMap<>();
-        heard.put("token", userData.getToken());
+        heard.put("token", userData.getUserInDeptDTO().getToken());
         NetHeaderInterceptor.getInterceptor().setHeaders(heard);
         String json = JSON.toJSONString(userData);
         SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, json);
-        SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getToken() + "");
+        SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getUserInDeptDTO().getToken() + "");
         SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
         SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, getUserName());
         Intent intent = new Intent(LoginAct.this, SechAct.class);

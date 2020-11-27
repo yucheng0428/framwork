@@ -13,13 +13,14 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSON;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.LogUtil;
 
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.baseUtils.SPValueUtil;
 
 import com.lib.common.netHttp.OnHttpCallBack;
-import com.qyai.main.Common;
+import com.qyai.main.Commons;
 import com.qyai.main.R;
 import com.qyai.main.bracelet.bean.ReqBraceletInfo;
 import com.qyai.main.bracelet.bean.SyncBloodBean;
@@ -57,13 +58,23 @@ public class BlueToothService extends Service {
         public void run() {
             // TODO Auto-generated method stub
             //提交请求
-            syncDataHandler.removeCallbacksAndMessages(null);
+//            syncDataHandler.removeCallbacksAndMessages(null);
             syncData();
 
         }
 
     };
 
+    Runnable reshAdapter=new Runnable() {
+        @Override
+        public void run() {
+            if (MessageAct.adapter != null) {
+                LogUtil.e("刷新","状态");
+                MessageAct.reshState();
+            }
+            syncDataHandler.postDelayed(reshAdapter, 3000);
+        }
+    };
 
     public void syncData() {
         syncDataHandler.postDelayed(syncDataRunnable, 60000);
@@ -123,7 +134,7 @@ public class BlueToothService extends Service {
     }
 
     public void reqMessage(ReqBraceletInfo info) {
-        HttpServiec.getInstance().postFlowableData(100, Common.UPLOADBRACELETINFO, info, new OnHttpCallBack() {
+        HttpServiec.getInstance().postFlowableData(100, Commons.UPLOADBRACELETINFO, info, new OnHttpCallBack() {
             @Override
             public void onSuccessful(int id, Object o) {
 
@@ -156,6 +167,7 @@ public class BlueToothService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         YCBTClient.registerBleStateChange(response);
         syncDataHandler.postDelayed(syncDataRunnable, 5000);
+        syncDataHandler.postDelayed(reshAdapter, 3000);
         return START_STICKY;
     }
 
@@ -172,7 +184,6 @@ public class BlueToothService extends Service {
         LogUtil.e("手环数据同步", "服务关了");
         YCBTClient.unRegisterBleStateChange(response);
     }
-
 
 
 }

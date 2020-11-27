@@ -38,7 +38,7 @@ public class MessageAdapter extends SimpleRecAdapter<MessageBean, MessageAdapter
         holder.tv_value.setText(bean.getTypeValue());
         if (bean.getTime() != null) {
             holder.tv_time.setVisibility(View.VISIBLE);
-            holder.tv_time.setText("上报时间:"+ DateUtils.timedate(bean.getTime()));
+            holder.tv_time.setText(""+ DateUtils.timedate(bean.getTime()));
         }else {
             holder.tv_time.setVisibility(View.GONE);
         }

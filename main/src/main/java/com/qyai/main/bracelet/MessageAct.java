@@ -8,18 +8,19 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.qyai.beaconlib.location.SensorManageService;
-import com.qyai.main.Common;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 import com.qyai.main.bracelet.bean.MessageBean;
@@ -34,7 +35,7 @@ import butterknife.BindView;
 public class MessageAct extends BaseHeadActivity implements BraceletReceiver.ReceiverCallBack {
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
-    MessageAdapter adapter;
+   static MessageAdapter adapter;
     Intent serviceIntent;
     @BindView(R2.id.sw_gps)
     Switch  sw_gps;
@@ -75,12 +76,11 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
 
 
     public void swSetting(){
-        sw_gps.setChecked(true);
+        sw_gps.setChecked(false);
         sw_bracelet.setChecked(true);
         sw_postion.setChecked(true);
         initService();
         SensorManageService.initService(mActivity);
-        GpsLactionUtils.getInstance(mActivity).startGps();
         sw_gps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -122,7 +122,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     @Override
     public void setOnClickTvRight() {
         super.setOnClickTvRight();
-        ARouter.getInstance().build("/beacon/HtmlMapAct")
+        ARouter.getInstance().build("/beacon/BeaconMessageAct")
                 .navigation();
     }
 
@@ -162,6 +162,10 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     }
 
 
+    public static void reshState(){
+        adapter.getDataSource().get(cheackString("断开设备")).setTypeValue(YCBTClient.connectState() == 3 ? "未连接" : "已连接");
+        adapter.notifyDataSetChanged();
+    }
     private void initService() {
         Common.openGPSSEtting(mActivity);
         PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Constants.permissionList); // 动态请求权限
@@ -180,10 +184,15 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
 
     private void stopService() {
         mActivity.stopService(serviceIntent);
-        mActivity.unregisterReceiver(myReceiver);
+        SensorManageService.stopService(mActivity);
+        try {
+            mActivity.unregisterReceiver(myReceiver);
+        }catch (IllegalArgumentException e){
+
+        }
     }
 
-    public int cheackString(String type) {
+    public static int cheackString(String type) {
         int pos = 0;
         for (int i = 0; i < adapter.getDataSource().size(); i++) {
             if (adapter.getDataSource().get(i).getTyepName().equals(type)) {

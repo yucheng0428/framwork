@@ -1,26 +1,23 @@
 package com.qyai.main.bracelet;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
-import com.lib.common.baseUtils.IntentKey;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
+import com.lib.common.recyclerView.ItemAdapter;
 import com.lib.common.recyclerView.RecyclerItemCallback;
-import com.qyai.main.Common;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 import com.qyai.main.bracelet.bean.DeviceBean;
-import com.yucheng.ycbtsdk.AITools;
 import com.yucheng.ycbtsdk.YCBTClient;
 
 import butterknife.BindView;
@@ -66,6 +63,7 @@ public class SechAct extends BaseHeadActivity {
     public void setOnClickTvRight() {
         super.setOnClickTvRight();
         YCBTClient.disconnectBle();
+        adapter.clearData();
         if (BraceletApi.getInstance().isOpenBlueTooth(mActivity)) {
             runOnUiThread(new Runnable() {
                 @Override

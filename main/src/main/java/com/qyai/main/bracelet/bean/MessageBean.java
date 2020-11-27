@@ -45,7 +45,7 @@ public class MessageBean implements Serializable {
 
     public static List<MessageBean> getMessgeList(){
         List<MessageBean>list=new ArrayList<>();
-//        list.add(new MessageBean("蓝牙连接状态","3"));
+        list.add(new MessageBean("蓝牙连接状态","3"));
 //        list.add(new MessageBean("数据同步","未开启"));
         list.add(new MessageBean("血压","100/70"));
         list.add(new MessageBean("体温","36"));
