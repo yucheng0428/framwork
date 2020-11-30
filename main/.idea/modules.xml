@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-899593597/FramApp.iml" filepath="$PROJECT_DIR$/.idea/modules/-899593597/FramApp.iml" group="FramApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-872863595/app.iml" filepath="$PROJECT_DIR$/.idea/modules/-872863595/app.iml" group="FramApp/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-691158250/beacon_lib.iml" filepath="$PROJECT_DIR$/.idea/modules/-691158250/beacon_lib.iml" group="FramApp/beacon_lib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bracelet_lib.iml" filepath="$PROJECT_DIR$/.idea/modules/bracelet_lib.iml" group="FramApp/bracelet_lib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/849378289/lib_common.iml" filepath="$PROJECT_DIR$/.idea/modules/849378289/lib_common.iml" group="FramApp/lib_common" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1288624699/main.iml" filepath="$PROJECT_DIR$/.idea/modules/-1288624699/main.iml" group="FramApp/main" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/356552619/picturecontrol.iml" filepath="$PROJECT_DIR$/.idea/modules/356552619/picturecontrol.iml" group="FramApp/picturecontrol" />
+    </modules>
+  </component>
+</project>
