@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_msg_toast"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+    <Switch
+        style="@style/switch_style"
+        android:id="@+id/sw_gps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GPS "
+        android:textOff="关闭"
+        android:textOn="打开" />
+
+    <Switch
+        style="@style/switch_style"
+        android:id="@+id/sw_postion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="蓝牙定位"
+        android:textOff="关闭"
+        android:textOn="打开" />
+
+    <Switch
+        style="@style/switch_style"
+        android:id="@+id/sw_bracelet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textOff="关闭"
+        android:textOn="打开"
+        android:text="手环健康数据" />
+    </LinearLayout>
+
+</LinearLayout>
