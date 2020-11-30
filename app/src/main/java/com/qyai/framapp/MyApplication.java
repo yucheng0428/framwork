@@ -8,7 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.base.BaseApp;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.netHttp.HttpReq;
-import com.qyai.main.MianApplication;
+import com.qyai.bracelet_lib.MianApplication;
 
 import java.lang.reflect.Method;
 

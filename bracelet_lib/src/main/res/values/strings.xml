@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">手环助手</string>
+
+
+    <string name="text_metro_yby">园博园</string>
+    <string name="text_metro_cmt">常码头</string>
+    <string name="text_metro_wjdd">王家墩东</string>
+    <string name="text_metro_qsl">取水楼</string>
+    <string name="text_metro_syl">三阳路</string>
+    <string name="text_metro_office">办公室</string>
+    <string name="text_test_map">站内地图</string>
+</resources>

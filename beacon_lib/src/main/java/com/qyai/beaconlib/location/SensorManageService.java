@@ -70,7 +70,7 @@ public class SensorManageService extends Service {
     private int beaconCount = 0;
 
 
-    private String[] filterMajors = {"10092", "10270"};//TODO以后信标有效范围应该是从数据库初始化
+    private String[] filterMajors = {"10092", "10270","20001"};//TODO以后信标有效范围应该是从数据库初始化
     private static final int rssiDataInerval = 1000;        //两组组rssi数据间隔时间 ms
     private static final int maxRssiCount = 20;            //每组rssi最大个数；
     /**

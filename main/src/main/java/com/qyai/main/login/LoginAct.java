@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.BaseMvp.BaseMvpAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
@@ -23,7 +24,6 @@ import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.qyai.main.R;
 import com.qyai.main.R2;
-import com.qyai.main.bracelet.SechAct;
 import com.qyai.main.login.bean.UserEvent;
 
 import java.util.HashMap;
@@ -118,8 +118,10 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getUserInDeptDTO().getToken() + "");
         SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
         SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, getUserName());
-        Intent intent = new Intent(LoginAct.this, SechAct.class);
-        startActivity(intent);
+//        Intent intent = new Intent(LoginAct.this, SechAct.class);
+//        startActivity(intent);
+        ARouter.getInstance().build("/bracelet/SechAct")
+                .navigation();
         finish();
         btn_login.setEnabled(true);
         hidLodingDialog();
