@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">手环助手</string>
-
-
+    <string name="app_name">手表助手</string>
+    <string name="title_regiser">注册</string>
+    <string name="title_forget">忘记密码</string>
+    <string name="btn_ok">确定</string>
     <string name="text_metro_yby">园博园</string>
     <string name="text_metro_cmt">常码头</string>
     <string name="text_metro_wjdd">王家墩东</string>

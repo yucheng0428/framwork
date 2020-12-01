@@ -40,8 +40,8 @@ import butterknife.ButterKnife;
 public abstract class BaseHeadActivity extends FragmentActivity {
     LinearLayout llContainer;
     public TextView tvTitle = null;//标题
-    ImageView ivLeft = null;//左上角图片
-    TextView tvLeft = null;//左上文字
+    public ImageView ivLeft = null;//左上角图片
+    public TextView tvLeft = null;//左上文字
 
     public ImageView ivRight = null;//右上图片
     TextView tvRight = null;//右上文字
@@ -97,7 +97,6 @@ public abstract class BaseHeadActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 setIvLeftOnclick();
-                onBackPressed();
             }
         });
         tvLeft.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +122,7 @@ public abstract class BaseHeadActivity extends FragmentActivity {
     }
 
     protected void setIvLeftOnclick() {
+        onBackPressed();
     }
 
 
@@ -158,7 +158,7 @@ public abstract class BaseHeadActivity extends FragmentActivity {
     }
 
     public void setIvLeftSrc(int drawable) {
-        ivRight.setImageResource(drawable);
+        ivLeft.setImageResource(drawable);
     }
 
     public void setIvRightSrc(int drawable) {

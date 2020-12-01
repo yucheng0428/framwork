@@ -1,9 +1,7 @@
 package com.qyai.main.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -23,8 +21,6 @@ import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.ZTLUtils;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
-import com.qyai.main.MainFrag;
-import com.qyai.main.MeFrag;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 import com.qyai.main.login.bean.UserEvent;
@@ -49,8 +45,6 @@ public class HomeAct extends BaseMvpAct<HomeIView, HomePersenter> implements Hom
     @BindView(R2.id.rb_mine)
     TextView rbManage;
     UserEvent.UserData userData;
-    private MainFrag mapFragment;
-    private MeFrag mineFragment;
     long mExitTime = 1000;
 
     @Override
@@ -130,26 +124,26 @@ public class HomeAct extends BaseMvpAct<HomeIView, HomePersenter> implements Hom
                 setScreenModel(2);
                 rbWork.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.mipmap.main_work_checked, 0, 0);
                 rbWork.setTextColor(getResources().getColor(R.color.color_circle_blue));
-                if (mineFragment != null) {
-                    fragmentTransaction.hide(mineFragment);
-                }
-                if (mapFragment == null) {
-                    mapFragment = new MainFrag();
-                    fragmentTransaction.add(R.id.frameLayout, mapFragment, mapFragment.getClass().getName());
-                } else {
-                    fragmentTransaction.show(mapFragment);
-                }
+//                if (mineFragment != null) {
+//                    fragmentTransaction.hide(mineFragment);
+//                }
+//                if (mapFragment == null) {
+//                    mapFragment = new MainFrag();
+//                    fragmentTransaction.add(R.id.frameLayout, mapFragment, mapFragment.getClass().getName());
+//                } else {
+//                    fragmentTransaction.show(mapFragment);
+//                }
                 break;
             case 1:
                 setScreenModel(2);
                 rbManage.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.mipmap.main_mine_checked, 0, 0);
                 rbManage.setTextColor(getResources().getColor(R.color.color_circle_blue));
-                fragmentTransaction.hide(mapFragment);
-                if (mineFragment == null) {
-                    mineFragment = new MeFrag();
-                    fragmentTransaction.add(R.id.frameLayout, mineFragment, mineFragment.getClass().getName());
-                }
-                fragmentTransaction.show(mineFragment);
+//                fragmentTransaction.hide(mapFragment);
+//                if (mineFragment == null) {
+//                    mineFragment = new MeFrag();
+//                    fragmentTransaction.add(R.id.frameLayout, mineFragment, mineFragment.getClass().getName());
+//                }
+//                fragmentTransaction.show(mineFragment);
                 break;
         }
         fragmentTransaction.commitAllowingStateLoss();

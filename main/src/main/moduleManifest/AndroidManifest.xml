@@ -37,17 +37,6 @@
         <activity
             android:name=".login.LoginAct"
             android:launchMode="singleTask">
-
-        </activity>
-
-        <activity
-            android:name=".home.HomeAct"
-            android:launchMode="singleTask" />
-
-        <activity
-            android:name=".bracelet.SechAct"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,15 +44,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".bracelet.MessageAct"
+        <activity
+            android:name=".home.HomeAct"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name=".forget.ForgetActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity android:name=".register.RegiserActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
-        <service
-            android:name=".bracelet.BlueToothService"
-            android:enabled="true"
-            android:exported="true" />
     </application>
 
 </manifest>

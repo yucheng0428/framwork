@@ -1,4 +1,4 @@
-package com.lib.common.dialog;
+package com.lib.common.widgt;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -10,6 +10,10 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.Typeface;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -22,10 +26,13 @@ import com.lib.common.R;
 
 public class CircularProgressView extends View {
 
-    private Paint mBackPaint, mProgPaint;   // 绘制画笔
+    private Paint mBackPaint, mProgPaint, mTextPaint,mTextPaint2;   // 绘制画笔
     private RectF mRectF;       // 绘制区域
     private int[] mColorArray;  // 圆环渐变色
     private int mProgress;      // 圆环进度(0-100)
+    private String text;
+    private String text2;
+    private int textSize=0;
 
     public CircularProgressView(Context context) {
         this(context, null);
@@ -58,6 +65,22 @@ public class CircularProgressView extends View {
         mProgPaint.setStrokeWidth(typedArray.getDimension(R.styleable.CircularProgressView_progWidth, 10));
         mProgPaint.setColor(typedArray.getColor(R.styleable.CircularProgressView_progColor, Color.BLUE));
 
+        mTextPaint = new Paint();
+        mTextPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//设置字体
+        mTextPaint.setStyle(Paint.Style.FILL);
+        textSize= (int) typedArray.getDimension(R.styleable.CircularProgressView_textSize, 10);
+        mTextPaint.setTextSize(typedArray.getDimension(R.styleable.CircularProgressView_textSize, 10));
+        mTextPaint.setColor(typedArray.getColor(R.styleable.CircularProgressView_textColor, Color.BLACK));
+        mTextPaint.setTextAlign(Paint.Align.CENTER);//设置文字对齐方式
+
+        mTextPaint2 = new Paint();
+        mTextPaint2.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//设置字体
+        mTextPaint2.setStyle(Paint.Style.FILL);
+        mTextPaint2.setTextSize(typedArray.getDimension(R.styleable.CircularProgressView_textSize2, 10));
+        mTextPaint2.setColor(typedArray.getColor(R.styleable.CircularProgressView_textColor, Color.BLACK));
+        mTextPaint2.setTextAlign(Paint.Align.CENTER);//设置文字对齐方式
+        text = typedArray.getText(R.styleable.CircularProgressView_textString).toString();
+        text2=typedArray.getText(R.styleable.CircularProgressView_textString2).toString();
         // 初始化进度圆环渐变色
         int startColor = typedArray.getColor(R.styleable.CircularProgressView_progStartColor, -1);
         int firstColor = typedArray.getColor(R.styleable.CircularProgressView_progFirstColor, -1);
@@ -89,6 +112,8 @@ public class CircularProgressView extends View {
         super.onDraw(canvas);
         canvas.drawArc(mRectF, 0, 360, false, mBackPaint);
         canvas.drawArc(mRectF, 275, 360 * mProgress / 100, false, mProgPaint);
+        canvas.drawText(text, mRectF.width()/2, mRectF.centerY(), mTextPaint);
+        canvas.drawText(text2,mRectF.width()/2,mRectF.centerY()+textSize,mTextPaint2);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -112,6 +137,11 @@ public class CircularProgressView extends View {
         invalidate();
     }
 
+
+    public void setText(String text){
+        this.text=text;
+        invalidate();
+    }
     /**
      * 设置当前进度，并展示进度动画。如果动画时间小于等于0，则不展示动画
      *

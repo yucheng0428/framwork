@@ -1,3 +1,4 @@
+include ':watch_app'
 include ':bracelet_lib'
 include ':main'
 include ':beacon_lib'

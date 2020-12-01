@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,6 +17,7 @@ import com.lib.common.BaseMvp.BaseMvpAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.IntentKey;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
@@ -24,7 +26,9 @@ import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.qyai.main.R;
 import com.qyai.main.R2;
+import com.qyai.main.forget.ForgetActivity;
 import com.qyai.main.login.bean.UserEvent;
+import com.qyai.main.register.RegiserActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +47,10 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     EditText et_password;
     @BindView(R2.id.btn_login)
     Button btn_login;
+    @BindView(R2.id.tv_register)
+    TextView tv_register;
+    @BindView(R2.id.tv_forget_psw)
+    TextView tv_forget_psw;
     @Autowired
     public String userName;
     @Autowired
@@ -65,7 +73,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     }
 
 
-    @OnClick({R2.id.btn_login, R2.id.login_logo})
+    @OnClick({R2.id.btn_login, R2.id.login_logo,R2.id.tv_forget_psw,R2.id.tv_register})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
             if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
@@ -81,6 +89,13 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
                 }
             }, true, "输入ip",  HttpReq.getInstence().getIp());
             iphoneDialog.show();
+        }else  if(v.getId()==R.id.tv_register){
+            Intent intent=new Intent(mActivity, RegiserActivity.class);
+            startActivityForResult(intent,IntentKey.REQ_UPLAOD);
+
+        }else if(v.getId()==R.id.tv_forget_psw){
+            Intent intent=new Intent(mActivity, ForgetActivity.class);
+            startActivityForResult(intent,IntentKey.REQ_DELECT);
         }
 
     }

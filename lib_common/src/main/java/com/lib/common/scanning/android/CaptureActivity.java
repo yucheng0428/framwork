@@ -16,6 +16,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,12 +50,12 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
     public ZxingConfig config;
     private SurfaceView previewView;
     private ViewfinderView viewfinderView;
-    private AppCompatImageView flashLightIv;
+    private ImageView flashLightIv;
     private TextView flashLightTv;
-    private AppCompatImageView backIv;
-    private LinearLayoutCompat flashLightLayout;
-    private LinearLayoutCompat albumLayout;
-    private LinearLayoutCompat bottomLayout;
+    private ImageView backIv;
+    private LinearLayout flashLightLayout;
+    private LinearLayout albumLayout;
+    private LinearLayout bottomLayout;
     private boolean hasSurface;
     private InactivityTimer inactivityTimer;
     private BeepManager beepManager;
@@ -127,17 +129,17 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
         viewfinderView.setZxingConfig(config);
 
 
-        backIv = (AppCompatImageView) findViewById(R.id.backIv);
+        backIv = (ImageView) findViewById(R.id.backIv);
         backIv.setOnClickListener(this);
 
-        flashLightIv = (AppCompatImageView) findViewById(R.id.flashLightIv);
+        flashLightIv = (ImageView) findViewById(R.id.flashLightIv);
         flashLightTv = (TextView) findViewById(R.id.flashLightTv);
 
-        flashLightLayout = (LinearLayoutCompat) findViewById(R.id.flashLightLayout);
+        flashLightLayout = (LinearLayout) findViewById(R.id.flashLightLayout);
         flashLightLayout.setOnClickListener(this);
-        albumLayout = (LinearLayoutCompat) findViewById(R.id.albumLayout);
+        albumLayout = (LinearLayout) findViewById(R.id.albumLayout);
         albumLayout.setOnClickListener(this);
-        bottomLayout = (LinearLayoutCompat) findViewById(R.id.bottomLayout);
+        bottomLayout = (LinearLayout) findViewById(R.id.bottomLayout);
 
 
         switchVisibility(bottomLayout, config.isShowbottomLayout());

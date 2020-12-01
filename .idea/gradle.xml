@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/lib_common" />
             <option value="$PROJECT_DIR$/main" />
             <option value="$PROJECT_DIR$/picturecontrol" />
+            <option value="$PROJECT_DIR$/watch_app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

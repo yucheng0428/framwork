@@ -8,9 +8,15 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application>
-        <activity android:name=".scanning.android.CaptureActivity" />
-        <activity android:name=".scanning.ScaningAct" />
-        <activity android:name=".base.WebViewActivity" />
+        <activity
+            android:name=".scanning.android.CaptureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".scanning.ScaningAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".base.WebViewActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".update.DownloadView" />
         <!-- Android 7.0 文件共享配置，必须配置 -->
         <provider

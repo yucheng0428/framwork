@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.leconssoft.common.scanning.android.CaptureActivity">
+    tools:context="com.lib.common.scanning.android.CaptureActivity">
     <!-- 整体透明画布 -->
 
 
@@ -13,7 +13,7 @@
         android:layout_height="match_parent" />
 
 
-    <LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -27,7 +27,7 @@
             android:layout_gravity="top"
             android:background="#99000000">
 
-            <AppCompatImageView
+            <ImageView
                 android:id="@+id/backIv"
                 android:layout_width="42dp"
                 android:layout_height="match_parent"
@@ -47,14 +47,14 @@
 
 
         <!-- 扫描取景框 -->
-        <ViewfinderView
+        <com.lib.common.scanning.view.ViewfinderView
             android:id="@+id/viewfinder_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
 
-        <LinearLayoutCompat
+        <LinearLayout
             android:id="@+id/bottomLayout"
             android:layout_width="match_parent"
             android:layout_height="96dp"
@@ -62,7 +62,7 @@
             android:background="#99000000"
             android:orientation="horizontal">
 
-            <LinearLayoutCompat
+            <LinearLayout
                 android:id="@+id/flashLightLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -85,9 +85,9 @@
                     android:text="打开闪光灯"
                     android:textColor="#ffffff" />
 
-            </LinearLayoutCompat>
+            </LinearLayout>
 
-            <LinearLayoutCompat
+            <LinearLayout
                 android:id="@+id/albumLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -95,7 +95,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <AppCompatImageView
+                <ImageView
                     android:id="@+id/albumIv"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -110,10 +110,10 @@
                     android:text="相册"
 
                     android:textColor="#ffffff" />
-            </LinearLayoutCompat>
+            </LinearLayout>
 
 
-        </LinearLayoutCompat>
+        </LinearLayout>
 
-    </LinearLayoutCompat>
+    </LinearLayout>
 </RelativeLayout>
