@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_xl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="40dp">
+
+    <TextView
+        android:id="@+id/tv_resh_time_xl"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:drawableLeft="@mipmap/ic_launcher"
+        android:gravity="center_vertical"
+        android:text="2020-11-01" />
+
+    <TextView
+        android:id="@+id/tv_title_xl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="心率"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/tv_value_xl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title_xl"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:text="120/80 mmHg"
+        android:textSize="30dp" />
+
+    <com.lib.common.widgt.CircularProgressView
+        android:id="@+id/iv_value_xl"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/tv_title_xl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/tv_value_xl"
+        android:src="@mipmap/ic_launcher"
+        app:backColor="@color/possible_result_points"
+        app:backWidth="3dp"
+        app:progColor="@color/x_red"
+        app:progFirstColor="@color/white"
+        app:progWidth="10dp"
+        app:progress="50"
+        app:textSize="15dp"
+        app:textSize2="10dp"
+        app:textString="120/80"
+        app:textString2="mmHg" />
+</RelativeLayout>
