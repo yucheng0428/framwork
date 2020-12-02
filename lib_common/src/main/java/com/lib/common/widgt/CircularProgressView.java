@@ -74,6 +74,7 @@ public class CircularProgressView extends View {
         mTextPaint.setTextAlign(Paint.Align.CENTER);//设置文字对齐方式
 
         mTextPaint2 = new Paint();
+        mProgPaint.setAntiAlias(true);              // 设置抗锯齿
         mTextPaint2.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//设置字体
         mTextPaint2.setStyle(Paint.Style.FILL);
         mTextPaint2.setTextSize(typedArray.getDimension(R.styleable.CircularProgressView_textSize2, 10));
