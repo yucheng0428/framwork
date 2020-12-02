@@ -1,13 +1,7 @@
 <resources>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="app_name">手表应用</string>
+    <string name="item_string1">设置后仅在您长按手表上SOS按钮的紧急情况下,会拨打紧急人联系电话</string>
+    <string name="item_string2">当您长按于手表上的SOS按钮时,将按顺序拨打紧急联系人电话,直到拨通为止</string>
+    <string name="item_string3">目前仅支持号码归属地为中国大陆的手机号码</string>
+    <string name="item_string4">添加或修改紧急联系人后请告知对方</string>
 </resources>

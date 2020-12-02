@@ -19,7 +19,10 @@ import com.qyai.watch_app.Common;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.bind.BindActivity;
+import com.qyai.watch_app.contacts.ContactsActivity;
 import com.qyai.watch_app.measure.MeasureActivity;
+import com.qyai.watch_app.message.MessageActivity;
+import com.qyai.watch_app.postion.PostionActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,7 +71,7 @@ public class HomeActivity extends BaseHeadActivity {
     @BindView(R.id.tv_contacts)
     TextView tv_contacts;
 
-    public boolean isBind = false;
+    public boolean isBind =true;
 
     @Override
     public int layoutId() {
@@ -97,6 +100,8 @@ public class HomeActivity extends BaseHeadActivity {
     @Override
     public void setOnClickIvRight() {
         super.setOnClickIvRight();
+        Intent intent = new Intent(mActivity, MessageActivity.class);
+        startActivity(intent);
         UIHelper.ToastMessage(mActivity, "消息");
     }
 
@@ -123,9 +128,17 @@ public class HomeActivity extends BaseHeadActivity {
             }
 
         } else if (view.getId() == R.id.tv_position) {
-
+            if(isBind){
+                Intent intent = new Intent(mActivity, PostionActivity.class);
+                intent.putExtra("title","位置");
+                startActivity(intent);
+            }
         } else if (view.getId() == R.id.tv_contacts) {
-
+           if(isBind){
+               Intent intent = new Intent(mActivity, ContactsActivity.class);
+               intent.putExtra("title","紧急联系人");
+               startActivity(intent);
+           }
         }
 
     }

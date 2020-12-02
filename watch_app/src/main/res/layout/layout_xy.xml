@@ -32,10 +32,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title_xy"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"
-        android:text="120/80 mmHg"
+        android:text="120/80"
         android:textSize="30dp" />
+    <TextView
+        android:id="@+id/tv_value_unit_xl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title_xy"
+        android:layout_toRightOf="@+id/tv_value_xy"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:text="mmHg"
+        android:textSize="20dp" />
 
     <com.lib.common.widgt.CircularProgressView
         android:id="@+id/iv_value_xy"
@@ -43,8 +53,9 @@
         android:layout_height="100dp"
         android:layout_below="@+id/tv_title_xy"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
         android:layout_marginLeft="30dp"
-        android:layout_toRightOf="@+id/tv_value_xy"
         android:src="@mipmap/ic_launcher"
         app:backColor="@color/possible_result_points"
         app:backWidth="3dp"
