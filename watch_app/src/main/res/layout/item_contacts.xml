@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_msg_content"
     android:layout_marginTop="2dp"
-    android:padding="8dp">
+    android:padding="4dp">
 
     <include
         android:id="@+id/layout_view"

@@ -49,13 +49,13 @@ public class ContactsAdapter extends SimpleRecAdapter<ContactsInfo, ContactsAdap
             holder.layout_view.setVisibility(View.VISIBLE);
             holder.tv_add.setVisibility(View.GONE);
         }
-        holder.tv_title_sort.setText("第" +position+"个");
+        holder.tv_title_sort.setText("第" +(position+1)+"紧急联系人");
         holder.tv_phone_no.setText(bean.getPhoneNo());
         holder.tv_name.setText(bean.getName());
         if (position == 0) {
-            holder.iv_sort.setImageResource(R.drawable.ruand_blue);
+            holder.iv_sort.setImageResource(R.mipmap.icon_down);
         } else {
-            holder.iv_sort.setImageResource(R.drawable.ruand_btn);
+            holder.iv_sort.setImageResource(R.mipmap.icon_up);
         }
         holder.tv_add.setOnClickListener(new View.OnClickListener() {
             @Override

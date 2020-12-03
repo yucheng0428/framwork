@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_e5e5e5">
@@ -10,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <include layout="@layout/layout_head" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -38,12 +38,12 @@
 
             <ImageView
                 android:id="@+id/iv_watch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="80dp"
                 android:layout_toRightOf="@+id/tv_power"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon_watch" />
         </RelativeLayout>
 
         <LinearLayout
@@ -56,7 +56,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:drawableLeft="@mipmap/icon_data"
                 android:gravity="center_vertical"
                 android:text="最近一次检测" />
 
@@ -66,8 +66,7 @@
                 android:layout_margin="5dp"
                 android:background="@color/color_e5e5e5" />
 
-            <include
-                layout="@layout/layout_xy" />
+            <include layout="@layout/layout_xy" />
 
             <View
                 android:layout_width="match_parent"
@@ -75,8 +74,7 @@
                 android:layout_margin="5dp"
                 android:background="@color/color_e5e5e5" />
 
-            <include
-                layout="@layout/layout_xl" />
+            <include layout="@layout/layout_xl" />
 
         </LinearLayout>
 
@@ -86,8 +84,10 @@
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:background="@color/white"
-            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawableLeft="@mipmap/icon_postion"
+            android:drawablePadding="@dimen/padding_10"
             android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_10"
             android:text="实时位置" />
 
         <TextView
@@ -96,8 +96,10 @@
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:background="@color/white"
-            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawableLeft="@mipmap/icon_contacts"
+            android:drawablePadding="@dimen/padding_10"
             android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_10"
             android:text="紧急联系人" />
     </LinearLayout>
 

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/icon_telphone" />
 
     <com.lib.common.widgt.CircularProgressView
         android:id="@+id/cpv"

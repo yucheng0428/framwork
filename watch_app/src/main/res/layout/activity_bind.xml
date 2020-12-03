@@ -7,9 +7,9 @@
         android:id="@+id/et_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_centerInParent="true"
         android:layout_toLeftOf="@+id/iv_scan"
         android:hint="请输入15位序列号"
         android:inputType="text"
@@ -18,19 +18,20 @@
 
     <ImageView
         android:id="@+id/iv_scan"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_alignBottom="@+id/et_no"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/icon_sacnning" />
 
     <Button
         android:id="@+id/btn_ok"
-        android:layout_below="@+id/et_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/et_no"
         android:layout_marginLeft="61dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="140dp"
         android:layout_marginRight="61dp"
         android:background="@drawable/btn_blue"
         android:text="确  定"

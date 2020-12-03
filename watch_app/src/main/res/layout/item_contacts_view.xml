@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title_sort"
-        android:minHeight="25dp"
+        android:layout_marginTop="@dimen/padding_20"
         android:text="11111111111" />
 
     <TextView
@@ -39,20 +39,19 @@
 
     <ImageView
         android:id="@+id/iv_sort"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ruand_btn" />
+        android:src="@mipmap/icon_down" />
 
     <TextView
         android:id="@+id/tv_delect"
         style="@style/textstyle_16_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/tv_phone_no"
+        android:layout_alignParentRight="true"
         android:text="删除"
-        android:textColor="@color/x_red"
-        />
+        android:textColor="@color/color_ec412b" />
 </RelativeLayout>
