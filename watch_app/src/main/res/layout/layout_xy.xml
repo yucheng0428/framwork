@@ -1,71 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_xy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="20dp">
-
-    <TextView
-        android:id="@+id/tv_resh_time_xy"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:drawablePadding="@dimen/padding_10"
-        android:drawableLeft="@mipmap/icon_resh"
-        android:gravity="center_vertical"
-        android:text="2020-11-01" />
+    android:background="@mipmap/icon_home_item_bg"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_title_xy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="27dp"
+        android:layout_gravity="center_horizontal"
         android:text="血压"
-        android:textSize="20dp" />
+        android:textColor="@color/color_333333"
+        android:textSize="17dp" />
 
     <TextView
         android:id="@+id/tv_value_xy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title_xy"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:text="120/80"
-        android:textSize="30dp" />
-    <TextView
-        android:id="@+id/tv_value_unit_xl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title_xy"
-        android:layout_toRightOf="@+id/tv_value_xy"
-        android:layout_marginLeft="10dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/icon_xy_bg"
         android:layout_marginTop="30dp"
-        android:text="mmHg"
-        android:textSize="20dp" />
+        android:textSize="15dp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="正常"
+       />
 
-    <com.lib.common.widgt.CircularProgressView
-        android:id="@+id/iv_value_xy"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/tv_title_xy"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="30dp"
-        android:src="@mipmap/ic_launcher"
-        app:backColor="@color/possible_result_points"
-        app:backWidth="3dp"
-        app:progColor="@color/x_red"
-        app:progFirstColor="@color/white"
-        app:progWidth="10dp"
-        app:progress="50"
-        app:textSize="15dp"
-        app:textSize2="10dp"
-        app:textString="120/80"
-        app:textString2="mmHg" />
-</RelativeLayout>
+    <TextView
+        android:id="@+id/tv_value_unit_xy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="28dp"
+        android:text="120/80 mmHg"
+        android:textColor="@color/color_217AFF"
+        android:textSize="21.5dp" />
+
+    <TextView
+        android:id="@+id/tv_resh_time_xy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="31dp"
+        android:drawableLeft="@mipmap/icon_resh"
+        android:drawablePadding="4dp"
+        android:textSize="12dp"
+        android:text="2020-11-01" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        />
+</LinearLayout>

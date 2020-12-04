@@ -19,6 +19,12 @@ public class MessageBean implements Serializable {
         this.titleMsg = titleMsg;
     }
 
+    public MessageBean(String content, String titleMsg, String typeValue) {
+        this.content = content;
+        this.titleMsg = titleMsg;
+        this.typeValue = typeValue;
+    }
+
     public String getTime() {
         return time;
     }
@@ -61,14 +67,14 @@ public class MessageBean implements Serializable {
 
     public static List<MessageBean> getMessgeList(){
         List<MessageBean>list=new ArrayList<>();
-        list.add(new MessageBean("蓝牙连接状态","3"));
-        list.add(new MessageBean("数据同步","未开启"));
-        list.add(new MessageBean("血压","100/70"));
-        list.add(new MessageBean("体温","36"));
-        list.add(new MessageBean("血氧","136"));
-        list.add(new MessageBean("心率","96"));
-        list.add(new MessageBean("呼吸率","96"));
-        list.add(new MessageBean("断开设备","状态"));
+        list.add(new MessageBean("蓝牙连接状态","奥术大师大所大所",1+""));
+        list.add(new MessageBean("数据同步","奥术大师大所大所大所多",2+""));
+        list.add(new MessageBean("血压","阿斯达苏打水大所大所多",2+""));
+        list.add(new MessageBean("体温","自行车自行车自行车自行车自行车",1+""));
+        list.add(new MessageBean("血氧","自行车在西安期望的期望的期望",1+""));
+        list.add(new MessageBean("心率","房产税擦拭擦拭擦拭擦擦上传",2+""));
+        list.add(new MessageBean("呼吸率","阿斯顿撒大所大所多撒大所大所多",1+""));
+        list.add(new MessageBean("断开设备","奥术大师大所大所大所大所多",2+""));
         return  list;
     }
 }

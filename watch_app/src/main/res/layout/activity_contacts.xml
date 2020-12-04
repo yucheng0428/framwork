@@ -12,43 +12,53 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_10"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="32dp"
             android:drawableLeft="@drawable/ruand_btn"
-            android:drawablePadding="@dimen/padding_10"
+            android:drawablePadding="@dimen/padding_15"
             android:text="@string/item_string1"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_10"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="32dp"
             android:drawableLeft="@drawable/ruand_btn"
-            android:drawablePadding="@dimen/padding_10"
+            android:drawablePadding="@dimen/padding_15"
             android:text="@string/item_string2"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_10"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="32dp"
             android:drawableLeft="@drawable/ruand_btn"
-            android:drawablePadding="@dimen/padding_10"
+            android:drawablePadding="@dimen/padding_15"
             android:text="@string/item_string3"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_10"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="@dimen/padding_15"
+            android:layout_marginRight="32dp"
             android:drawableLeft="@drawable/ruand_btn"
             android:drawablePadding="@dimen/padding_10"
             android:text="@string/item_string4"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_e5e5e5"/>
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="@dimen/padding_20"
+        android:layout_marginRight="12dp" />
 </LinearLayout>

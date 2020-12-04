@@ -7,23 +7,23 @@
 
     <ImageView
         android:id="@+id/iv_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
         android:src="@mipmap/icon_telphone" />
 
     <com.lib.common.widgt.CircularProgressView
         android:id="@+id/cpv"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="192dp"
+        android:layout_height="192dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        app:backWidth="3dp"
+        app:backWidth="5dp"
         app:progColor="@color/x_red"
         app:progFirstColor="@color/bg_blue"
         app:backColor="@color/possible_result_points"
-        app:progWidth="10dp"
+        app:progWidth="20dp"
         app:progress="50"
         app:textSize="15dp"
         app:textSize2="10dp"
@@ -32,12 +32,12 @@
 
     <Button
         android:id="@+id/btn_ok"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="215dp"
+        android:layout_height="44dp"
         android:layout_below="@+id/cpv"
-        android:layout_marginLeft="61dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="61dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="77.5dp"
+        android:layout_marginRight="80dp"
         android:background="@drawable/btn_blue"
         android:text="开始测量"
         android:textColor="#FFFFFF"

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lib.common.baseUtils.DateUtils;
+import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.recyclerView.SimpleRecAdapter;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
@@ -42,6 +43,13 @@ public class MessageAdapter extends SimpleRecAdapter<MessageBean, MessageAdapter
             holder.tv_time.setText(""+ DateUtils.timedate(bean.getTime()));
         }else {
             holder.tv_time.setText( DateUtils.getCurrentTime_Today());
+        }
+        if(SPValueUtil.isEmpty(bean.getTypeValue())){
+            if(bean.getTypeValue().equals("1")){
+                holder.iv_icon.setImageResource(R.mipmap.icon_message_blue);
+            }else if(bean.getTypeValue().equals("2")){
+                holder.iv_icon.setImageResource(R.mipmap.icon_message_orange);
+            }
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

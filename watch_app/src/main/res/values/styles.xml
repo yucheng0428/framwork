@@ -8,4 +8,12 @@
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="title_style_black">
+        <item name="android:textColor">@color/color_191919</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:shadowDx">1.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
 </resources>

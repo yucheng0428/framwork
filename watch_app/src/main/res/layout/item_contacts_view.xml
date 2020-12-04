@@ -2,24 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="2dp"
     android:background="@drawable/bg_msg_content"
-    android:padding="8dp">
+    >
 
 
     <TextView
         android:id="@+id/tv_title_sort"
-        style="@style/textstyle_16_black"
+        style="@style/textstyle_14_gray"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:text="第一紧急联系人"
-        android:textColor="@color/bg_blue" />
+        android:text="第一紧急联系人" />
 
     <TextView
         android:id="@+id/tv_phone_no"
-        style="@style/textstyle_15_gray"
+        style="@style/textstyle_13_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title_sort"
@@ -32,26 +30,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tv_phone_no"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="38dp"
         android:layout_toRightOf="@+id/tv_phone_no"
         android:singleLine="true"
         android:text="姓名" />
 
     <ImageView
         android:id="@+id/iv_sort"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
         android:src="@mipmap/icon_down" />
 
     <TextView
         android:id="@+id/tv_delect"
-        style="@style/textstyle_16_black"
+        style="@style/textstyle_14_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tv_phone_no"
         android:layout_alignParentRight="true"
         android:text="删除"
-        android:textColor="@color/color_ec412b" />
+        android:textColor="@color/color_FF3232" />
 </RelativeLayout>

@@ -7,26 +7,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_248bfe"
-        android:orientation="horizontal"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:background="@mipmap/left_bg"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/layout_head"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="@dimen/padding_10"
-            android:layout_marginBottom="@dimen/padding_10">
+            android:layout_marginLeft="23.5dp"
+            android:layout_marginTop="60.5dp"
+            android:layout_marginBottom="60.5dp">
 
             <com.lib.common.widgt.RoundImageView
                 android:id="@+id/iv_head"
-                android:layout_width="66dp"
-                android:layout_height="66dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:scaleType="center"
                 android:src="@mipmap/defaul_head" />
         </LinearLayout>
@@ -41,7 +39,7 @@
             android:layout_toRightOf="@+id/layout_head"
             android:text="姓 名 :"
             android:textColor="@color/white"
-            android:textSize="16dp" />
+            android:textSize="17dp" />
 
     </RelativeLayout>
 
@@ -51,35 +49,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/icon_jc"
-        android:drawablePadding="@dimen/padding_10"
-        android:padding="20dp"
-        android:paddingRight="15dp"
-        android:text="解除绑定"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="66dp"
+        android:drawablePadding="20dp"
+        android:text="我的设备"
         android:textColor="@color/color_333333"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/icon_about"
-        android:drawablePadding="@dimen/padding_10"
-        android:padding="20dp"
-        android:paddingRight="15dp"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="66dp"
+        android:drawablePadding="20dp"
         android:text="关于我们"
         android:textColor="@color/color_333333"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_out_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/icon_out_login"
-        android:drawablePadding="@dimen/padding_10"
-        android:padding="20dp"
-        android:paddingRight="15dp"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="66dp"
+        android:drawablePadding="20dp"
         android:text="退出登录"
         android:textColor="@color/color_333333"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
 </LinearLayout>

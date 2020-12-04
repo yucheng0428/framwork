@@ -1,53 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="2dp"
-    android:background="@drawable/bg_msg_content"
-    android:orientation="horizontal"
-    android:padding="8dp">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/padding_10"
+    android:layout_marginBottom="@dimen/padding_10"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/padding_10"
         android:layout_marginRight="@dimen/padding_10"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/icon_message_blue" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginLeft="12dp">
 
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/textstyle_16_black"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:singleLine="true"
             android:text="2222222"
-            android:textColor="@color/bg_blue" />
+            android:textColor="@color/color_222222"
+            android:textSize="15.5dp" />
 
         <TextView
             android:id="@+id/tv_content"
-            style="@style/textstyle_15_gray"
+            android:layout_below="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="25dp"
+            android:textSize="13.5dp"
+            android:layout_marginTop="@dimen/padding_15"
+            android:textColor="@color/color_333333"
             android:text="1111111" />
 
         <TextView
             android:id="@+id/tv_time"
-            style="@style/textstyle_13_gray"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="right"
             android:singleLine="true"
+            android:textSize="11.5dp"
+            android:textColor="@color/color_999999"
             android:text="2020-11-11 15:33" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
