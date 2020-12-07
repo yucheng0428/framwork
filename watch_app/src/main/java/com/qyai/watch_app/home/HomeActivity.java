@@ -1,24 +1,17 @@
 package com.qyai.watch_app.home;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.android.material.navigation.NavigationView;
 import com.lib.common.base.BaseActivity;
-import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.IntentKey;
 import com.lib.common.baseUtils.UIHelper;
-import com.lib.common.widgt.CircularProgressView;
 import com.lib.common.widgt.MyDrawerLayout;
 import com.lib.common.widgt.RoundImageView;
 import com.qyai.watch_app.Common;
@@ -30,7 +23,6 @@ import com.qyai.watch_app.measure.MeasureActivity;
 import com.qyai.watch_app.message.MessageActivity;
 import com.qyai.watch_app.postion.PostionActivity;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -38,7 +30,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Route(path = "/watch/homeView")
+@Route(path = "/watch/HomeActivity")
 public class HomeActivity extends BaseActivity {
     @BindView(R2.id.drawer_layout)
     MyDrawerLayout drawer_layout;
@@ -51,49 +43,53 @@ public class HomeActivity extends BaseActivity {
     ImageView ivLeft;
     @BindView(R2.id.ivRight)
     ImageView ivRight;
-    @BindView(R.id.tv_stat)
+    @BindView(R2.id.layout_stat)
+    RelativeLayout layout_stat;
+    @BindView(R2.id.layout_no_bind)
+    RelativeLayout layout_no_bind;
+    @BindView(R2.id.tv_stat)
     TextView tv_stat;
-    @BindView(R.id.tv_power)
+    @BindView(R2.id.tv_power)
     TextView tv_power;
 
-    @BindView(R.id.layout_xy)
+    @BindView(R2.id.layout_xy)
     View layout_xy;
-    @BindView(R.id.tv_resh_time_xy)
+    @BindView(R2.id.tv_resh_time_xy)
     TextView tv_resh_time_xy;
-    @BindView(R.id.tv_value_xy)
+    @BindView(R2.id.tv_value_xy)
     TextView tv_value_xy;
-    @BindView(R.id.tv_value_unit_xy)
+    @BindView(R2.id.tv_value_unit_xy)
     TextView tv_value_unit_xy;
 
-    @BindView(R.id.layout_xl)
+    @BindView(R2.id.layout_xl)
     View layout_xl;
-    @BindView(R.id.tv_resh_time_xl)
+    @BindView(R2.id.tv_resh_time_xl)
     TextView tv_resh_time_xl;
-    @BindView(R.id.tv_value_xl)
+    @BindView(R2.id.tv_value_xl)
     TextView tv_value_xl;
-    @BindView(R.id.tv_value_unit_xl)
+    @BindView(R2.id.tv_value_unit_xl)
     TextView tv_value_unit_xl;
 
-    @BindView(R.id.tv_position)
+    @BindView(R2.id.tv_position)
     TextView tv_position;
-    @BindView(R.id.tv_contacts)
+    @BindView(R2.id.tv_contacts)
     TextView tv_contacts;
 
-    @BindView(R.id.iv_head)
+    @BindView(R2.id.iv_head)
     RoundImageView iv_head;
-    @BindView(R.id.tv_name)
+    @BindView(R2.id.tv_name)
     TextView tv_name;
-    @BindView(R.id.tv_unbind)
+    @BindView(R2.id.tv_unbind)
     TextView tv_unbind;
-    @BindView(R.id.tv_about)
+    @BindView(R2.id.tv_about)
     TextView tv_about;
-    @BindView(R.id.tv_out_login)
+    @BindView(R2.id.tv_out_login)
     TextView tv_out_login;
     public boolean isBind = true;
 
     @Override
     public int layoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_home_view;
     }
 
 
@@ -106,20 +102,60 @@ public class HomeActivity extends BaseActivity {
         ivLeft.setImageResource(R.mipmap.cehua);
         ivRight.setImageResource(R.mipmap.message);
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        onLine(true);
     }
 
 
-    @OnClick({R.id.layout_stat, R.id.layout_xy, R.id.layout_xl,
-            R.id.tv_position, R.id.tv_contacts, R.id.ivLeft,
-            R.id.ivRight,R.id.tv_unbind,R.id.tv_about,R.id.tv_out_login})
+    public void onLine(boolean online) {
+        if(online){
+            tv_stat.setCompoundDrawablesRelativeWithIntrinsicBounds(getResources().getDrawable(R.drawable.ruand_blue), null, null, null);
+            tv_stat.setText("手表在线");
+            isMesureData(true);
+        }else {
+            tv_stat.setCompoundDrawablesRelativeWithIntrinsicBounds(getResources().getDrawable(R.drawable.ruand_btn), null, null, null);
+            tv_stat.setText("手表不在线");
+            isMesureData(false);
+        }
+    }
+    public void isMesureData(boolean flag) {
+        if(flag){
+            tv_value_xy.setText("正常");
+            tv_value_xy.setTextColor(getResources().getColor(R.color.white));
+            tv_value_xy.setBackground(getResources().getDrawable(R.mipmap.icon_xy_bg));
+            tv_resh_time_xy.setVisibility(View.VISIBLE);
+            tv_value_unit_xy.setVisibility(View.VISIBLE);
+            tv_value_xl.setText("正常");
+            tv_value_xl.setTextColor(getResources().getColor(R.color.white));
+            tv_value_xl.setBackground(getResources().getDrawable(R.mipmap.icon_xy_bg));
+            tv_resh_time_xl.setVisibility(View.VISIBLE);
+            tv_value_unit_xl.setVisibility(View.VISIBLE);
+        }else {
+            tv_value_xy.setText("无数据");
+            tv_value_xy.setTextColor(getResources().getColor(R.color.color_217AFF));
+            tv_value_xy.setBackground(null);
+            tv_resh_time_xy.setVisibility(View.GONE);
+            tv_value_unit_xy.setVisibility(View.GONE);
+            tv_value_xl.setText("无数据");
+            tv_value_xl.setTextColor(getResources().getColor(R.color.color_217AFF));
+            tv_value_xl.setBackground(null);
+            tv_resh_time_xl.setVisibility(View.GONE);
+            tv_value_unit_xl.setVisibility(View.GONE);
+        }
+    }
+
+    public void onBind() {
+        layout_stat.setVisibility(View.GONE);
+        layout_no_bind.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick({R2.id.layout_stat, R2.id.layout_no_bind, R2.id.layout_xy, R2.id.layout_xl,
+            R2.id.tv_position, R2.id.tv_contacts, R2.id.ivLeft,
+            R2.id.ivRight, R2.id.tv_unbind, R2.id.tv_about, R2.id.tv_out_login})
     public void onClick(View view) {
         Intent intent = new Intent();
-        if (view.getId() == R.id.layout_stat) {
-            if (isBind) {
-                UIHelper.ToastMessage(mActivity, "设备未绑定");
-                intent.setClass(mActivity, BindActivity.class);
-                startActivityForResult(intent, IntentKey.REQ_UPLAOD);
-            }
+        if (view.getId() == R.id.layout_no_bind) {
+            intent.setClass(mActivity, BindActivity.class);
+            startActivityForResult(intent, IntentKey.REQ_UPLAOD);
 
         } else if (view.getId() == R.id.ivLeft) {
             if (drawer_layout.isOpen()) {
@@ -161,9 +197,9 @@ public class HomeActivity extends BaseActivity {
             intent.putExtra("title", "我的设备");
             startActivity(intent);
         } else if (view.getId() == R.id.tv_about) {
-            UIHelper.ToastMessage(mActivity,"关于我们");
+            UIHelper.ToastMessage(mActivity, "关于我们");
         } else if (view.getId() == R.id.tv_out_login) {
-            UIHelper.ToastMessage(mActivity,"退出登录");
+            UIHelper.ToastMessage(mActivity, "退出登录");
         }
 
     }

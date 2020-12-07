@@ -13,4 +13,15 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="layout_edit_style">
+        <item name="android:layout_width">290dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:background">#F2F7FF</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+    <style name="edittext_style">
+        <item name="android:textStyle">normal</item>
+        <item name="android:lines">1</item>
+        <item name="android:textSize">14dp</item>
+    </style>
 </resources>

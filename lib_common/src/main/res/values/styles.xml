@@ -23,39 +23,41 @@
         <!-- <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
          <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>-->
     </style>
+
     <style name="MainProgressDialogStyle" parent="@style/CustomDialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="title_style">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:shadowColor">@color/bg_blue</item>
+        <item name="android:textColor">@color/color_222222</item>
+        <item name="android:textSize">17.5sp</item>
         <item name="android:shadowDx">1.0</item>
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+
     <style name="title_action_bar">
         <item name="android:scaleType">center</item>
     </style>
 
     <declare-styleable name="CheckBox">
-        <attr name="checkbox_color" format="color"/>
-        <attr name="unchecked_color" format="color"/>
-        <attr name="disabled_color" format="color"/>
-        <attr name="border_color" format="color"/>
-        <attr name="checkbox_size" format="dimension"/>
-        <attr name="invisible_in_unchecked_state" format="boolean"/>
-        <attr name="checked_drawable" format="reference"/>
-        <attr name="unchecked_drawable" format="reference"/>
-        <attr name="show_border_in_check_state" format="boolean">
-        </attr>
+        <attr name="checkbox_color" format="color" />
+        <attr name="unchecked_color" format="color" />
+        <attr name="disabled_color" format="color" />
+        <attr name="border_color" format="color" />
+        <attr name="checkbox_size" format="dimension" />
+        <attr name="invisible_in_unchecked_state" format="boolean" />
+        <attr name="checked_drawable" format="reference" />
+        <attr name="unchecked_drawable" format="reference" />
+        <attr name="show_border_in_check_state" format="boolean"></attr>
     </declare-styleable>
-
-    <style name="DialogTheme" parent="@android:style/Theme.Holo.Dialog">
+<!--    parent="@android:style/Theme.Holo.Dialog"-->
+    <style name="DialogTheme" parent="@android:style/Theme.Holo.Dialog"
+      >
         <item name="android:windowFrame">@null</item>
         <!-- 边框 -->
-        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsFloating">false</item>
         <!-- 是否浮现在activity之上 -->
         <item name="android:windowIsTranslucent">false</item>
         <!-- 半透明 -->
@@ -63,6 +65,13 @@
         <!-- 无标题 -->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!-- 背景透明 -->
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowExitAnimation">@anim/dialog_bottom_exit</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_bottom_enter</item>
     </style>
 
     <style name="normalBtn">
@@ -72,7 +81,7 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">10dp</item>
     </style>
-    
+
     <style name="switch_style">
         <item name="android:track">@drawable/selector_track_check</item>
         <item name="android:thumb">@drawable/selector_thumb_check</item>
@@ -96,6 +105,12 @@
     <style name="textstyle_13_gray">
         <item name="android:textSize">13dp</item>
         <item name="android:textColor">@color/color_333333</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="textstyle_14_gray">
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">@color/color_444444</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 

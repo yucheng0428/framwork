@@ -117,7 +117,7 @@ public class ContactsAdapter extends SimpleRecAdapter<ContactsInfo, ContactsAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.layout_view)
+        @BindView(R2.id.layout_view)
         View layout_view;
 
         @BindView(R2.id.iv_sort)

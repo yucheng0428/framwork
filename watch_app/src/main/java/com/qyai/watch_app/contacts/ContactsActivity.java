@@ -14,13 +14,14 @@ import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.qyai.watch_app.R;
+import com.qyai.watch_app.R2;
 import com.qyai.watch_app.contacts.bean.ContactsInfo;
 
 import butterknife.BindView;
 
 public class ContactsActivity extends BaseHeadActivity {
     public String title="紧急联系人";
-    @BindView(R.id.recyclerView)
+    @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
     ContactsAdapter adapter;
 

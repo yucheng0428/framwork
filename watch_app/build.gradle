@@ -11,7 +11,7 @@ android {
     defaultConfig {
         if (isModuleWatch.toBoolean()) {
             // 独立调试时添加 applicationId ，集成调试时移除
-            applicationId "com.qyai.main"
+            applicationId "com.qyai.watch_app"
         }
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -67,6 +67,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.1'
     implementation 'androidx.navigation:navigation-ui:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

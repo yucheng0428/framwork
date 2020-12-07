@@ -3,7 +3,7 @@
     android:id="@+id/head"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/color_248bfe">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -11,9 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:ellipsize="end"
         android:gravity="center"
         android:maxLength="10"
-        android:ellipsize="end"
         android:singleLine="true" />
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:paddingLeft="10dp"
-        android:src="@drawable/btn_return_selector" />
+        android:src="@mipmap/icon_retrun" />
 
     <ImageView
         android:id="@+id/ivRight"
@@ -40,9 +40,9 @@
         style="@style/title_action_bar"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:minWidth="10dp"
         android:layout_alignParentLeft="true"
         android:gravity="center"
+        android:minWidth="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="10dp"
         android:textColor="@color/titlebar_tv_selector"
@@ -68,8 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:background="@mipmap/title_counter_bg"
             android:gravity="center"
             android:textColor="@color/white"
@@ -99,7 +99,7 @@
         android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="15dp"
-        android:textColor="@color/titlebar_tv_selector"
+        android:textColor="@color/color_222222"
         android:textSize="15sp"
         android:visibility="gone" />
 
@@ -107,11 +107,11 @@
         android:id="@+id/headSearch_layout"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/ivLeft"
+        android:layout_marginBottom="10dp"
         android:layout_toLeftOf="@+id/tvRight"
+        android:layout_toRightOf="@+id/ivLeft"
         android:background="@drawable/bg_edittext_blue_bg"
         android:orientation="horizontal"
         android:paddingLeft="8dp"
@@ -131,7 +131,9 @@
             android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="12sp"></EditText>
+            android:textSize="12sp">
+
+        </EditText>
     </LinearLayout>
 
 </RelativeLayout>

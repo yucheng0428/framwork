@@ -19,9 +19,9 @@ import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.recyclerView.RecyclerItemCallback;
-import com.qyai.beaconlib.R;
-import com.qyai.beaconlib.R2;
-import com.qyai.beaconlib.location.SensorManageService;
+//import com.qyai.beaconlib.R;
+//import com.qyai.beaconlib.R2;
+//import com.qyai.beaconlib.location.SensorManageService;
 import com.qyai.bracelet_lib.bean.MessageBean;
 import com.qyai.bracelet_lib.bean.SyncBloodBean;
 import com.qyai.bracelet_lib.bean.SyncHeartBean;
@@ -79,7 +79,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         sw_bracelet.setChecked(true);
         sw_postion.setChecked(true);
         initService();
-        SensorManageService.initService(mActivity);
+//        SensorManageService.initService(mActivity);
         sw_gps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -93,11 +93,11 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
         sw_postion.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    SensorManageService.initService(mActivity);
-                }else {
-                    SensorManageService.stopService(mActivity);
-                }
+//                if(isChecked){
+//                    SensorManageService.initService(mActivity);
+//                }else {
+//                    SensorManageService.stopService(mActivity);
+//                }
             }
         });
         sw_bracelet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -183,7 +183,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
 
     private void stopService() {
         mActivity.stopService(serviceIntent);
-        SensorManageService.stopService(mActivity);
+//        SensorManageService.stopService(mActivity);
         try {
             mActivity.unregisterReceiver(myReceiver);
         }catch (IllegalArgumentException e){

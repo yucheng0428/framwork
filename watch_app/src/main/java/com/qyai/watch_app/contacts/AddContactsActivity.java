@@ -11,17 +11,18 @@ import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.qyai.watch_app.R;
+import com.qyai.watch_app.R2;
 import com.qyai.watch_app.contacts.bean.ContactsInfo;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class AddContactsActivity extends BaseHeadActivity {
-    @BindView(R.id.et_phone_no)
+    @BindView(R2.id.et_phone_no)
     EditText et_phone_no;
-    @BindView(R.id.et_name)
+    @BindView(R2.id.et_name)
     EditText et_name;
-    @BindView(R.id.btn_ok)
+    @BindView(R2.id.btn_ok)
     Button btn_ok;
 
     @Override
@@ -34,7 +35,7 @@ public class AddContactsActivity extends BaseHeadActivity {
         setTvTitle("添加联系人");
     }
 
-    @OnClick({R.id.btn_ok})
+    @OnClick({R2.id.btn_ok})
     public void onClick(View view) {
         if (view.getId() == R.id.btn_ok) {
             if (SPValueUtil.isEmpty(et_phone_no.getText().toString()) &&

@@ -1,5 +1,7 @@
 package com.qyai.watch_app.message;
 
+import android.content.Intent;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +35,8 @@ public class MessageActivity extends BaseHeadActivity {
             @Override
             public void onItemClick(int position, MessageBean model, int tag, MessageAdapter.ViewHolder holder) {
                 super.onItemClick(position, model, tag, holder);
+                Intent intent=new Intent(mActivity,MessageDetailAct.class);
+                startActivity(intent);
             }
         });
     }

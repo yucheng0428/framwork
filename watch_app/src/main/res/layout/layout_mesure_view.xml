@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.lib.common.widgt.CircularProgressView
+        android:id="@+id/cpv"
+        android:layout_width="192dp"
+        android:layout_height="192dp"
+        android:layout_gravity="center_horizontal"
+        app:backColor="@color/possible_result_points"
+        app:backWidth="5dp"
+        app:progColor="@color/x_red"
+        app:progFirstColor="@color/bg_blue"
+        app:progWidth="20dp"
+        app:progress="50" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:id="@+id/tv_mesure_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="127/111"
+            android:textColor="@color/color_222222"
+            android:textSize="31dp" />
+
+        <TextView
+            android:id="@+id/tv_unit_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_mesure_value"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/padding_10"
+            android:text="mmHg"
+            android:textColor="@color/color_222222"
+            android:textSize="17dp" />
+    </RelativeLayout>
+</FrameLayout>

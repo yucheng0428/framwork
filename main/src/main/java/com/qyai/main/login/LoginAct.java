@@ -3,6 +3,8 @@ package com.qyai.main.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,6 +57,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     public String userName;
     @Autowired
     public String psw;
+    boolean isShow=false;
 
     @Override
     protected int layoutId() {
@@ -73,11 +76,12 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     }
 
 
-    @OnClick({R2.id.btn_login, R2.id.login_logo,R2.id.tv_forget_psw,R2.id.tv_register})
+    @OnClick({R2.id.btn_login, R2.id.login_logo,R2.id.tv_forget_psw,R2.id.tv_register,R2.id.iv_open})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
             if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
-                getMvpPresenter().loginding(getUserName(), getPassWord());
+//                getMvpPresenter().loginding(getUserName(), getPassWord());
+                ARouter.getInstance().build("/watch/HomeActivity").navigation();
             }
         } else if (v.getId() == R.id.login_logo) {
             IphoneDialog iphoneDialog = new IphoneDialog(mActivity, new IphoneDialog.IphoneListener() {
@@ -96,6 +100,14 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         }else if(v.getId()==R.id.tv_forget_psw){
             Intent intent=new Intent(mActivity, ForgetActivity.class);
             startActivityForResult(intent,IntentKey.REQ_DELECT);
+        }else if(v.getId()==R.id.iv_open){
+            if(isShow){
+                isShow=false;
+                et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }else {
+                isShow=true;
+                et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance()); //密码可见
+            }
         }
 
     }
@@ -133,8 +145,6 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getUserInDeptDTO().getToken() + "");
         SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
         SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, getUserName());
-//        Intent intent = new Intent(LoginAct.this, SechAct.class);
-//        startActivity(intent);
         ARouter.getInstance().build("/bracelet/SechAct")
                 .navigation();
         finish();

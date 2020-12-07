@@ -25,6 +25,7 @@ import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.scanning.android.CaptureActivity;
 import com.lib.common.scanning.bean.ZxingConfig;
 import com.qyai.watch_app.R;
+import com.qyai.watch_app.R2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,11 +35,11 @@ import butterknife.OnClick;
 
 @Route(path = "/watch/bindView")
 public class BindActivity extends BaseHeadActivity {
-    @BindView(R.id.et_no)
+    @BindView(R2.id.et_no)
     EditText et_no;
-    @BindView(R.id.iv_scan)
+    @BindView(R2.id.iv_scan)
     ImageView iv_scan;
-    @BindView(R.id.btn_ok)
+    @BindView(R2.id.btn_ok)
     Button btn_ok;
     String[] permissions= new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
     @Override
@@ -51,7 +52,7 @@ public class BindActivity extends BaseHeadActivity {
        setTvTitle("绑定设备");
     }
 
-    @OnClick({R.id.iv_scan, R.id.btn_ok})
+    @OnClick({R2.id.iv_scan, R2.id.btn_ok})
     public void onClick(View view) {
         if (view.getId() == R.id.iv_scan) {
             if(!PermissionCheckUtils.lacksPermission(mActivity, "android.permission.CAMERA")){

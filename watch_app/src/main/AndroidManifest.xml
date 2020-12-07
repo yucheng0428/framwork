@@ -1,5 +1,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.qyai.watch_app">
 
-    /
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 读取外置存储。如果开发者使用了so动态加载功能并且把so文件放在了外置存储区域，则需要申请该权限，否则不需要 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 写外置存储。如果开发者使用了离线地图，并且数据写在外置存储区域，则需要申请该权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 这个权限用于进行网络定位 &ndash;&gt; -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application android:requestLegacyExternalStorage="true">
+        <activity android:name=".postion.AddEnclosureActivity"></activity>
+        <activity android:name=".home.MyWatchActivity" />
+        <activity android:name=".contacts.AddContactsActivity" />
+        <activity android:name=".contacts.ContactsActivity" />
+        <activity android:name=".postion.PostionActivity" />
+        <activity android:name=".message.MessageActivity" />
+        <activity
+            android:name=".measure.MeasureActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name=".bind.BindActivity" />
+        <activity
+            android:name=".home.HomeActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".message.MessageDetailAct" />
+
+    </application>
 </manifest>

@@ -78,7 +78,7 @@ public abstract class BaseHeadActivity extends FragmentActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.act_head_baseview);
         if (setStatusBar) {
-            new ZTLUtils(this).initSystemBar(this, R.color.color_248bfe);
+            new ZTLUtils(this).initSystemBar(this, R.color.white);
         }
         mActivity = this;
         ViewManager.getInstance().addActivity(this);

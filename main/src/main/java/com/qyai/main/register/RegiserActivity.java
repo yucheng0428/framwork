@@ -1,10 +1,14 @@
 package com.qyai.main.register;
 
 
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lib.common.BaseMvp.BaseMvpHeadAct;
@@ -35,11 +39,15 @@ public class RegiserActivity extends BaseMvpHeadAct<RegiserView, RegiserPersente
     TextView tv_sendcode;
     @BindView(R2.id.et_password)
     EditText et_password;
+    @BindView(R2.id.iv_open)
+    ImageView iv_open;
     @BindView(R2.id.btn_ok)
     Button btn_ok;
+    @BindView(R2.id.tv_go_login)
+    TextView tv_go_login;
     Disposable disposable;
     boolean isCode = false;
-
+    boolean isShow=false;
     @Override
     public int layoutId() {
         return R.layout.activity_regiser;
@@ -48,9 +56,10 @@ public class RegiserActivity extends BaseMvpHeadAct<RegiserView, RegiserPersente
     @Override
     protected void initUIData() {
         setTvTitle(getResources().getString(R.string.title_regiser));
+        tv_go_login.setText(Html.fromHtml("<font color=\"#888888\">已有账号?</font>"+"<font color=\"#217AFF\">登录</font>"));
     }
 
-    @OnClick({R2.id.tv_sendcode, R2.id.btn_ok})
+    @OnClick({R2.id.tv_sendcode, R2.id.btn_ok,R2.id.tv_go_login,R2.id.iv_open})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_ok) {
             if (!TextUtils.isEmpty(userName()) && !TextUtils.isEmpty(passWord())) {
@@ -100,6 +109,16 @@ public class RegiserActivity extends BaseMvpHeadAct<RegiserView, RegiserPersente
                             }
                         }
                     });
+        }else if(v.getId()==R.id.tv_go_login){
+            onBackPressed();
+        }else if(v.getId()==R.id.iv_open){
+            if(isShow){
+                isShow=false;
+                et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }else {
+                isShow=true;
+                et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance()); //密码可见
+            }
         }
     }
 

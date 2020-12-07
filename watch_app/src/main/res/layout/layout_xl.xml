@@ -14,7 +14,7 @@
         android:layout_marginTop="27dp"
         android:text="心率"
         android:textColor="@color/color_333333"
-        android:textSize="17dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_value_xl"
@@ -26,7 +26,7 @@
         android:gravity="center"
         android:text="正常"
         android:textColor="@color/white"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tv_value_unit_xl"
@@ -36,7 +36,7 @@
         android:layout_marginTop="28dp"
         android:text="120/80 bpm"
         android:textColor="@color/color_FF562E"
-        android:textSize="21.5dp" />
+        android:textSize="23sp" />
 
     <TextView
         android:id="@+id/tv_resh_time_xl"
@@ -47,6 +47,6 @@
         android:drawableLeft="@mipmap/icon_resh"
         android:drawablePadding="4dp"
         android:text="2020-11-01"
-        android:textSize="12dp" />
+        android:textSize="12sp" />
 
 </LinearLayout>

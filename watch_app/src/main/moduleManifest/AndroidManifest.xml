@@ -32,7 +32,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".home.MyWatchActivity"></activity>
+        <activity android:name=".postion.AddEnclosureActivity"></activity>
+        <activity android:name=".home.MyWatchActivity" />
         <activity android:name=".contacts.AddContactsActivity" />
         <activity android:name=".contacts.ContactsActivity" />
         <activity android:name=".postion.PostionActivity" />
@@ -51,6 +52,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".message.MessageDetailAct" />
     </application>
 
 </manifest>

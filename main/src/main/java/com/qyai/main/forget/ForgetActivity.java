@@ -1,6 +1,8 @@
 package com.qyai.main.forget;
 
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +40,7 @@ public class ForgetActivity extends BaseMvpHeadAct<ForgetView, ForgetPersenter> 
     Button btn_ok;
     Disposable disposable;
     boolean isCode = false;
-
+    boolean isShow=false;
     @Override
     public int layoutId() {
         return R.layout.activity_forget;
@@ -49,7 +51,7 @@ public class ForgetActivity extends BaseMvpHeadAct<ForgetView, ForgetPersenter> 
         setTvTitle(getResources().getString(R.string.title_forget));
     }
 
-    @OnClick({R2.id.tv_sendcode, R2.id.btn_ok})
+    @OnClick({R2.id.tv_sendcode, R2.id.btn_ok,R2.id.iv_open,})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_ok) {
             if (!TextUtils.isEmpty(userName()) && !TextUtils.isEmpty(passWord())) {
@@ -99,6 +101,14 @@ public class ForgetActivity extends BaseMvpHeadAct<ForgetView, ForgetPersenter> 
                             }
                         }
                     });
+        }else if(v.getId()==R.id.iv_open){
+            if(isShow){
+                isShow=false;
+                et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }else {
+                isShow=true;
+                et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance()); //密码可见
+            }
         }
     }
 

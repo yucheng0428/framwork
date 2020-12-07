@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="14dp">
+
+    <TextView
+        android:id="@+id/tv_title_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18.5dp"
+        android:text="XX标题"
+        android:textColor="@color/color_222222"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title_value"
+        android:layout_marginTop="21dp"
+        android:text="2020-11-22 16:11" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginTop="35dp">
+
+        <TextView
+            android:id="@+id/tv_content_value"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="内容"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/rl_xl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/padding_20"
+            android:visibility="visible">
+
+            <include
+                android:id="@+id/layout_cpv"
+                layout="@layout/layout_mesure_view" />
+
+            <TextView
+                android:id="@+id/tv_ruslt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_cpv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="21.5dp"
+                android:text="心率过速"
+                android:textColor="@color/color_333333"
+                android:textSize="13dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="正常心率:60~100bpm"/>
+        </RelativeLayout>
+    </FrameLayout>
+</RelativeLayout>
