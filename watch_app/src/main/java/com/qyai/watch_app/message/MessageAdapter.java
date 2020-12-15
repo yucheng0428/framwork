@@ -30,7 +30,7 @@ public class MessageAdapter extends SimpleRecAdapter<MessageBean, MessageAdapter
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_message;
+        return R.layout.item_watch_message;
     }
 
     @Override
@@ -62,13 +62,13 @@ public class MessageAdapter extends SimpleRecAdapter<MessageBean, MessageAdapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R2.id.iv_icon)
+        @BindView(R2.id.iv_message_icon)
         ImageView iv_icon;
-        @BindView(R2.id.tv_time)
+        @BindView(R2.id.tv_message_time)
         TextView tv_time;
-        @BindView(R2.id.tv_title)
+        @BindView(R2.id.tv_message_title)
         TextView tv_title;
-        @BindView(R2.id.tv_content)
+        @BindView(R2.id.tv_message_content)
         TextView tv_content;
 
         public ViewHolder(@NonNull View itemView) {

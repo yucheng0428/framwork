@@ -72,7 +72,8 @@ public class MainActivity extends BaseActivity {
                                 text_time.setText(count + "");
                             }
                         });
-                        if (count == 0) {
+                        if (count == 1) {
+//                            Thread.sleep(1000);
                             mActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

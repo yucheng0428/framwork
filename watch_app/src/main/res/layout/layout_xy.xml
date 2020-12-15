@@ -37,7 +37,7 @@
         android:layout_marginTop="28dp"
         android:text="120/80 mmHg"
         android:textColor="@color/color_217AFF"
-        android:textSize="23sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_resh_time_xy"

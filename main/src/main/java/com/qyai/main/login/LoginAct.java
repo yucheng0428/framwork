@@ -82,6 +82,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
             if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
 //                getMvpPresenter().loginding(getUserName(), getPassWord());
                 ARouter.getInstance().build("/watch/HomeActivity").navigation();
+                mActivity.finish();
             }
         } else if (v.getId() == R.id.login_logo) {
             IphoneDialog iphoneDialog = new IphoneDialog(mActivity, new IphoneDialog.IphoneListener() {

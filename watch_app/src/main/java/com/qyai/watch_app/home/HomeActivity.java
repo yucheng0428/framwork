@@ -2,6 +2,7 @@ package com.qyai.watch_app.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.android.material.navigation.NavigationView;
 import com.lib.common.base.BaseActivity;
+import com.lib.common.base.ViewManager;
 import com.lib.common.baseUtils.IntentKey;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.widgt.MyDrawerLayout;
@@ -86,6 +88,7 @@ public class HomeActivity extends BaseActivity {
     @BindView(R2.id.tv_out_login)
     TextView tv_out_login;
     public boolean isBind = true;
+    private long mExitTime = 0;
 
     @Override
     public int layoutId() {
@@ -207,5 +210,20 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            //两秒之内按返回键就会退出
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                UIHelper.ToastMessage(this, "再按一次退出程序");
+                mExitTime = System.currentTimeMillis();
+            } else {
+                ViewManager.getInstance().exitApp(this);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
