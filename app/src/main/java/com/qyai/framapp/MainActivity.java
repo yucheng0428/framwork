@@ -80,6 +80,7 @@ public class MainActivity extends BaseActivity {
                                     ARouter.getInstance().build("/main/login")
                                             .withString("userName", "SH")
                                             .withString("psw", "888888")
+                                            .withInt("viewType",2)
                                             .navigation();
                                 }
                             });
