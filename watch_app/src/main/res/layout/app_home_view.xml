@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/half_transparent">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/item_head" />
+
+
+    <RelativeLayout
+        android:id="@+id/layout_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_head"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:padding="@dimen/padding_10">
+
+
+        <TextView
+            android:id="@+id/tv_all"
+            style="@style/alarm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总人数:60" />
+
+        <TextView
+            android:id="@+id/tv_online"
+            style="@style/alarm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="在线人数:60" />
+
+        <TextView
+            android:id="@+id/tv_alarm_all"
+            style="@style/alarm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_all"
+            android:text="今日告警总数:60" />
+
+        <TextView
+            android:id="@+id/tv_nodo"
+            style="@style/alarm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_alarm_all"
+            android:text="今日未处理告警:60" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_nodo_num"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/layout_num"
+        android:layout_marginTop="@dimen/padding_5"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_10"
+        android:text="未处理告警" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tv_xqsh"
+        android:layout_below="@+id/tv_nodo_num"
+        android:layout_marginTop="1dp"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_xqsh"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/padding_5"
+        android:layout_marginBottom="@dimen/padding_10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_20"
+        android:text="辖区守护" />
+</RelativeLayout>

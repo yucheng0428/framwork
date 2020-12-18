@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.qyai.watch_app">
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
@@ -10,7 +12,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application android:requestLegacyExternalStorage="true">
-        <activity android:name=".postion.AddEnclosureActivity"></activity>
+        <activity android:name=".home2.HomeActivity2"></activity>
+        <activity android:name=".postion.AddEnclosureActivity" />
         <activity android:name=".home.MyWatchActivity" />
         <activity android:name=".contacts.AddContactsActivity" />
         <activity android:name=".contacts.ContactsActivity" />
@@ -23,9 +26,8 @@
         <activity android:name=".bind.BindActivity" />
         <activity
             android:name=".home.HomeActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"/>
         <activity android:name=".message.MessageDetailAct" />
-
     </application>
+
 </manifest>

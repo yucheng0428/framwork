@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="@dimen/padding_20"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_20"
+        android:layout_marginTop="@dimen/padding_20"
+        android:layout_toRightOf="@+id/iv_head"
+        android:maxLines="1"
+        android:minWidth="50dp"
+        android:text="隔壁老王" />
+
+    <TextView
+        android:id="@+id/tvsex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="@dimen/padding_20"
+        android:layout_toRightOf="@+id/iv_head"
+        android:gravity="bottom"
+        android:text="男" />
+
+    <TextView
+        android:id="@+id/tv_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginLeft="@dimen/padding_20"
+        android:layout_marginTop="@dimen/padding_20"
+        android:layout_toRightOf="@+id/tvsex"
+        android:gravity="bottom"
+        android:text="健康特征正常！"
+        android:textColor="@color/x_green" />
+
+    <ImageView
+        android:id="@+id/iv_phone"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/padding_10"
+        android:src="@mipmap/icon_unit" />
+
+    <ImageView
+        android:id="@+id/iv_postion"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/padding_10"
+        android:layout_toLeftOf="@+id/iv_phone"
+        android:src="@mipmap/icon_about" />
+</RelativeLayout>

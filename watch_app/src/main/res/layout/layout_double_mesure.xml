@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <com.lib.common.widgt.CircularProgressView
+                android:id="@+id/cpv"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                app:backColor="@color/possible_result_points"
+                app:backWidth="3dp"
+                app:progColor="@color/x_red"
+                app:progFirstColor="@color/bg_blue"
+                app:progWidth="12dp"
+                app:progress="50" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60dp">
+
+                <TextView
+                    android:id="@+id/tv_mesure_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="127/111"
+                    android:textColor="@color/color_222222"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tv_unit_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_mesure_value"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:text="mmHg"
+                    android:textColor="@color/color_222222"
+                    android:textSize="14dp" />
+            </RelativeLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <com.lib.common.widgt.CircularProgressView
+                android:id="@+id/cpv2"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                app:backColor="@color/possible_result_points"
+                app:backWidth="3dp"
+                app:progColor="@color/x_red"
+                app:progFirstColor="@color/bg_blue"
+                app:progWidth="12dp"
+                app:progress="50" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60dp">
+
+                <TextView
+                    android:id="@+id/tv_mesure_value2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="127/111"
+                    android:textColor="@color/color_222222"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/tv_unit_value2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_mesure_value2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:text="mmHg"
+                    android:textColor="@color/color_222222"
+                    android:textSize="14dp" />
+            </RelativeLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_result_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="正常"
+            android:gravity="center"
+            android:padding="@dimen/padding_10"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_result_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="正常"
+            android:gravity="center"
+            android:padding="@dimen/padding_10"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/x_green"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_height="1dp"/>
+</LinearLayout>

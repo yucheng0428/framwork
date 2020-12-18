@@ -1,5 +1,5 @@
 <resources>
-        <!-- Customize your theme here. -->
+    <!-- Customize your theme here. -->
     <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -8,6 +8,7 @@
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="title_style_black">
         <item name="android:textColor">@color/color_191919</item>
         <item name="android:textSize">18sp</item>
@@ -15,5 +16,43 @@
         <item name="android:shadowDx">1.0</item>
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">2.0</item>
+    </style>
+
+    <style name="title_change_text">
+        <item name="android:textColor">@color/color_248bfe</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:shadowDx">1.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+
+    <style name="alarm_text">
+        <item name="android:text">16sp</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:paddingTop">@dimen/padding_15</item>
+    </style>
+
+    <style name="weight_style">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="weight_style_value">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+    <style name="weight_layout">
+        <item name="android:layout_width"> match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/padding_20</item>
+        <item name="android:layout_marginLeft">@dimen/padding_20</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 </resources>

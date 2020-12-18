@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/half_transparent"/>
+    <include
+        layout="@layout/layout_double_mesure"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/padding_5"
+        android:layout_height="220dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_20">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:id="@+id/layout"
+            style="@style/weight_layout"
+            android:layout_toRightOf="@+id/iv_head">
+
+            <TextView
+                style="@style/weight_style_value"
+                android:text="王麻子" />
+
+            <TextView
+                style="@style/weight_style_value"
+                android:text="汉" />
+
+            <TextView
+                style="@style/weight_style_value"
+                android:text="党员" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_value"
+            style="@style/weight_layout"
+            android:layout_below="@+id/layout"
+            android:layout_toRightOf="@+id/iv_head">
+
+            <TextView
+                style="@style/weight_style"
+                android:text="男" />
+
+            <TextView
+                style="@style/weight_style"
+                android:text="民族" />
+
+            <TextView
+                style="@style/weight_style"
+                android:text="政治面貌" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_head"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/weight_style_value"
+                android:layout_margin="@dimen/padding_10"
+                android:text="湖北省武汉市光谷未来城" />
+
+            <TextView
+                style="@style/weight_style"
+                android:layout_margin="@dimen/padding_10"
+                android:text="现居地" />
+
+            <TextView
+                style="@style/weight_style_value"
+                android:layout_margin="@dimen/padding_10"
+                android:text="湖北省武汉市光谷未来城" />
+
+            <TextView
+                style="@style/weight_style"
+                android:layout_margin="@dimen/padding_10"
+                android:text="户籍所在地" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_phone"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/padding_10"
+            android:src="@mipmap/icon_unit" />
+
+        <ImageView
+            android:id="@+id/iv_postion"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/padding_10"
+            android:layout_toLeftOf="@+id/iv_phone"
+            android:src="@mipmap/icon_about" />
+    </RelativeLayout>
+
+</LinearLayout>

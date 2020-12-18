@@ -32,7 +32,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".postion.AddEnclosureActivity"></activity>
+        <activity android:name=".xiaqu.PersonDetailActivity"></activity>
+        <activity android:name=".message.AlarmActivity" />
+        <activity android:name=".xiaqu.XiaQuActivity" />
+        <activity android:name=".postion.AddEnclosureActivity" />
         <activity android:name=".home.MyWatchActivity" />
         <activity android:name=".contacts.AddContactsActivity" />
         <activity android:name=".contacts.ContactsActivity" />
@@ -45,6 +48,9 @@
         <activity android:name=".bind.BindActivity" />
         <activity
             android:name=".home.HomeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".home2.HomeActivity2"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
