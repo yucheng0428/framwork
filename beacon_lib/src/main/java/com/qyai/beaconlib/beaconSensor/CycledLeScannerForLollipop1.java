@@ -152,6 +152,8 @@ public class CycledLeScannerForLollipop1 extends CycledLeScanner {
                     }
                 } else {
                     Log.d(TAG, "Using no scan filter since this is pre-8.1");
+                    //兼容8.1版本 不然会报错
+                    filters = (new ScanFilterUtils()).createScanFiltersForBeaconParsers(this.mBeaconManager.getBeaconParsers());
                 }
             }
 
