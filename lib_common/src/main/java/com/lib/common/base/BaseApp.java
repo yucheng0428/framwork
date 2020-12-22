@@ -13,6 +13,7 @@ import androidx.multidex.MultiDex;
 import com.lib.common.baseUtils.LogUtil;
 
 import java.io.File;
+import java.util.List;
 import java.util.Stack;
 
 
@@ -22,6 +23,10 @@ import java.util.Stack;
 public class BaseApp extends Application {
 	private static BaseApp instance;
 
+	public static final String ROOT_PACKAGE = "com.qyai";
+
+
+	private List<ApplicationDelegate> mAppDelegateList;
 	/** 缓存目录 */
 
 	/**
@@ -40,12 +45,17 @@ public class BaseApp extends Application {
 
     private File tmpFile;
 
-    public static BaseApp getInstance() {
-    	if(instance==null){
-    		instance=new BaseApp();
+	public static BaseApp getIns() {
+		if (instance == null) {
+			synchronized (BaseApp.class) {
+				if (instance == null) {
+					instance = new BaseApp();
+				}
+			}
 		}
-    	return instance;
-    }
+
+		return instance;
+	}
 
     public String getPhone() {
 		if (null == phone) {
@@ -62,7 +72,11 @@ public class BaseApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
+		instance = this;
+		mAppDelegateList = ClassUtils.getObjectsWithInterface(this, ApplicationDelegate.class, ROOT_PACKAGE);
+		for (ApplicationDelegate delegate : mAppDelegateList) {
+			delegate.onCreate();
+		}
 	}
 
 	@Override

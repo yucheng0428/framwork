@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.navigation.NavigationView;
 import com.lib.common.base.BaseActivity;
 import com.lib.common.base.ViewManager;
@@ -23,7 +24,6 @@ import com.qyai.watch_app.bind.BindActivity;
 import com.qyai.watch_app.contacts.ContactsActivity;
 import com.qyai.watch_app.measure.MeasureActivity;
 import com.qyai.watch_app.message.MessageActivity;
-import com.qyai.watch_app.postion.PostionActivity;
 
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
@@ -185,9 +185,7 @@ public class HomeActivity extends BaseActivity {
 
         } else if (view.getId() == R.id.tv_position) {
             if (isBind) {
-                intent.setClass(mActivity, PostionActivity.class);
-                intent.putExtra("title", "位置");
-                startActivity(intent);
+                ARouter.getInstance().build("/maplib/PostionActivity").navigation();
             }
         } else if (view.getId() == R.id.tv_contacts) {
             if (isBind) {

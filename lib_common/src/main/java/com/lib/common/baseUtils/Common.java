@@ -3,12 +3,15 @@ package com.lib.common.baseUtils;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.widget.Toast;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 
 /**
  * Created by yucheng on 2017-10-31.
@@ -115,5 +118,11 @@ public class Common {
         return isOpen;
     }
 
-
+    public static void initARouter(Application application) {
+        if (Constants.isDebug()) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
+            ARouter.openLog();     // 打印日志
+            ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+        }
+        ARouter.init(application); // 尽可能早，推荐在Application中初始化
+    }
 }

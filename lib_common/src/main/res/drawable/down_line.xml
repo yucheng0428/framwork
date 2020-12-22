@@ -10,7 +10,7 @@
 
             <stroke
                 android:width="2px"
-                android:color="@color/half_transparent" />
+                android:color="@color/color_248bfe" />
         </shape>
     </item>
 

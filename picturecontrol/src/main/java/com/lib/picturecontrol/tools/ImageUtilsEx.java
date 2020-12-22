@@ -1065,8 +1065,8 @@ public class ImageUtilsEx {
 	 * @return
 	 */
 	public static Bitmap getSmallBitmap(String filePath) {
-		if(PhoneUtils.getResolution(BaseApp.getInstance())[0]<720){
-			return getSmallBitmap(filePath, PhoneUtils.getResolution(BaseApp.getInstance())[0],PhoneUtils.getResolution(BaseApp.getInstance())[1]);
+		if(PhoneUtils.getResolution(BaseApp.getIns())[0]<720){
+			return getSmallBitmap(filePath, PhoneUtils.getResolution(BaseApp.getIns())[0],PhoneUtils.getResolution(BaseApp.getIns())[1]);
 		}else {
 			return getSmallBitmap(filePath, 720,1280);
 		}
@@ -1095,7 +1095,7 @@ public class ImageUtilsEx {
 	}
 	
 	public static String saveBitmapFile(Bitmap bitmap){
-        File file=new File(FileUtils.createFileMp3(BaseApp.getInstance()).getAbsolutePath());//将要保存图片的路径
+        File file=new File(FileUtils.createFileMp3(BaseApp.getIns()).getAbsolutePath());//将要保存图片的路径
         try {
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
                 bitmap.compress(CompressFormat.JPEG, 100, bos);

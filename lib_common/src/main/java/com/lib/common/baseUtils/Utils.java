@@ -342,7 +342,7 @@ public class Utils {
      * F: 将dp转成为px
      */
     public static int dpTopx(int dpValue) {
-        final float scale = BaseApp.getInstance().getResources()
+        final float scale = BaseApp.getIns().getResources()
                 .getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }

@@ -32,7 +32,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".xiaqu.PersonDetailActivity"></activity>
+        <activity android:name=".message.AlarmDetailActivity" />
+        <activity android:name=".xiaqu.PersonDetailActivity" />
         <activity android:name=".message.AlarmActivity" />
         <activity android:name=".xiaqu.XiaQuActivity" />
         <activity android:name=".postion.AddEnclosureActivity" />

@@ -29,6 +29,11 @@
 
     <style name="alarm_text">
         <item name="android:text">16sp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/padding_10</item>
+        <item name="android:drawableLeft">@drawable/ruand_btn</item>
+        <item name="android:layout_marginLeft">@dimen/padding_10</item>
         <item name="android:textColor">@color/color_999999</item>
         <item name="android:paddingTop">@dimen/padding_15</item>
     </style>

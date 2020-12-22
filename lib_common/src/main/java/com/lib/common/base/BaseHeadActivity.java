@@ -189,10 +189,6 @@ public abstract class BaseHeadActivity extends FragmentActivity {
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 
 
     @Override
@@ -202,26 +198,13 @@ public abstract class BaseHeadActivity extends FragmentActivity {
     }
 
 
-    @Override
-    protected void onRestart() {
-        // TODO Auto-generated method stub
-        super.onRestart();
-    }
 
-    @Override
-    protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
         return super.onKeyDown(keyCode, event);
     }
-
-
-
 
 
     @Override

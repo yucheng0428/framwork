@@ -56,7 +56,13 @@ public class AlarmActivity extends BaseActivity {
                 switch (tag) {
                     case 1:
                         //1是点击整item;
-                        Intent intent = new Intent(mActivity, MessageDetailAct.class);
+                        Intent intent = new Intent(mActivity, AlarmDetailActivity.class);
+                        if(itemType==2){
+                            intent.putExtra("type",1);
+                        }else {
+                            intent.putExtra("type",2);
+                        }
+                        intent.putExtra("info",model);
                         startActivity(intent);
                         break;
                     case 2:

@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
-import com.qyai.watch_app.message.MessageDetailAct;
 
 import butterknife.BindView;
 
@@ -51,6 +51,7 @@ public class XiaQuActivity extends BaseHeadActivity {
                         UIHelper.ToastMessage(mActivity, "点击打电话");
                         break;
                     case 3:
+                        ARouter.getInstance().build("/maplib/MapActivity").navigation();
                         //2是点击打电话;
                         UIHelper.ToastMessage(mActivity, "点击定位");
                         break;

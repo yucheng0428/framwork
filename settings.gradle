@@ -1,3 +1,4 @@
+include ':baiduMap'
 include ':watch_app'
 include ':bracelet_lib'
 include ':main'

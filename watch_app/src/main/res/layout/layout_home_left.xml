@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/left_bg"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_20">
+
+        <com.lib.common.widgt.RoundImageView
+            android:id="@+id/iv_head"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="@dimen/padding_20"
+            android:scaleType="center"
+            android:src="@mipmap/defaul_head" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_toRightOf="@+id/iv_head"
+            android:text="姓 名 :"
+            android:textColor="@color/white"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/tv_phoenNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_head"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:text="手机：135588555655"
+            android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/tv_project"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_phoenNo"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:text="所属机构:牛栏山红花亭街道二组11号"
+            android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_project"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:text="角色:红花会会长"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_changePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="66dp"
+        android:drawableLeft="@mipmap/icon_about"
+        android:drawablePadding="20dp"
+        android:text="修改密码"
+        android:textColor="@color/color_333333"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tv_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="66dp"
+        android:drawableLeft="@mipmap/icon_about"
+        android:drawablePadding="20dp"
+        android:text="关于我们"
+        android:textColor="@color/color_333333"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_out_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="66dp"
+        android:drawableLeft="@mipmap/icon_out_login"
+        android:drawablePadding="20dp"
+        android:text="退出登录"
+        android:textColor="@color/color_333333"
+        android:textSize="16sp" />
+
+</LinearLayout>

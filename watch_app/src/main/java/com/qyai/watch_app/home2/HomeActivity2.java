@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.navigation.NavigationView;
 import com.lib.common.base.BaseActivity;
 import com.lib.common.baseUtils.UIHelper;
@@ -24,7 +26,7 @@ import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.AlarmActivity;
 import com.qyai.watch_app.message.AlarmAdapter;
-import com.qyai.watch_app.message.MessageDetailAct;
+import com.qyai.watch_app.message.AlarmDetailActivity;
 import com.qyai.watch_app.message.bean.AlarmInfo;
 import com.qyai.watch_app.xiaqu.XiaQuActivity;
 
@@ -38,7 +40,7 @@ public class HomeActivity2 extends BaseActivity {
     @BindView(R2.id.nav_view)
     NavigationView nav_view;
     @BindView(R2.id.tvTitle)
-    TextView tvTitle;
+    Spinner tvTitle;
     @BindView(R2.id.ivLeft)
     ImageView ivLeft;
     @BindView(R2.id.ivRight)
@@ -49,8 +51,16 @@ public class HomeActivity2 extends BaseActivity {
     RoundImageView iv_head;
     @BindView(R2.id.tv_name)
     TextView tv_name;
+    @BindView(R2.id.tv_phoenNo)
+    TextView tv_phoenNo;
+    @BindView(R2.id.tv_project)
+    TextView tv_project;
+    @BindView(R2.id.tv_user)
+    TextView tv_user;
     @BindView(R2.id.tv_unbind)
     TextView tv_unbind;
+    @BindView(R2.id.tv_changePassword)
+    TextView tv_changePassword;
     @BindView(R2.id.tv_about)
     TextView tv_about;
     @BindView(R2.id.tv_out_login)
@@ -71,7 +81,6 @@ public class HomeActivity2 extends BaseActivity {
     protected void initUIData(Bundle bundle) {
         setScreenModel(3);
         setTranslucentStatusColor(mActivity.getResources().getColor(R.color.white));
-        tvTitle.setText("首页");
         ivRight.setVisibility(View.VISIBLE);
         ivLeft.setImageResource(R.mipmap.cehua);
         ivRight.setImageResource(R.mipmap.message);
@@ -82,6 +91,7 @@ public class HomeActivity2 extends BaseActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
         alarmAdapter = new AlarmAdapter(mActivity);
+        alarmAdapter.setType(2);
         recyclerView.setAdapter(alarmAdapter);
         alarmAdapter.setData(AlarmInfo.getContactsInfoList());
         alarmAdapter.setRecItemClick(new RecyclerItemCallback<AlarmInfo, AlarmAdapter.ViewHolder>() {
@@ -91,7 +101,9 @@ public class HomeActivity2 extends BaseActivity {
                 switch (tag) {
                     case 1:
                         //1是点击整item;
-                        Intent intent = new Intent(mActivity, MessageDetailAct.class);
+                        Intent intent = new Intent(mActivity, AlarmDetailActivity.class);
+                        intent.putExtra("type", 2);
+                        intent.putExtra("info",model);
                         startActivity(intent);
                         break;
                     case 2:
@@ -106,7 +118,7 @@ public class HomeActivity2 extends BaseActivity {
 
     @OnClick({
             R2.id.ivLeft, R2.id.tv_xqsh,
-            R2.id.ivRight, R2.id.tv_about, R2.id.tv_out_login})
+            R2.id.ivRight, R2.id.tv_about, R2.id.tv_out_login,R2.id.tv_changePassword})
     public void onClick(View view) {
         Intent intent = new Intent();
         if (view.getId() == R.id.ivLeft) {
@@ -122,7 +134,11 @@ public class HomeActivity2 extends BaseActivity {
         } else if (view.getId() == R.id.tv_xqsh) {
             intent.setClass(mActivity, XiaQuActivity.class);
             startActivity(intent);
-        } else if (view.getId() == R.id.tv_about) {
+        }else if (view.getId() == R.id.tv_changePassword) {
+            ARouter.getInstance().build("/main/changePsw").navigation();
+            UIHelper.ToastMessage(mActivity, "修改密码");
+        }  else if (view.getId() == R.id.tv_about) {
+            ARouter.getInstance().build("/main/about").navigation();
             UIHelper.ToastMessage(mActivity, "关于我们");
         } else if (view.getId() == R.id.tv_out_login) {
             UIHelper.ToastMessage(mActivity, "退出登录");

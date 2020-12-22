@@ -1,6 +1,7 @@
 package com.qyai.beaconlib.location;
 
 
+import com.lib.common.base.BaseApp;
 import com.qyai.beaconlib.debug.MyApplication;
 import com.qyai.beaconlib.R;
 
@@ -71,19 +72,19 @@ public class LocationUtils {
      */
     public static String getMetroName(String buildId) {
         if (BuildingIdConstants.PSOP_WHGJ_YBY.equals(buildId)) {
-            return MyApplication.getAppContext().getString(R.string.text_metro_yby);
+            return BaseApp.getIns().getString(R.string.text_metro_yby);
         } else if (BuildingIdConstants.PSOP_WHGJ_CMT.equals(buildId)) {
-            return MyApplication.getAppContext().getString(R.string.text_metro_cmt);
+            return BaseApp.getIns().getString(R.string.text_metro_cmt);
         } else if (BuildingIdConstants.PSOP_WHGJ_WJDD.equals(buildId)) {
-            return MyApplication.getAppContext().getString(R.string.text_metro_wjdd);
+            return BaseApp.getIns().getString(R.string.text_metro_wjdd);
         } else if (BuildingIdConstants.PSOP_WHGJ_QSL.equals(buildId)) {
-            return MyApplication.getAppContext().getString(R.string.text_metro_qsl);
+            return BaseApp.getIns().getString(R.string.text_metro_qsl);
         } else if (BuildingIdConstants.PSOP_WHGJ_SYL.equals(buildId)) {
-            return MyApplication.getAppContext().getString(R.string.text_metro_syl);
+            return BaseApp.getIns().getString(R.string.text_metro_syl);
         } else if (BuildingIdConstants.PSOP_WHGJ_BGS.equals(buildId)) {
-            return MyApplication.getAppContext().getString(R.string.text_metro_office);
+            return BaseApp.getIns().getString(R.string.text_metro_office);
         } else {
-            return MyApplication.getAppContext().getString(R.string.text_metro_wjdd);
+            return BaseApp.getIns().getString(R.string.text_metro_wjdd);
         }
     }
 

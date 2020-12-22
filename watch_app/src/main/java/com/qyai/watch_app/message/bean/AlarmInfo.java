@@ -1,12 +1,12 @@
 package com.qyai.watch_app.message.bean;
 
 import com.lib.common.baseUtils.DateUtils;
-import com.qyai.watch_app.contacts.bean.ContactsInfo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlarmInfo {
+public class AlarmInfo implements Serializable {
     String title;
     String time;
     String tyep;

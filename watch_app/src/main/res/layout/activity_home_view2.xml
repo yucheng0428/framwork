@@ -16,6 +16,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
 
-        <include layout="@layout/layout_left" />
+        <include layout="@layout/layout_home_left" />
     </com.google.android.material.navigation.NavigationView>
 </com.lib.common.widgt.MyDrawerLayout>

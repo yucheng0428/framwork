@@ -40,9 +40,11 @@ public class XiaQuAdapter extends SimpleRecAdapter<XiaQuInfo, XiaQuAdapter.ViewH
        if(info.getStat().equals("1")){
            holder.tv_stat.setText("健康特征正常！");
            holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_green));
+           holder.tv_stat.setVisibility(View.GONE);
        }else {
            holder.tv_stat.setText("健康特征异常！");
            holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_red));
+           holder.tv_stat.setVisibility(View.VISIBLE);
        }
        holder.iv_head.setOnClickListener(new View.OnClickListener() {
            @Override

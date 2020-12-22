@@ -27,7 +27,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_gravity="center_vertical"
-            android:hint="请输手机号"
+            android:hint="请输旧密码"
             style="@style/edittext_style"
             android:background="@null"
             android:inputType="text"
@@ -48,7 +48,7 @@
             android:layout_marginRight="20dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:hint="请输入密码"
+            android:hint="请输入新密码"
             style="@style/edittext_style"
             android:textStyle="normal"
             android:background="@null"
@@ -64,7 +64,7 @@
             android:layout_marginRight="10dp"
             android:src="@mipmap/icon_open" />
     </RelativeLayout>
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_yzm"
         android:layout_below="@+id/ll_psw"
         style="@style/layout_edit_style"
@@ -73,30 +73,28 @@
 
 
         <EditText
-            android:id="@+id/et_code"
-            style="@style/edittext_style"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/et_password_agan"
+            android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:hint="请输入验证码"
-            android:background="@null"
-            android:inputType="text"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:hint="请输入新密码"
+            style="@style/edittext_style"
             android:textStyle="normal"
+            android:background="@null"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
             />
-
-        <TextView
-            android:id="@+id/tv_sendcode"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:text="获取验证码"
-            android:textSize="12dp"
-            android:paddingRight="@dimen/padding_10"
-            android:textColor="@color/color_217AFF" />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_open2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/icon_open" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btn_ok"

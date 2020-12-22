@@ -84,7 +84,7 @@ public class LocalImageHelper {
             synchronized (LocalImageHelper.class) {
                 //未初始化，则初始instance变量
                 if (instance == null) {
-                    instance = new LocalImageHelper(BaseApp.getInstance());
+                    instance = new LocalImageHelper(BaseApp.getIns());
                 }
             }
         }
