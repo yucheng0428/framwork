@@ -11,13 +11,17 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.dialog.LookBigPictureDialog;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.bean.AlarmInfo;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.OnCheckedChangeListener {
     @BindView(R2.id.iv_head)
@@ -92,17 +96,22 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
         if (info != null) {
             tv_title.setText(info.getTitle());
             tv_time.setText(info.getTime());
+            Glide.with(mActivity).load(Constants.imageUrl).placeholder(R.drawable.icon_loadings).skipMemoryCache(true).into(iv_head);
         }
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R2.id.radioButton1:
-                //这里是checkbox的值处理
-                break;
-            case R2.id.radioButton2:
-                break;
+        if (checkedId == R.id.radioButton1) {
+            //这里是checkbox的值处理
+        } else if (checkedId == R.id.radioButton2) {
         }
+    }
+    @OnClick({R2.id.iv_head})
+    public  void onClick(View view){
+        if(view.getId()==R.id.iv_head){
+            new LookBigPictureDialog(mActivity,Constants.imageUrl).show();
+        }
+
     }
 }

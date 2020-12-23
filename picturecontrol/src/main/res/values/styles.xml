@@ -1,14 +1,3 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-<!--        <item name="colorPrimary">@color/color_248bfe</item>-->
-<!--        <item name="colorPrimaryDark">@color/color_0093dd</item>-->
-<!--        <item name="colorAccent">@color/color_939ba4</item>-->
-    </style>
-    <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-<!--        <item name="colorPrimary">@color/bg_transparent</item>-->
-        <item name="android:windowIsTranslucent">false</item>
-    </style>
+
 </resources>

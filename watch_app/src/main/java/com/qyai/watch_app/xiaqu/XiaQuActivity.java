@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.PhoneUtils;
 import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
@@ -44,10 +46,12 @@ public class XiaQuActivity extends BaseHeadActivity {
                     case 1:
                         //1是点击整item;
                         Intent intent = new Intent(mActivity, PersonDetailActivity.class);
+                        intent.putExtra("info",model);
                         startActivity(intent);
                         break;
                     case 2:
                         //2是点击打电话;
+                        PhoneUtils.dialPhone(mActivity,model.phoneNo);
                         UIHelper.ToastMessage(mActivity, "点击打电话");
                         break;
                     case 3:
@@ -56,6 +60,7 @@ public class XiaQuActivity extends BaseHeadActivity {
                         UIHelper.ToastMessage(mActivity, "点击定位");
                         break;
                     case 4:
+                        new LookBigPictureDialog(mActivity,model.imageUrl).show();
                         UIHelper.ToastMessage(mActivity, "点击头像放大");
                         break;
                 }

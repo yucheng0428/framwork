@@ -45,22 +45,17 @@ public class MainActivity extends BaseActivity {
         if (Utils.hasPermission(mActivity, android.Manifest.permission.CAMERA,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            init();
+            adLoading();
         }
     }
 
-    public void init() {
-//        LocalImageHelper.init(MyApplication.getInstance());
-        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(mActivity));
-        adLoading();
-    }
 
     public void adLoading() {
         disposable = Observable.interval(0, 1, TimeUnit.SECONDS)
                 .map(new Function<Long, Long>() {
                     @Override
                     public Long apply(Long aLong) throws Exception {
-                        return 3 - (aLong + 1);
+                        return 5 - (aLong + 1);
                     }
                 })
                 .subscribe(new Consumer<Long>() {
@@ -100,7 +95,7 @@ public class MainActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode==Constants.REQUEST_CODE){
-            init();
+            adLoading();
         }
     }
 }

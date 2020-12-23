@@ -1,26 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="AppTheme.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <!-- 微信快速启动的搞法-->
-    <style name="AppWeiX" parent="android:Theme.Translucent.NoTitleBar.Fullscreen">
-
-    </style>
-    <!-- 设置背景启动-->
-<!--    <style name="AppwindowBackground" parent="android:Theme.NoTitleBar.Fullscreen">-->
-<!--        <item name="android:windowBackground">@mipmap/launcher_bg</item>-->
-<!--    </style>-->
 </resources>

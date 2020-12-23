@@ -52,14 +52,14 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="WsNL7arT3XqAwqbisYTWaAhOuDsPnwCb" />
         <activity android:name=".MapActivity">
-        </activity>
-        <activity android:name=".postion.AddEnclosureActivity"/>
-        <activity android:name=".postion.PostionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".postion.AddEnclosureActivity"/>
+        <activity android:name=".postion.PostionActivity">
         </activity>
     </application>
 

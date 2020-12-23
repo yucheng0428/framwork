@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">手表App</string>
+    <string name="app_name">集成应用</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="title_fri">主页</string>

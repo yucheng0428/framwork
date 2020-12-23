@@ -22,6 +22,8 @@ import android.view.WindowManager;
 
 import androidx.core.app.ActivityCompat;
 
+import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,8 +34,6 @@ public class PhoneUtils {
     public static final String CDMA_DATA_NETWORK = "cdma";
     public static final String NONE_DATA_NETWORK = "none";
 
-    public static Uri PREFERRED_APN_URI = Uri
-            .parse("content://telephony/carriers/preferapn");
 
     /**
      * 获取手机imsi码
@@ -59,7 +59,17 @@ public class PhoneUtils {
     public static String getMdn(Context ctx) {
         TelephonyManager telephonyManager = (TelephonyManager) ctx
                 .getSystemService(Context.TELEPHONY_SERVICE);
-        String mdn = telephonyManager.getLine1Number();
+        String mdn=null;
+        if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            mdn = telephonyManager.getLine1Number();
+        }
         return mdn;
     }
 
@@ -366,6 +376,7 @@ public class PhoneUtils {
      * 直接打电话
      **/
     public static void callPhone(Activity act, String mobile) {
+        PermissionCheckUtils.requestPermissions(act,Constants.REQUEST_PERMISSION, Manifest.permission.CALL_PHONE);
         Intent phoneIntent = new Intent("android.intent.action.CALL",
                 Uri.parse("tel:" + mobile));
         //启动

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">手表助手</string>
+    <string name="app_name">首页模块</string>
     <string name="title_regiser">注册</string>
     <string name="title_forget">忘记密码</string>
     <string name="title_change">修改密码</string>

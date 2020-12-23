@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Picturecontrol</string>
+    <string name="app_name">附件lib</string>
     <string name="btn_fujian">附件</string>
     <string name="btn_take_pic">拍照</string>
     <string name="btn_album">相册</string>

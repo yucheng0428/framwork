@@ -1,12 +1,18 @@
 package com.qyai.baidumap;
 
 
+import android.view.View;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
+import com.baidu.mapapi.search.share.OnGetShareUrlResultListener;
+import com.baidu.mapapi.search.share.PoiDetailShareURLOption;
+import com.baidu.mapapi.search.share.ShareUrlResult;
+import com.baidu.mapapi.search.share.ShareUrlSearch;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
@@ -14,6 +20,8 @@ import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.qyai.baidumap.postion.MyLocationListener;
 
 import butterknife.BindView;
+import cn.sharesdk.framework.ShareSDK;
+
 @Route(path = "/maplib/MapActivity")
 public class MapActivity extends BaseHeadActivity {
 
@@ -23,6 +31,7 @@ public class MapActivity extends BaseHeadActivity {
     MapView mMapView;
     private BaiduMap mBaiduMap;
     private boolean isFirstLoc = true;
+    private ShareUrlSearch shareUrlSearch;
 
 
     @Override
@@ -33,6 +42,8 @@ public class MapActivity extends BaseHeadActivity {
     @Override
     protected void initUIData() {
         setTvTitle("位置信息");
+        setIvRightSrc(R.mipmap.ic_launcher);
+        hideIvRight(View.VISIBLE);
         initViews();
         PermissionCheckUtils.requestPermissions(MapActivity.this, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限
         // 定位初始化
@@ -44,7 +55,7 @@ public class MapActivity extends BaseHeadActivity {
         mOption.setOpenGps(true);
         //设置locationClientOption
         mClient.setLocOption(mOption);
-        myLocationListener = new MyLocationListener(mMapView,mBaiduMap,isFirstLoc);
+        myLocationListener = new MyLocationListener(mMapView, mBaiduMap, isFirstLoc);
         //注册LocationListener监听器
         mClient.registerLocationListener(myLocationListener);
         //设置后台定位
@@ -52,6 +63,30 @@ public class MapActivity extends BaseHeadActivity {
         mClient.start();
     }
 
+    @Override
+    public void setOnClickIvRight() {
+        shareUrlSearch = ShareUrlSearch.newInstance();
+        shareUrlSearch.setOnGetShareUrlResultListener(new OnGetShareUrlResultListener(){
+            @Override
+            public void onGetPoiDetailShareUrlResult(ShareUrlResult shareUrlResult) {
+                String shareUrl = shareUrlResult.getUrl();
+                ShareUtils.shareMessage("分享","测试分享","",shareUrl,"");
+            }
+
+            @Override
+            public void onGetLocationShareUrlResult(ShareUrlResult shareUrlResult) {
+
+            }
+
+            @Override
+            public void onGetRouteShareUrlResult(ShareUrlResult shareUrlResult) {
+
+            }
+        });
+        shareUrlSearch.requestPoiDetailShareUrl(new PoiDetailShareURLOption().poiUid("65e1ee886c885190f60e77ff"));
+        shareUrlSearch.destroy();
+
+    }
 
     @Override
     protected void onDestroy() {
@@ -80,7 +115,6 @@ public class MapActivity extends BaseHeadActivity {
                 0xAAFFFF88,
                 0xAA00FF00));
     }
-
 
 
     @Override

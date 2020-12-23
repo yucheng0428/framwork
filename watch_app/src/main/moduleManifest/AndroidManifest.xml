@@ -31,16 +31,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".message.AlarmDetailActivity" />
         <activity android:name=".xiaqu.PersonDetailActivity" />
         <activity android:name=".message.AlarmActivity" />
         <activity android:name=".xiaqu.XiaQuActivity" />
-        <activity android:name=".postion.AddEnclosureActivity" />
         <activity android:name=".home.MyWatchActivity" />
         <activity android:name=".contacts.AddContactsActivity" />
         <activity android:name=".contacts.ContactsActivity" />
-        <activity android:name=".postion.PostionActivity" />
         <activity android:name=".message.MessageActivity" />
         <activity
             android:name=".measure.MeasureActivity"
@@ -52,7 +50,8 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".home2.HomeActivity2"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

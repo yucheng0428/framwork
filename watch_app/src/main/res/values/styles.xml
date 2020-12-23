@@ -1,13 +1,4 @@
 <resources>
-    <!-- Customize your theme here. -->
-    <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="title_style_black">
         <item name="android:textColor">@color/color_191919</item>

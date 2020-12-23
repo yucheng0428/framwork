@@ -21,6 +21,7 @@
         android:layout_height="50dp"
         android:layout_toRightOf="@+id/iv_head"
         android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/padding_20"
         android:text="这里是标题" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/padding_20"
         android:layout_marginRight="@dimen/padding_20"
-        android:background="@color/x_green" />
+        android:background="@color/half_transparent" />
 
     <LinearLayout
         android:id="@+id/layout1"
@@ -127,7 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout4"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -149,6 +150,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/layout4"
         android:layout_marginTop="@dimen/padding_10"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <LinearLayout

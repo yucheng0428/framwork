@@ -16,9 +16,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.lib.common.base.BaseActivity;
+import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.lib.common.widgt.MyDrawerLayout;
 import com.lib.common.widgt.RoundImageView;
@@ -57,8 +60,6 @@ public class HomeActivity2 extends BaseActivity {
     TextView tv_project;
     @BindView(R2.id.tv_user)
     TextView tv_user;
-    @BindView(R2.id.tv_unbind)
-    TextView tv_unbind;
     @BindView(R2.id.tv_changePassword)
     TextView tv_changePassword;
     @BindView(R2.id.tv_about)
@@ -85,7 +86,6 @@ public class HomeActivity2 extends BaseActivity {
         ivLeft.setImageResource(R.mipmap.cehua);
         ivRight.setImageResource(R.mipmap.message);
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        tv_unbind.setVisibility(View.GONE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -113,12 +113,13 @@ public class HomeActivity2 extends BaseActivity {
                 }
             }
         });
+        Glide.with(mActivity).load(Constants.imageUrl).placeholder(R.drawable.icon_loadings).skipMemoryCache(true).into(iv_head);
     }
 
 
     @OnClick({
             R2.id.ivLeft, R2.id.tv_xqsh,
-            R2.id.ivRight, R2.id.tv_about, R2.id.tv_out_login,R2.id.tv_changePassword})
+            R2.id.ivRight, R2.id.tv_about, R2.id.tv_out_login,R2.id.tv_changePassword,R2.id.iv_head})
     public void onClick(View view) {
         Intent intent = new Intent();
         if (view.getId() == R.id.ivLeft) {
@@ -142,6 +143,8 @@ public class HomeActivity2 extends BaseActivity {
             UIHelper.ToastMessage(mActivity, "关于我们");
         } else if (view.getId() == R.id.tv_out_login) {
             UIHelper.ToastMessage(mActivity, "退出登录");
+        }else if(view.getId()==R.id.iv_head){
+            new LookBigPictureDialog(mActivity,Constants.imageUrl).show();
         }
 
     }
