@@ -33,6 +33,9 @@
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name=".message.MessageDetailAct" />
+        <service android:name=".message.MessageService"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

@@ -30,6 +30,7 @@ import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.AlarmActivity;
 import com.qyai.watch_app.message.AlarmAdapter;
 import com.qyai.watch_app.message.AlarmDetailActivity;
+import com.qyai.watch_app.message.MessageService;
 import com.qyai.watch_app.message.bean.AlarmInfo;
 import com.qyai.watch_app.xiaqu.XiaQuActivity;
 
@@ -114,6 +115,7 @@ public class HomeActivity2 extends BaseActivity {
             }
         });
         Glide.with(mActivity).load(Constants.imageUrl).placeholder(R.drawable.icon_loadings).skipMemoryCache(true).into(iv_head);
+        MessageService.initService(mActivity);
     }
 
 
@@ -146,6 +148,11 @@ public class HomeActivity2 extends BaseActivity {
         }else if(view.getId()==R.id.iv_head){
             new LookBigPictureDialog(mActivity,Constants.imageUrl).show();
         }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MessageService.stopService(mActivity);
     }
 }

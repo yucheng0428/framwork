@@ -59,6 +59,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".message.MessageDetailAct" />
+        <service android:name=".message.MessageService"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>
