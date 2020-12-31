@@ -69,7 +69,7 @@ public class BindActivity extends BaseHeadActivity {
                 config.setDecodeBarCode(false);//是否扫描条形码 默认为true
                 config.setReactColor(R.color.white);//设置扫描框四个角的颜色 默认为淡蓝色
                 config.setFrameLineColor(R.color.white);//设置扫描框边框颜色 默认无色
-                config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
+                config.setFullScreenScan(true);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                 intent.putExtra(Common.INTENT_ZXING_CONFIG, config);
                 startActivityForResult(intent, IntentKey.SCAN_CODE);
             }else {

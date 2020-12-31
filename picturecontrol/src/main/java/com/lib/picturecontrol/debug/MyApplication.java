@@ -1,35 +1,19 @@
 package com.lib.picturecontrol.debug;
 
-import android.Manifest;
 
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.lib.common.base.BaseApp;
+import android.app.Application;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
-import com.lib.common.baseUtils.Utils;
 import com.lib.picturecontrol.album.LocalImageHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class MyApplication extends BaseApp {
+public class MyApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        if (Utils.hasPermission(this, Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            LocalImageHelper.init(this);
-        }else {
-            Utils.grantedPermissions(this, new String[]{
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.ACCESS_COARSE_LOCATION},
-                    "获取拍照、定位获取本地位置权限");
-        }
+        LocalImageHelper.init(this);
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
-        Common.initARouter(BaseApp.getIns());
+        Common.initARouter(this);
     }
 }

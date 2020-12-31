@@ -13,7 +13,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".scanning.ScaningAct"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".base.WebViewActivity"
             android:screenOrientation="portrait" />

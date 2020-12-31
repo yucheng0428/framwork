@@ -1,5 +1,6 @@
 package com.lib.picturecontrol.album;
 
+import android.app.Application;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
@@ -29,7 +30,7 @@ public class LocalImageHelper {
         return maxNum;
     }
 
-    private final BaseApp context;
+    private final Application context;
 
     final List<LocalFile> checkedItems = new ArrayList<LocalFile>();
 
@@ -69,7 +70,7 @@ public class LocalImageHelper {
 
     Map<String, List<LocalFile>> folders = new HashMap<String, List<LocalFile>>();
 
-    private LocalImageHelper(BaseApp context) {
+    private LocalImageHelper(Application context) {
         this.context = context;
     }
 
@@ -91,7 +92,7 @@ public class LocalImageHelper {
         return instance;
     }
 
-    public static void init(BaseApp context) {
+    public static void init(Application context) {
         instance = new LocalImageHelper(context);
         new Thread(new Runnable() {
             @Override

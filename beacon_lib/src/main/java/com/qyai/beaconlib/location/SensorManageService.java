@@ -42,7 +42,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 
 public class SensorManageService extends Service {
@@ -55,6 +57,8 @@ public class SensorManageService extends Service {
     private BroadcastReceiver receiver = null;
 
     private String userId = null;
+
+    private static String mapID="";
 
     /**
      * 手机消息通知管理器，用于弹系统消息通知
@@ -142,7 +146,11 @@ public class SensorManageService extends Service {
         initBroadcastReceiver();
 
         //启动蓝牙信标扫描、处理等相关程序
-        startBeaconScan();
+        if(SPValueUtil.isEmpty(mapID)){
+            getFilterMajors(mapID);
+        }else {
+            startBeaconScan();
+        }
 
     }
 
@@ -166,7 +174,11 @@ public class SensorManageService extends Service {
         }
 
         //启动蓝牙信标扫描器
-        startBeaconScan();
+        if(SPValueUtil.isEmpty(mapID)){
+            getFilterMajors(mapID);
+        }else {
+            startBeaconScan();
+        }
 
         //启动定时任务，定时检查蓝牙扫描情况，如果蓝牙关闭了，则进行启动
         //TODO 这个JobSchedulerManager也是一个定时器 这里可能定时器重复
@@ -446,6 +458,17 @@ public class SensorManageService extends Service {
             activity.startService(serviceIntent);
         }
     }
+    public static void initService(Activity activity,String buidleId) {
+        Common.openGPSSEtting(activity);
+        PermissionCheckUtils.requestPermissions(activity, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
+        mapID=buidleId;
+        Intent serviceIntent = new Intent(activity, SensorManageService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            activity.startForegroundService(serviceIntent);
+        } else {
+            activity.startService(serviceIntent);
+        }
+    }
 
     public static void stopService(Activity activity) {
         Intent stopIntent = new Intent(activity, SensorManageService.class);
@@ -480,7 +503,25 @@ public class SensorManageService extends Service {
         return new ReqBeaconInfo(beacon.major, beacon.minor, beacon.pow + "", SensorManagerUtlis.getInstance().calculateOrientation() + "", beacon.rssi + "");
     }
 
+    //获取范围信标过滤数组
+    public void getFilterMajors(String buildId){
+        Map<String,String> req =new HashMap<>();
+        req.put("buildingIdNum",buildId);
+        HttpServiec.getInstance().postFlowableData(100, "http://172.16.1.237:9799/beacon/getMajor", req, new OnHttpCallBack<List<String>>() {
+            @Override
+            public void onSuccessful(int id, List<String> o) {
+                if(o!=null){
+                    filterMajors=new String[o.size()];
+                    o.toArray(filterMajors);
+                    startBeaconScan();
+                }
+            }
+            @Override
+            public void onFaild(int id,List<String> o, String err) {
 
+            }
+        }, List.class);
+    }
 
 }
 

@@ -8,6 +8,7 @@
  */
 package com.lib.common.baseUtils;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -27,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.lib.common.base.BaseApp;
 import com.lib.common.baseUtils.permssion.EasyPermission;
+import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -145,7 +147,8 @@ public class Utils {
      * @param mention     提示信息
      */
     public static void grantedPermissions(final Context context, final String[] permissions, String mention) {
-        EasyPermission.requestPermissions(context, mention, Common.PERMISSIONS_REQUEST, permissions);
+        PermissionCheckUtils.requestPermissions((Activity) context, Constants.REQUEST_PERMISSION,permissions);
+//        EasyPermission.requestPermissions(context, mention, Common.PERMISSIONS_REQUEST, permissions);
 
     }
 

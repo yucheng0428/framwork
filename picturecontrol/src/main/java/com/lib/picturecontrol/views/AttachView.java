@@ -1,6 +1,7 @@
 package com.lib.picturecontrol.views;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -16,9 +17,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.IntentKey;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.Utils;
+import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.lib.picturecontrol.R;
 import com.lib.picturecontrol.adapter.ReclecyAdapter;
@@ -156,6 +159,7 @@ public class AttachView extends LinearLayout
 
                         utils.showPickDialog();
                     } else {
+
                         Utils.grantedPermissions(mContext, new String[]{
                                         Manifest.permission.CAMERA,
                                         Manifest.permission.WRITE_EXTERNAL_STORAGE,

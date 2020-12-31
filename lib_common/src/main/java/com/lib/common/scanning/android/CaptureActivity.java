@@ -26,6 +26,8 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.google.zxing.Result;
 import com.lib.common.R;
+import com.lib.common.base.BaseActivity;
+import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.scanning.bean.ZxingConfig;
 import com.lib.common.scanning.camera.CameraManager;
@@ -44,7 +46,7 @@ import java.io.IOException;
  * @declare :扫一扫
  */
 
-public class CaptureActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
+public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callback, View.OnClickListener {
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
     public ZxingConfig config;
@@ -80,10 +82,15 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+    @Override
+    public int layoutId() {
+        return R.layout.activity_capture;
+    }
+
+    @Override
+    protected void initUIData(Bundle bundle) {
+        setScreenModel(3);
         // 保持Activity处于唤醒状态
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -104,7 +111,6 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
         }
 
 
-        setContentView(R.layout.activity_capture);
 
 
         initView();
@@ -115,8 +121,6 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
         beepManager = new BeepManager(this);
         beepManager.setPlayBeep(config.isPlayBeep());
         beepManager.setVibrate(config.isShake());
-
-
     }
 
 
@@ -273,7 +277,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         if (handler != null) {
             handler.quitSynchronously();
             handler = null;

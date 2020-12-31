@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity {
                             }
                         });
                         if (count == 1) {
-//                            Thread.sleep(1000);
+                            Thread.sleep(1000);
                             mActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
