@@ -4,29 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="77dp"
         android:orientation="horizontal">
 
 
         <EditText
-            android:layout_gravity="center_vertical"
             android:id="@+id/et_phone_no"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="22dp"
-            android:layout_marginRight="24dp"
             android:background="@null"
             android:drawableLeft="@mipmap/icon_phone"
-            android:drawableRight="@mipmap/icon_person_costact"
             android:drawablePadding="@dimen/padding_20"
             android:hint="请输手机号"
             android:inputType="text"
             android:maxLength="15"
             android:maxLines="1"
             android:textStyle="normal" />
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="24dp"
+            android:src="@mipmap/icon_person_costact" />
+    </RelativeLayout>
 
 
     <LinearLayout
@@ -35,10 +43,10 @@
         android:orientation="horizontal">
 
         <EditText
-            android:layout_gravity="center_vertical"
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="22dp"
             android:layout_marginRight="24dp"
             android:background="@null"

@@ -74,18 +74,17 @@
 
         <EditText
             android:id="@+id/et_password_agan"
+            style="@style/edittext_style"
             android:layout_width="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:hint="请输入新密码"
-            style="@style/edittext_style"
-            android:textStyle="normal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@null"
+            android:hint="请输入新密码"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
-            />
+            android:textStyle="normal" />
         <ImageView
             android:id="@+id/iv_open2"
             android:layout_width="wrap_content"

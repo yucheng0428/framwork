@@ -35,8 +35,8 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
     EditText et_user;
     @BindView(R2.id.iv_open2)
     ImageView iv_open2;
-    @BindView(R2.id.et_code)
-    EditText et_code;
+    @BindView(R2.id.et_password_agan)
+    EditText et_password_agan;
     @BindView(R2.id.iv_open)
     ImageView iv_open;
     @BindView(R2.id.et_password)
@@ -44,7 +44,6 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
     @BindView(R2.id.btn_ok)
     Button btn_ok;
     Disposable disposable;
-    boolean isCode = false;
     boolean isShow=false;
     @Override
     public int layoutId() {
@@ -77,10 +76,10 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
         } else if(v.getId()==R.id.iv_open2){
             if(isShow){
                 isShow=false;
-                et_code.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                et_password_agan.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }else {
                 isShow=true;
-                et_code.setTransformationMethod(HideReturnsTransformationMethod.getInstance()); //密码可见
+                et_password_agan.setTransformationMethod(HideReturnsTransformationMethod.getInstance()); //密码可见
             }
         }
     }
@@ -132,7 +131,7 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
 
     @Override
     public String sendCode() {
-        String code= et_code.getText().toString().trim();
+        String code= et_password_agan.getText().toString().trim();
         if (!TextUtils.isEmpty(code)) {
             return code;
         } else {

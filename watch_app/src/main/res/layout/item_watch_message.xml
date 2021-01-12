@@ -1,58 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/padding_10"
-    android:layout_marginBottom="@dimen/padding_10"
-    android:orientation="horizontal">
+    android:layout_marginBottom="@dimen/padding_10">
+
+    <TextView
+        android:id="@+id/tv_message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:singleLine="true"
+        android:layout_alignParentBottom="true"
+        android:text="2020-11-11 15:33"
+        android:textColor="@color/color_999999"
+        android:textSize="11.5dp" />
 
     <ImageView
         android:id="@+id/iv_message_icon"
         android:layout_width="39dp"
         android:layout_height="39dp"
-        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/padding_10"
         android:layout_marginRight="@dimen/padding_10"
         android:src="@mipmap/icon_message_blue" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/tv_message_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_message_icon"
+        android:singleLine="true"
+        android:text="2222222"
+        android:ellipsize="end"
+        android:maxLength="30"
+        android:textColor="@color/color_222222"
+        android:textSize="15.5dp" />
+
+    <TextView
+        android:id="@+id/tv_message_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp">
-
-
-        <TextView
-            android:id="@+id/tv_message_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:text="2222222"
-            android:textColor="@color/color_222222"
-            android:textSize="15.5dp" />
-
-        <TextView
-            android:id="@+id/tv_message_content"
-            android:layout_below="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="13.5dp"
-            android:maxLength="50"
-            android:ellipsize="end"
-            android:layout_marginTop="@dimen/padding_15"
-            android:textColor="@color/color_333333"
-            android:text="1111111" />
-
-        <TextView
-            android:id="@+id/tv_message_time"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:singleLine="true"
-            android:textSize="11.5dp"
-            android:textColor="@color/color_999999"
-            android:text="2020-11-11 15:33" />
-    </RelativeLayout>
-
-</LinearLayout>
+        android:layout_below="@+id/tv_message_title"
+        android:layout_toRightOf="@+id/iv_message_icon"
+        android:ellipsize="end"
+        android:maxLength="30"
+        android:singleLine="true"
+        android:paddingTop="@dimen/padding_10"
+        android:text="1111111"
+        android:textColor="@color/color_333333"
+        android:textSize="13.5dp" />
+</RelativeLayout>
