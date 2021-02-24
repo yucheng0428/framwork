@@ -7,25 +7,26 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/half_transparent"/>
+        android:background="@color/half_transparent" />
+
     <include
         layout="@layout/layout_double_mesure"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/padding_5"
-        android:layout_height="220dp" />
+        android:layout_height="220dp"
+        android:layout_marginTop="@dimen/padding_5" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_20"
         android:paddingLeft="@dimen/padding_10"
-        android:paddingRight="@dimen/padding_10"
-        android:layout_marginBottom="@dimen/padding_20">
+        android:paddingRight="@dimen/padding_10">
 
         <ImageView
             android:id="@+id/iv_head"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@mipmap/ic_launcher" />
+             />
 
         <LinearLayout
             android:id="@+id/layout"
@@ -33,16 +34,15 @@
             android:layout_toRightOf="@+id/iv_head">
 
             <TextView
-                style="@style/weight_style_value"
-                android:text="王麻子" />
+                android:id="@+id/tv_sex"
+                style="@style/weight_style"
+                android:text="男" />
 
             <TextView
+                android:id="@+id/tv_name"
                 style="@style/weight_style_value"
-                android:text="汉" />
+                android:text="" />
 
-            <TextView
-                style="@style/weight_style_value"
-                android:text="党员" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,27 +53,41 @@
 
             <TextView
                 style="@style/weight_style"
-                android:text="男" />
+                android:text="民族" />
 
             <TextView
-                style="@style/weight_style"
-                android:text="民族" />
+                android:id="@+id/tv_mz"
+                style="@style/weight_style_value"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_value1"
+            style="@style/weight_layout"
+            android:layout_below="@+id/layout_value"
+            android:layout_toRightOf="@+id/iv_head">
 
             <TextView
                 style="@style/weight_style"
                 android:text="政治面貌" />
+
+            <TextView
+                android:id="@+id/tv_dy"
+                style="@style/weight_style_value"
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_head"
+            android:layout_below="@+id/layout_value1"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_now_adress"
                 style="@style/weight_style_value"
                 android:layout_margin="@dimen/padding_10"
-                android:text="湖北省武汉市光谷未来城" />
+                android:text="" />
 
             <TextView
                 style="@style/weight_style"
@@ -81,9 +95,10 @@
                 android:text="现居地" />
 
             <TextView
+                android:id="@+id/tv_hj_adress"
                 style="@style/weight_style_value"
                 android:layout_margin="@dimen/padding_10"
-                android:text="湖北省武汉市光谷未来城" />
+                android:text="" />
 
             <TextView
                 style="@style/weight_style"

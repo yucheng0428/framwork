@@ -5,6 +5,7 @@ if (isModuleMap.toBoolean()) {
     apply plugin: "com.android.library"
 }
 apply plugin: 'com.mob.sdk'
+
 MobSDK {
     appKey "31d9bf7980980"
     appSecret "c3f19e83008e06f4e9ff5ca1899e1280"
@@ -108,5 +109,9 @@ dependencies {
 
     implementation "com.alibaba:arouter-api:$rootProject.arouterVersion"
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.acompilerVersion"//ARouter
+
+    implementation 'com.amap.api:3dmap:5.0.0'
+    implementation 'com.amap.api:location:3.3.0'
+    implementation 'com.amap.api:search:5.0.0'
 
 }

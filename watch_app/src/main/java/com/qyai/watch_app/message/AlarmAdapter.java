@@ -13,24 +13,17 @@ import com.lib.common.recyclerView.SimpleRecAdapter;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.bean.AlarmInfo;
+import com.qyai.watch_app.message.bean.AlarmPushBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AlarmAdapter extends SimpleRecAdapter<AlarmInfo,AlarmAdapter.ViewHolder> {
-    public  int type=1;
+public class AlarmAdapter extends SimpleRecAdapter<AlarmPushBean,AlarmAdapter.ViewHolder> {
 
     public AlarmAdapter(Context context) {
         super(context);
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
 
     @Override
     public ViewHolder newViewHolder(View itemView) {
@@ -44,21 +37,17 @@ public class AlarmAdapter extends SimpleRecAdapter<AlarmInfo,AlarmAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        AlarmInfo info=data.get(position);
-        if(type==1){
-            holder.tv_do.setVisibility(View.GONE);
-        }else {
-            holder.tv_do.setVisibility(View.VISIBLE);
-        }
-        holder.tv_time.setText(info.getTime());
-        holder.tv_title.setText(info.getTitle());
-        if(SPValueUtil.isEmpty(info.getTyep())){
-            if(info.getTyep().equals("1")){
-                holder.iv_icon.setImageResource(R.mipmap.icon_message_blue);
-            }else if(info.getTyep().equals("2")){
+        AlarmPushBean info=data.get(position);
+        holder.tv_time.setText(info.getCreateTime());
+        holder.tv_title.setText(info.getContent());
+        //处理结果，1已处理，0未处理, 2忽略
+            if(info.getDealStatus()==0){
                 holder.iv_icon.setImageResource(R.mipmap.icon_message_orange);
+                holder.tv_do.setVisibility(View.VISIBLE);
+            }else if(info.getDealStatus()==1){
+                holder.iv_icon.setImageResource(R.mipmap.icon_message_blue);
+                holder.tv_do.setVisibility(View.GONE);
             }
-        }
         holder.tv_do.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

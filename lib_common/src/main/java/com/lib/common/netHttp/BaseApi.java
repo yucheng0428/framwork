@@ -58,6 +58,8 @@ public interface BaseApi {
     Flowable<ResponseBody> flowablePostData(@Url String url, @Body RequestBody requestBody);
     @POST
     Flowable<ResponseBody> flowablePostData(@Url String url, @Body Object requestBody);
+    @GET
+    Flowable<ResponseBody> flowableGet(@Url String url, @QueryMap Map<String,String> maps);
     @Streaming
     @POST("/systemStorage/download")
 //文件下载

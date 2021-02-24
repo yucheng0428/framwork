@@ -64,8 +64,8 @@ public class PagePersenter<T,M extends BasePageModel> extends BasePresenter<Page
     }
 
     public void reqDelect(BaseResult result) {
-        if (result.getResult() == 0) {
-            getMvpView().showErrMsg(result.resultRemark);
+        if (result.getCode() .equals("0") ) {
+            getMvpView().showErrMsg(result.getMsg());
         } else {
             getFragmentMpdel().loadData(getMvpView().startPageNo(), getMvpView().getUrl());
         }

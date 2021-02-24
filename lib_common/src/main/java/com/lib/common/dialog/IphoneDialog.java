@@ -196,6 +196,9 @@ public class IphoneDialog extends Dialog implements View.OnClickListener{
 		 tv_canl.setText(left);
 		 tv_ok.setText(right);
 		isText=flag;
+		if(!flag){
+			ed_content.setVisibility(View.GONE);
+		}
 		if(TextUtils.isEmpty(str))
 			tvTitle.setVisibility(View.GONE);
 		else{

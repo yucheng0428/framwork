@@ -60,6 +60,7 @@
             >
         </activity>
         <activity android:name=".changepsw.ChangePswActivity" />
+        <activity android:name="com.qyai.main.AboutActivity"/>
     </application>
 
 </manifest>

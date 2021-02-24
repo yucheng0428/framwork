@@ -36,6 +36,12 @@ public class AddEnclosureAdapter extends SimpleRecAdapter<EnclosureInfo, AddEncl
           EnclosureInfo info=data.get(position);
           holder.et_enclosure.setText(info.getName());
           holder.tv_adress.setText(info.getAdress());
+          holder.itemView.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  getRecItemClick().onItemClick(position,info,1,holder);
+              }
+          });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">手表App</string>
+    <string name="app_notific">健康守护App</string>
     <string name="item_string1">设置后仅在您长按手表上SOS按钮的紧急情况下,会拨打紧急人联系电话</string>
     <string name="item_string2">当您长按于手表上的SOS按钮时,将按顺序拨打紧急联系人电话,直到拨通为止</string>
     <string name="item_string3">目前仅支持号码归属地为中国大陆的手机号码</string>

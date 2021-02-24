@@ -5,7 +5,7 @@
     <!-- 边框 -->
     <stroke
         android:width="0.5dp"
-        android:color="@color/white"/>
+        android:color="@color/color_e2e4e8"/>
     <!-- 圆角 -->
     <corners android:radius="5dp"/>
 

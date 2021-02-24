@@ -1,8 +1,10 @@
 package com.qyai.main.login;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.lib.common.BaseMvp.presenter.BasePresenter;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.baseModle.BaseResult;
 import com.lib.common.netHttp.HttpReq;
 import com.qyai.main.login.bean.UserEvent;
 
@@ -29,7 +31,15 @@ public class LoginPersenter extends BasePresenter<LoginView> {
         switch (id) {
             case 100:
                 getMvpView().hidLodingDialog();
-                getMvpView().loginNext((UserEvent) baseResponse);
+                BaseResult event= JSONObject.parseObject((String) baseResponse,BaseResult.class);
+                if(event!=null&&event.getCode().equals("000000")){
+                    getMvpView().loginNext(JSONObject.parseObject((String) baseResponse,UserEvent.class));
+                }else {
+                    if(event!=null){
+                        getMvpView().showErrMsg(event.getMsg());
+                    }
+
+                }
                 break;
         }
     }

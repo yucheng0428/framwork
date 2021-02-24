@@ -1,6 +1,8 @@
 package com.qyai.main.changepsw;
 
 import com.lib.common.BaseMvp.presenter.BasePresenter;
+import com.lib.common.baseUtils.baseModle.BaseResult;
+import com.lib.common.netHttp.HttpReq;
 
 public class ChangePswPersenter extends BasePresenter<ChangePswView> {
     final ChangePswModel forgetModel;
@@ -11,14 +13,14 @@ public class ChangePswPersenter extends BasePresenter<ChangePswView> {
 
     public void reqForget(Object para){
         getMvpView().showLodingDialog();
-        forgetModel.reqForgetHttp(para,"");
+        forgetModel.reqForgetHttp(para, HttpReq.getInstence().getIp()+"/user/changePwd");
     }
 
     public void reqSuccessful(int id, Object baseResponse) {
         switch (id) {
             case 100:
                 getMvpView().hidLodingDialog();
-                getMvpView().nextForget((String) baseResponse);
+                getMvpView().nextForget((BaseResult) baseResponse);
                 break;
         }
     }

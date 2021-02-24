@@ -3,9 +3,38 @@ if (isModuleMian.toBoolean()) {
     apply plugin: 'com.android.application'
 }else {
     apply plugin: "com.android.library"
-
 }
+apply plugin: 'com.mob.sdk'
 
+MobSDK {
+    appKey "31d9bf7980980"
+    appSecret "c3f19e83008e06f4e9ff5ca1899e1280"
+    ShareSDK {
+        loopShare true
+        devInfo {
+            Wechat {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                userName "gh_afb25ac019c9"
+                path "pages/index/index.html?id=1"
+                withShareTicket true
+                miniprogramType 2
+            }
+
+            ShortMessage {
+                enable true
+            }
+            WhatsApp {
+                enable true
+            }
+            WechatMoments {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+
+        }
+    }
+}
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     defaultConfig {
@@ -71,4 +100,9 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
     implementation "com.alibaba:arouter-api:$rootProject.arouterVersion"
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.acompilerVersion"//ARouter
+
+    if(!isModuleWatch.toBoolean()){
+        implementation project(path: ':watch_app')
+    }
+
 }

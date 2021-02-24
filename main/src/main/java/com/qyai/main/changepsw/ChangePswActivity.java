@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.BaseMvp.BaseMvpHeadAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.baseUtils.Utils;
+import com.lib.common.baseUtils.baseModle.BaseResult;
 import com.qyai.main.R;
 import com.qyai.main.R2;
 
@@ -53,16 +56,17 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
     @Override
     protected void initUIData() {
         setTvTitle(getResources().getString(R.string.title_change));
+        btn_ok.setText("确定");
     }
 
     @OnClick({ R2.id.btn_ok,R2.id.iv_open,R2.id.iv_open2})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_ok) {
-            if (!TextUtils.isEmpty(userName()) && !TextUtils.isEmpty(passWord())) {
+            if (!TextUtils.isEmpty(oldPsw()) && !TextUtils.isEmpty(newAgainPsw())) {
                 Map<Object,Object> para=new HashMap<>();
-                para.put("userName",userName());
-                para.put("password",passWord());
-                para.put("code",sendCode());
+                para.put("newPwd1",Utils.md5(newPsw()));
+                para.put("newPwd2",Utils.md5(newAgainPsw()));
+                para.put("oldPwd", Utils.md5(oldPsw()));
                 getMvpPresenter().reqForget(para);
             }
         } else if(v.getId()==R.id.iv_open){
@@ -96,7 +100,7 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
 
     @Override
     public void showErrMsg(String msg) {
-
+           UIHelper.ToastMessage(mActivity,msg);
     }
 
     @Override
@@ -107,8 +111,9 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
         }
     }
 
+
     @Override
-    public String userName() {
+    public String oldPsw() {
         String userName = et_user.getText().toString().trim();
         if (!TextUtils.isEmpty(userName)) {
             return userName;
@@ -119,12 +124,23 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
     }
 
     @Override
-    public String passWord() {
+    public String newPsw() {
         String password = et_password.getText().toString().trim();
         if (!TextUtils.isEmpty(password)) {
             return password;
         } else {
             UIHelper.ToastMessage(mActivity, "请输入新密码");
+            return "";
+        }
+    }
+
+    @Override
+    public String newAgainPsw() {
+        String code= et_password_agan.getText().toString().trim();
+        if (!TextUtils.isEmpty(code)) {
+            return code;
+        } else {
+            UIHelper.ToastMessage(mActivity, "请再次输入新密码");
             return "";
         }
     }
@@ -141,7 +157,13 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
     }
 
     @Override
-    public void nextForget(String s) {
-        showErrMsg(s);
+    public void nextForget(BaseResult s) {
+        showErrMsg(s.getMsg());
+        if(s.getCode().equals("000000")){
+            ARouter.getInstance().build("/main/login")
+                    .withInt("viewType",2)
+                    .navigation();
+            mActivity.finish();
+        }
     }
 }

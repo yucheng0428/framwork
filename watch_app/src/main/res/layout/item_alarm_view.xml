@@ -25,10 +25,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/tv_do"
             android:text="xxx离开了安全区，快去土城药店PK，打了爆装备"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/color_222222"
-            android:textSize="15.5dp" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -36,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/tv_do"
-            android:gravity="right"
+            android:gravity="left"
             android:textSize="13.5dp"
             android:maxLength="50"
             android:ellipsize="end"

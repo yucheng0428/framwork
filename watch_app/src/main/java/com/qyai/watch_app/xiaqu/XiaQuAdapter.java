@@ -18,7 +18,7 @@ import com.qyai.watch_app.R2;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class XiaQuAdapter extends SimpleRecAdapter<XiaQuInfo, XiaQuAdapter.ViewHolder> {
+public class XiaQuAdapter extends SimpleRecAdapter<XiaQuResult.DataBean.ListBean, XiaQuAdapter.ViewHolder> {
 
 
     public XiaQuAdapter(Context context) {
@@ -37,23 +37,17 @@ public class XiaQuAdapter extends SimpleRecAdapter<XiaQuInfo, XiaQuAdapter.ViewH
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-       XiaQuInfo info=data.get(position);
+       XiaQuResult.DataBean.ListBean info=data.get(position);
        holder.tv_name.setText(info.getName());
-       holder.tv_sex.setText(info.getSex());
-       if(info.getStat().equals("1")){
+       holder.tv_sex.setText(info.getSexName());
+       if(info.getHealthInfo().equals("0")){
            holder.tv_stat.setText("健康特征正常！");
            holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_green));
-           holder.tv_stat.setVisibility(View.GONE);
        }else {
            holder.tv_stat.setText("健康特征异常！");
            holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_red));
-           holder.tv_stat.setVisibility(View.VISIBLE);
        }
-       if(SPValueUtil.isEmpty(info.imageUrl)){
-           Glide.with(context).load(info.imageUrl).placeholder(R.drawable.icon_loadings).skipMemoryCache(true).into(holder.iv_head);
-       }else {
-           Glide.with(context).load(Constants.imageUrl).placeholder(R.drawable.icon_loadings).skipMemoryCache(true).into(holder.iv_head);
-       }
+        Glide.with(context).load("").placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(holder.iv_head);
        holder.iv_head.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

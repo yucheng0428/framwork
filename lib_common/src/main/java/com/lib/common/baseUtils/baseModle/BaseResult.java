@@ -7,26 +7,27 @@ package com.lib.common.baseUtils.baseModle;
 public class BaseResult {
 
     /**
-     * code : 14
-     * content : 帐号密码错误
+     * msg : 5
+     * code : 502
      */
 
-    public int result;
-    public String resultRemark;
+    private String msg;
+    private String code;
 
-    public int getResult() {
-        return result;
+
+    public String getMsg() {
+        return msg;
     }
 
-    public void setResult(int result) {
-        this.result = result;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public String getResultRemark() {
-        return resultRemark;
+    public String getCode() {
+        return code;
     }
 
-    public void setResultRemark(String resultRemark) {
-        this.resultRemark = resultRemark;
+    public void setCode(String code) {
+        this.code = code;
     }
 }

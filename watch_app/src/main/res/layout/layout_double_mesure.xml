@@ -96,7 +96,7 @@
                     android:layout_below="@+id/tv_mesure_value2"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/padding_10"
-                    android:text="mmHg"
+                    android:text="Bpm"
                     android:textColor="@color/color_222222"
                     android:textSize="14dp" />
             </RelativeLayout>
@@ -111,7 +111,7 @@
             android:id="@+id/tv_result_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="正常"
+            android:text="心率"
             android:gravity="center"
             android:padding="@dimen/padding_10"
             android:layout_weight="1" />
@@ -120,7 +120,7 @@
             android:id="@+id/tv_result_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="正常"
+            android:text="血氧"
             android:gravity="center"
             android:padding="@dimen/padding_10"
             android:layout_weight="1" />

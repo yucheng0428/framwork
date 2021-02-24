@@ -1,8 +1,11 @@
 package com.qyai.baidumap.postion;
 
 
+import android.graphics.Color;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,25 +17,29 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MyLocationConfiguration;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.LocationSource;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.MyLocationStyle;
 import com.lib.common.base.BaseHeadActivity;
-import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
-import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.qyai.baidumap.R;
 import com.qyai.baidumap.R2;
 import com.qyai.baidumap.postion.bean.EnclosureInfo;
 
 
+
 import butterknife.BindView;
 import butterknife.OnClick;
 @Route(path = "/maplib/PostionActivity")
-public class PostionActivity extends BaseHeadActivity {
+public class PostionActivity extends BaseHeadActivity implements LocationSource,
+        AMapLocationListener {
 
     @BindView(R2.id.mapView)
     MapView mapView;
@@ -58,20 +65,35 @@ public class PostionActivity extends BaseHeadActivity {
     RecyclerView ryl_search;
     AddEnclosureAdapter addEnclosureAdapter;
     int number = 0;
-    private LocationClient mClient;
-    private MyLocationListener myLocationListener;
-    BaiduMap mBaiduMap;
-    private boolean isFirstLoc = true;
+    //初始化地图控制器对象
+    AMap aMap;
+    private OnLocationChangedListener mListener;
+    private AMapLocationClient mlocationClient;
+    private AMapLocationClientOption mLocationOption;
+    private static final int STROKE_COLOR = Color.argb(180, 3, 145, 255);
+    private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
+
+    EnclosureInfo info;
     @Override
     public int layoutId() {
         return R.layout.activity_postion;
     }
 
 
+
     @Override
     protected void initUIData() {
+        initViews(getBundle());
         setTvTitle(getIntent().getStringExtra("title")==null?"实时位置":getIntent().getStringExtra("title"));
         setTvRightMsg("编辑");
+        info= (EnclosureInfo) getIntent().getSerializableExtra("bean");
+        if(info!=null){
+            isEdit=true;
+            isShowing = true;
+            layout_enclosure.setVisibility(View.VISIBLE);
+            et_enclosuer.setText(info.getName());
+            tv_adress.setText(info.getAdress());
+        }
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         ryl_search.setLayoutManager(layoutManager);
         addEnclosureAdapter = new AddEnclosureAdapter(mActivity);
@@ -138,41 +160,40 @@ public class PostionActivity extends BaseHeadActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-        initViews();
-        mapInit();
     }
-    private void initViews() {
-        mBaiduMap = mapView.getMap();
-        mBaiduMap.setMyLocationEnabled(true);
-        /**
-         * mCurrentMode = LocationMode.FOLLOWING;//定位跟随态
-         * mCurrentMode = LocationMode.NORMAL;   //默认为 LocationMode.NORMAL 普通态
-         * mCurrentMode = LocationMode.COMPASS;  //定位罗盘态
-         */
-        mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING,
-                true,
-                null,
-                0xAAFFFF88,
-                0xAA00FF00));
+    private void initViews(Bundle bundle) {
+        mapView.onCreate(bundle);
+        if (aMap == null) {
+            aMap = mapView.getMap();
+            setUpMap();
+        }
+
     }
-    //地图初始化配置
-    public void mapInit(){
-        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限
-        // 定位初始化
-        mClient = new LocationClient(this);
-        LocationClientOption mOption = new LocationClientOption();
-        mOption.setScanSpan(5000);
-        mOption.setCoorType("bd09ll");// 设置坐标类型
-        mOption.setIsNeedAddress(true);
-        mOption.setOpenGps(true);
-        //设置locationClientOption
-        mClient.setLocOption(mOption);
-        myLocationListener=new MyLocationListener(mapView,mBaiduMap,isFirstLoc);
-        //注册LocationListener监听器
-        mClient.registerLocationListener(myLocationListener);
-        //设置后台定位
-        //android8.0及以上使用NotificationUtils
-        mClient.start();
+    /**
+     * 设置一些amap的属性
+     */
+    private void setUpMap() {
+        aMap.setLocationSource(this);// 设置定位监听
+        aMap.getUiSettings().setZoomControlsEnabled(false);//隐藏缩放按钮
+        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
+        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+        setupLocationStyle();
+    }
+
+    private void setupLocationStyle() {
+        // 自定义系统定位蓝点
+        MyLocationStyle myLocationStyle = new MyLocationStyle();
+        // 自定义定位蓝点图标
+        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.
+                fromResource(R.mipmap.gps_point));
+        // 自定义精度范围的圆形边框颜色
+        myLocationStyle.strokeColor(STROKE_COLOR);
+        //自定义精度范围的圆形边框宽度
+        myLocationStyle.strokeWidth(5);
+        // 设置圆形的填充颜色
+        myLocationStyle.radiusFillColor(FILL_COLOR);
+        // 将自定义的 myLocationStyle 对象添加到地图上
+        aMap.setMyLocationStyle(myLocationStyle);
     }
     @Override
     public void setOnClickTvRight() {
@@ -217,28 +238,67 @@ public class PostionActivity extends BaseHeadActivity {
         super.onDestroy();
         mapView.onDestroy();
         mapView = null;
-        // 关闭前台定位服务
-        mClient.disableLocInForeground(true);
-        // 取消之前注册的 BDAbstractLocationListener 定位监听函数
-        mClient.unRegisterLocationListener(myLocationListener);
-        // 停止定位sdk
-        mClient.stop();
     }
     @Override
     protected void onResume() {
         super.onResume();
         mapView.onResume();
-        mBaiduMap.setOnMapLoadedCallback(new BaiduMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                //这里做一些UI更新操作
-            }
-        });
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mapView.onPause();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation amapLocation) {
+        if (mListener != null && amapLocation != null) {
+            if (amapLocation != null
+                    && amapLocation.getErrorCode() == 0) {
+                mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
+                aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+            } else {
+                String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
+                Log.e("AmapErr", errText);
+            }
+        }
+    }
+
+    /**
+     * 激活定位
+     */
+    @Override
+    public void activate(OnLocationChangedListener listener) {
+        mListener = listener;
+        if (mlocationClient == null) {
+            mlocationClient = new AMapLocationClient(this);
+            mLocationOption = new AMapLocationClientOption();
+            //设置定位监听
+            mlocationClient.setLocationListener(this);
+            //设置为高精度定位模式
+            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            //设置定位参数
+            mlocationClient.setLocationOption(mLocationOption);
+
+            // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+            // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
+            // 在定位结束后，在合适的生命周期调用onDestroy()方法
+            // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+            mlocationClient.startLocation();
+        }
+    }
+
+    /**
+     * 停止定位
+     */
+    @Override
+    public void deactivate() {
+        mListener = null;
+        if (mlocationClient != null) {
+            mlocationClient.stopLocation();
+            mlocationClient.onDestroy();
+        }
+        mlocationClient = null;
     }
 }

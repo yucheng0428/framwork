@@ -189,7 +189,9 @@ public class HomeActivity extends BaseActivity {
 
         } else if (view.getId() == R.id.tv_position) {
             if (isBind) {
-                ARouter.getInstance().build("/maplib/PostionActivity").navigation();
+                ARouter.getInstance().build("/maplib/AddEnclosure")
+                        .withString("title","智能围栏")
+                        .navigation();
             }
         } else if (view.getId() == R.id.tv_contacts) {
             if (isBind) {

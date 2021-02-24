@@ -1,9 +1,10 @@
 package com.qyai.baidumap.postion.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnclosureInfo {
+public class EnclosureInfo implements Serializable {
     public String name;
     public String adress;
 

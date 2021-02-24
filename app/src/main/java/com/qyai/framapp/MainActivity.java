@@ -5,17 +5,28 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lib.common.base.BaseActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.Utils;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
+import com.lib.common.netHttp.HttpReq;
+import com.lib.common.netHttp.HttpServiec;
+import com.lib.common.netHttp.NetHeaderInterceptor;
+import com.lib.common.netHttp.OnHttpCallBack;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.qyai.main.login.bean.UserEvent;
 
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -29,6 +40,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tv_time)
     TextView text_time;
     Disposable disposable;
+    int viewType=2;
+    boolean isLogin=false;
 
     @Override
     protected int layoutId() {
@@ -51,6 +64,9 @@ public class MainActivity extends BaseActivity {
 
 
     public void adLoading() {
+        if(SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.USER_NAME))&&SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.USER_PASSWORD))){
+            LoginReq();
+        }
         disposable = Observable.interval(0, 1, TimeUnit.SECONDS)
                 .map(new Function<Long, Long>() {
                     @Override
@@ -72,14 +88,21 @@ public class MainActivity extends BaseActivity {
                             mActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ARouter.getInstance().build("/main/login")
-                                            .withString("userName", "SH")
-                                            .withString("psw", "888888")
-                                            .withInt("viewType",2)
-                                            .navigation();
+                                    if(isLogin){
+                                        if(viewType==1){
+                                            ARouter.getInstance().build("/watch/HomeActivity").navigation();
+                                        }else {
+                                            ARouter.getInstance().build("/watch/HomeActivity2").navigation();
+                                        }
+                                    }else {
+                                        ARouter.getInstance().build("/main/login")
+                                                .withString("userName", "SH")
+                                                .withString("psw", "888888")
+                                                .withInt("viewType",viewType)
+                                                .navigation();
+                                    }
                                 }
                             });
-
                             if (disposable != null) {
                                 disposable.dispose();
                             }
@@ -88,7 +111,35 @@ public class MainActivity extends BaseActivity {
                     }
                 });
     }
+    public void LoginReq() {
+        Map<Object, Object> para = new HashMap<>();
+        para.put("account", SPValueUtil.getStringValue(mActivity,Common.USER_NAME));
+        para.put("pwd", Utils.md5(SPValueUtil.getStringValue(mActivity,Common.USER_PASSWORD)));
+        para.put("loginType", "phone");
+        HttpServiec.getInstance().postFlowableMap(100, HttpReq.getInstence().getIp() +"login/login",para, new OnHttpCallBack<UserEvent>() {
+            @Override
+            public void onSuccessful(int id, UserEvent baseResult) {
+                try {
+                    isLogin=true;
+                    Map<String, String> heard = new HashMap<>();
+                    heard.put("token", baseResult.getData().getUserInDeptDTO().getToken());
+                    NetHeaderInterceptor.getInterceptor().setHeaders(heard);
+                    SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, JSON.toJSONString(baseResult.getData()));
+                    SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, baseResult.getData().getUserInDeptDTO().getToken() + "");
+                    SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, SPValueUtil.getStringValue(mActivity,Common.USER_PASSWORD));
+                    SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, SPValueUtil.getStringValue(mActivity,Common.USER_NAME));
+                }catch (Exception e){
+                    isLogin=false;
+                }
+            }
 
+            @Override
+            public void onFaild(int id, UserEvent baseResult, String err) {
+                isLogin=false;
+            }
+        },UserEvent.class);
+
+    }
 
     //获取权限回调
     @Override

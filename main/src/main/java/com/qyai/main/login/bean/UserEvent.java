@@ -95,6 +95,15 @@ public class UserEvent implements Serializable {
             private String level;
             private String supDept;
             private String token;
+            private String roleName;
+
+            public String getRoleName() {
+                return roleName;
+            }
+
+            public void setRoleName(String roleName) {
+                this.roleName = roleName;
+            }
 
             public String getUserId() {
                 return userId;

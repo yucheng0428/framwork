@@ -31,7 +31,7 @@ public class HttpServiec {
     private static HttpServiec instance;
     public static OkHttpClient okHttpClient;
     public static Retrofit retrofit;
-    public static String base_Url = "http://47.92.125.30:18200/";
+    public static String base_Url = HttpReq.getInstence().getIp();
     public static Map<Object,Object> httpManger=new HashMap<>();
 
     public static HttpServiec getInstance() {
@@ -69,7 +69,7 @@ public class HttpServiec {
     }
 
     //构造方法私有
-    private OkHttpClient getOkHttpClient(int time) {
+    public OkHttpClient getOkHttpClient(int time) {
             okHttpClient = new OkHttpClient.Builder()
                     .readTimeout(time, TimeUnit.SECONDS)
                     .connectTimeout(time, TimeUnit.SECONDS)
@@ -135,6 +135,13 @@ public class HttpServiec {
         httpManger.put(id,baseSubscribe);
     }
 
+    public void getFlowbleData(int id, String url, Map<String,String> req, OnHttpCallBack onHttpCallBack, Class clazz){
+        FlowabBaseSubscribe baseSubscribe=new FlowabBaseSubscribe(id,onHttpCallBack,clazz);
+        HttpServiec.getInstance().service.flowableGet(url, req)
+                .compose(getScheduler())
+                .subscribeWith(baseSubscribe);
+        httpManger.put(id,baseSubscribe);
+    }
 
     public void cancel(int id){
         if(httpManger.size()>0&&httpManger.get(id)!=null){

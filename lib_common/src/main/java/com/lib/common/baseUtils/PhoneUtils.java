@@ -387,8 +387,12 @@ public class PhoneUtils {
      * 拨号界面
      **/
     public static void dialPhone(Activity act, String mobile) {
+        if(SPValueUtil.isEmpty(mobile)){
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mobile));
         act.startActivity(intent);
+        }else {
+            UIHelper.ToastMessage(act,"用户未填写紧急联系人");
+        }
     }
 
 

@@ -9,28 +9,44 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.NinePatch;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.lib.common.base.BaseApp;
-import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
-import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
-import com.lib.common.netHttp.HttpServiec;
-import com.lib.common.netHttp.OnHttpCallBack;
+import com.lib.common.baseUtils.LogUtil;
+import com.lib.common.baseUtils.UIHelper;
 import com.qyai.watch_app.R;
+import com.qyai.watch_app.message.bean.AlarmPushBean;
+import com.qyai.watch_app.message.websocket.AlamListenser;
+import com.qyai.watch_app.message.websocket.PushListener;
+import com.qyai.watch_app.message.websocket.WebSocketUtlts;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.java_websocket.client.WebSocketClient;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.StompClient;
+import ua.naiksoftware.stomp.dto.StompMessage;
 
 
-public class MessageService extends Service {
+public class MessageService extends Service  {
     public static final String CHANNEL_ID_STRING = "service_message";
+    private static AlamListenser mAlamListenser;
+
+
     /**
      * 手机消息通知管理器，用于弹系统消息通知
      */
@@ -38,7 +54,14 @@ public class MessageService extends Service {
     private NotificationChannel notificationChannel = null;
     String CHANNEL_ONE_NAME = "One";
     String CHANNEL_ONE_ID = "com.qyai.base";
-    private int intervalTime=30000;
+    private int intervalTime=10000;
+    WebSocketUtlts webSocketUtlts;
+
+
+    public static void setAlamListenser(AlamListenser alamListenser) {
+        mAlamListenser = alamListenser;
+    }
+
     /**
      * 轮询服务器消息(3秒一次)
      * 获取消息通知，如新警情、预警任务的提醒
@@ -58,23 +81,15 @@ public class MessageService extends Service {
         }
 
     };
-
-    //消息轮询请求
+    /**
+     * 停止轮询告警
+     */
+    private void stopRunnable() {
+        queryAlarmInSignHandler.removeCallbacksAndMessages(null);
+    }
+    //轮询告警
     public void queryAlarmInSign() {
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("id", 1);
-//        HttpServiec.getInstance().postFlowableData(100, "", map, new OnHttpCallBack<String>() {
-//            @Override
-//            public void onSuccessful(int id, String o) {
-//                createNotification(o);
-//            }
-//
-//            @Override
-//            public void onFaild(int id, String o, String err) {
-//
-//            }
-//        },String.class);
-        createNotification("o");
+        mAlamListenser.reshAlamList();
         queryAlarmInSignHandler.postDelayed(runnable, intervalTime);
     }
 
@@ -87,12 +102,13 @@ public class MessageService extends Service {
      *
      * @param bean
      */
-    private void createNotification(String bean) {
+    private void createNotification(AlarmPushBean bean) {
         Intent intent = new Intent(this.getApplicationContext(), AlarmDetailActivity.class);
         // 点击Notification不重启MainActivity.class
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.putExtra("info",bean);
         PendingIntent pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 10001, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        String content = "";
+        String content = bean.getContent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (notificationChannel == null) {
                 notificationChannel = new NotificationChannel(CHANNEL_ONE_ID,
@@ -108,7 +124,7 @@ public class MessageService extends Service {
             @SuppressLint("WrongConstant") NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ONE_ID)
                     .setTicker(getResources().getString(R.string.app_name))
                     .setSmallIcon(R.mipmap.icon_message_blue)
-                    .setContentTitle("标题")
+                    .setContentTitle("告警提示")
                     .setContentText(content)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)//点击后消失
@@ -138,6 +154,11 @@ public class MessageService extends Service {
             manager.notify(10001, notification);
         }
     }
+
+
+
+
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -155,7 +176,12 @@ public class MessageService extends Service {
             mChannel = new NotificationChannel(CHANNEL_ID_STRING, getString(R.string.app_name),
                     NotificationManager.IMPORTANCE_LOW);
             notificationManager.createNotificationChannel(mChannel);
-            Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID_STRING).build();
+            Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID_STRING)
+                    .setSmallIcon(R.mipmap.icon_app)
+                    .setContentTitle("健康守护运行中")
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_app))
+                    .build();
+
             startForeground(1, notification);
         }
         /***适配8.0 解决报IllegalStateException  end***/
@@ -173,14 +199,20 @@ public class MessageService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        //启动轮询器，定时轮询通知等
-        //TODO   20200825 1459
-        queryAlarmInSignHandler.removeCallbacksAndMessages(null);
         queryAlarmInSignHandler.postDelayed(runnable, intervalTime);
-
+        //启动长连接
+        webSocketUtlts=new WebSocketUtlts(getApplicationContext(), new PushListener() {
+            @Override
+            public void pushMsg(AlarmPushBean bean) {
+                createNotification(bean);
+                mAlamListenser.pushMsgReshList(bean);
+            }
+        });
+        webSocketUtlts.stompConnect();
         return START_STICKY;
     }
+
+
 
     public static void initService(Activity activity) {
         Intent serviceIntent = new Intent(activity, MessageService.class);
@@ -191,8 +223,20 @@ public class MessageService extends Service {
         }
     }
 
+
     public static void stopService(Activity activity) {
         Intent stopIntent = new Intent(activity, MessageService.class);
         activity.stopService(stopIntent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopRunnable();
+        NotificationManager mManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mManager.cancel(10001);
+        if(webSocketUtlts!=null){
+            webSocketUtlts.stopConnect();
+        }
     }
 }

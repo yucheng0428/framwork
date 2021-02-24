@@ -42,7 +42,7 @@ public class MapActivity extends BaseHeadActivity {
     @Override
     protected void initUIData() {
         setTvTitle("位置信息");
-        setIvRightSrc(R.mipmap.ic_launcher);
+        setIvRightSrc(R.mipmap.icon_share);
         hideIvRight(View.VISIBLE);
         initViews();
         PermissionCheckUtils.requestPermissions(MapActivity.this, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限

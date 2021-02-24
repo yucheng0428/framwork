@@ -22,8 +22,8 @@ public class MapApplicationDelegate implements ApplicationDelegate {
         LogUtil.e("init", "初始化地图sdk");
         locationService = new LocationService(BaseApp.getIns());
         mVibrator = (Vibrator) BaseApp.getIns().getSystemService(Service.VIBRATOR_SERVICE);
-        SDKInitializer.initialize(BaseApp.getIns());
-        SDKInitializer.setCoordType(CoordType.BD09LL);
+//        SDKInitializer.initialize(BaseApp.getIns());
+//        SDKInitializer.setCoordType(CoordType.BD09LL);
         Common.initARouter(BaseApp.getIns());
     }
 

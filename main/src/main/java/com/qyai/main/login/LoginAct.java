@@ -68,7 +68,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     @Autowired
     public String psw;
     @Autowired
-    public int viewType;
+    public int viewType=1;
     boolean isShow = false;
     boolean isChange=true;
     boolean isCode = false;
@@ -83,8 +83,8 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     @Override
     protected void initUIData(Bundle bundle) {
         setTranslucentNavigationColor(getResources().getColor(R.color.half_transparent));
-        et_password.setText(psw);
-        et_user.setText(userName);
+        et_password.setText(psw==null?"888888":psw);
+        et_user.setText(userName==null?"SH":userName);
         loginType(viewType);
         setScreenModel(2);
         Common.openGPSSEtting(mActivity);
@@ -107,19 +107,21 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     }
     public void changeCode(){
         et_password.setText("");
+        et_user.setText("");
+        et_user.setHint("请输入手机号");
         isCode = false;
         tv_sendcode.setText("发送验证码");
         if (disposable != null) {
             disposable.dispose();
         }
         if(isChange){
-            et_password.setHint("请输入密码");
+            et_password.setHint("请输入验证码");
             tv_forget_psw.setText("密码登录");
             tv_sendcode.setVisibility(View.VISIBLE);
             iv_open.setVisibility(View.GONE);
             isChange=false;
         }else {
-            et_password.setHint("请输入验证码");
+            et_password.setHint("请输入密码");
             tv_forget_psw.setText("验证码登录");
             tv_sendcode.setVisibility(View.GONE);
             iv_open.setVisibility(View.VISIBLE);
@@ -131,13 +133,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
             if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
-//                getMvpPresenter().loginding(getUserName(), getPassWord(),viewType);
-                if(viewType==1){
-                    ARouter.getInstance().build("/watch/HomeActivity").navigation();
-                }else {
-                    ARouter.getInstance().build("/watch/HomeActivity2").navigation();
-                }
-                mActivity.finish();
+                getMvpPresenter().loginding(getUserName(), getPassWord(),viewType);
             }
         } else if (v.getId() == R.id.login_logo) {
             IphoneDialog iphoneDialog = new IphoneDialog(mActivity, new IphoneDialog.IphoneListener() {
@@ -148,7 +144,10 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
                     }
                 }
             }, true, "输入ip", HttpReq.getInstence().getIp());
-            iphoneDialog.show();
+            if(Constants.isDebug()){
+                iphoneDialog.show();
+            }
+
         } else if (v.getId() == R.id.tv_register) {
             Intent intent = new Intent(mActivity, RegiserActivity.class);
             startActivityForResult(intent, IntentKey.REQ_UPLAOD);
@@ -229,7 +228,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         if (!TextUtils.isEmpty(password)) {
             return password;
         } else {
-            if(viewType==1){
+            if(!isChange){
                 UIHelper.ToastMessage(mActivity, "请输入密码");
             }else {
                 UIHelper.ToastMessage(mActivity, "请输入验证码");
@@ -240,20 +239,23 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
 
     @Override
     public void loginNext(UserEvent baseBean) {
+
         UserEvent.UserData userData = baseBean.getData();
         Map<String, String> heard = new HashMap<>();
         heard.put("token", userData.getUserInDeptDTO().getToken());
         NetHeaderInterceptor.getInterceptor().setHeaders(heard);
-        String json = JSON.toJSONString(userData);
-        SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, json);
+        SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, JSON.toJSONString(userData));
         SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getUserInDeptDTO().getToken() + "");
         SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
         SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, getUserName());
-        ARouter.getInstance().build("/bracelet/SechAct")
-                .navigation();
-        finish();
         btn_login.setEnabled(true);
         hidLodingDialog();
+        if(viewType==1){
+            ARouter.getInstance().build("/watch/HomeActivity").navigation();
+        }else {
+            ARouter.getInstance().build("/watch/HomeActivity2").navigation();
+        }
+        finish();
     }
 
     @Override

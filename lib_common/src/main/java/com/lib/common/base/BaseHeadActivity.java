@@ -52,6 +52,7 @@ public abstract class BaseHeadActivity extends FragmentActivity {
     public Activity mActivity;
     private int mRequestCode;
     public ProgressDialog mProgressDialog;
+    private static Bundle mBundle;
 
     public void showProgress() {//显示对话框
         if (null != mProgressDialog) {
@@ -118,6 +119,7 @@ public abstract class BaseHeadActivity extends FragmentActivity {
                 setOnClickIvRight();
             }
         });
+        mBundle=bundle;
         initUIData();
     }
 
@@ -127,10 +129,11 @@ public abstract class BaseHeadActivity extends FragmentActivity {
 
 
     public abstract int layoutId();
-
     protected abstract void initUIData();
 
-
+    public Bundle getBundle(){
+        return mBundle;
+    }
     protected String getLogTag() {
         return getClass().getName();
     }
