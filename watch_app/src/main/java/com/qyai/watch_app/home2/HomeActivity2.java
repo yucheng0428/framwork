@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.lib.common.base.BaseActivity;
 import com.lib.common.base.ViewManager;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.FileUtils;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.dialog.IphoneDialog;
@@ -111,8 +113,6 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     UserEvent.UserData userData;
     JusClassAdapter jusClassAdapter;
     static int classId = 0;
-    //    -------------------------------------WebSocket发送空消息心跳检测------------------------------------------------
-    private static final long HEART_BEAT_RATE = 60 * 1000;//每隔1分钟发送空消息保持WebSocket长连接
     @Override
     protected int layoutId() {
         return R.layout.activity_home_view2;
@@ -134,7 +134,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             }
             tv_title.setText(userData.getUserInDeptDTO().getDeptName());
             if (SPValueUtil.isEmpty(userData.getUserInDeptDTO().getIcon())) {
-                Glide.with(mActivity).load(userData.getUserInDeptDTO().getIcon()).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
+                Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(userData.getUserInDeptDTO().getIcon())).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
             }
         }
         setTranslucentStatusColor(mActivity.getResources().getColor(R.color.white));
@@ -222,7 +222,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             iphoneDialog.show();
         } else if (view.getId() == R.id.iv_head) {
             if (SPValueUtil.isEmpty(userData.getUserInDeptDTO().getIcon())) {
-                new LookBigPictureDialog(mActivity, Constants.imageUrl).show();
+                new LookBigPictureDialog(mActivity, FileUtils.base64ChangeBitmap(userData.getUserInDeptDTO().getIcon())).show();
             }
         } else if (view.getId() == R.id.tv_title) {
             tvTitle.showContextMenu();
@@ -288,13 +288,13 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         List<String> count = new ArrayList<>();
         count.add(clas + "");
         req.put("classId", count);
-
         //查询告警
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarm", req, new OnHttpCallBack<AlarmResult>() {
             @Override
             public void onSuccessful(int id, AlarmResult result) {
 
                 if (result != null && result.getData().size() > 0) {
+                    alarmAdapter.clearData();
                     alarmAdapter.setData(result.getData());
                 }
             }
@@ -382,7 +382,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
 
     @Override
     public void pushMsgReshList(AlarmPushBean bean) {
-           if(bean!=null){
+           if(bean!=null&&bean.getDealStatus()==0){
                alarmAdapter.getDataSource().add(0,bean);
                alarmAdapter.notifyDataSetChanged();
            }

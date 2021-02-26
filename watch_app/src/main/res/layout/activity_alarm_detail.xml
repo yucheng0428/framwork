@@ -113,7 +113,7 @@
 
     <LinearLayout
         android:id="@+id/layout4"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout3"
         android:orientation="horizontal">
@@ -126,15 +126,15 @@
 
         <TextView
             android:id="@+id/tv_alarm_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/padding_20"
+            android:paddingRight="@dimen/padding_20"
             android:text="告警内容：张三的血压异常，136mmHg，已超出正常范围20%，请及时关注处理！" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout5"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout4"
         android:orientation="vertical"
@@ -148,10 +148,10 @@
 
         <TextView
             android:id="@+id/tv_alarm_result"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/padding_10"
-            android:text="告警内容：张三的血压异常，136mmHg，已超出正常范围20%，请及时关注处理！" />
+            android:text="" />
     </LinearLayout>
 
     <RelativeLayout

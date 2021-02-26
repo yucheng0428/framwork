@@ -36,6 +36,8 @@ import io.reactivex.functions.Function;
 public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPersenter> implements ChangePswView {
     @BindView(R2.id.et_user)
     EditText et_user;
+    @BindView(R2.id.iv_open3)
+    ImageView iv_open3;
     @BindView(R2.id.iv_open2)
     ImageView iv_open2;
     @BindView(R2.id.et_password_agan)
@@ -50,7 +52,7 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
     boolean isShow=false;
     @Override
     public int layoutId() {
-        return R.layout.activity_forget;
+        return R.layout.activity_change_psw;
     }
 
     @Override
@@ -59,10 +61,14 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
         btn_ok.setText("确定");
     }
 
-    @OnClick({ R2.id.btn_ok,R2.id.iv_open,R2.id.iv_open2})
+    @OnClick({ R2.id.btn_ok,R2.id.iv_open,R2.id.iv_open2,R2.id.iv_open3})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_ok) {
             if (!TextUtils.isEmpty(oldPsw()) && !TextUtils.isEmpty(newAgainPsw())) {
+                if(newAgainPsw().length()<6||newPsw().length()<6){
+                    UIHelper.ToastMessage(mActivity, "密码必须大于6位");
+                    return;
+                }
                 Map<Object,Object> para=new HashMap<>();
                 para.put("newPwd1",Utils.md5(newPsw()));
                 para.put("newPwd2",Utils.md5(newAgainPsw()));
@@ -84,6 +90,14 @@ public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPe
             }else {
                 isShow=true;
                 et_password_agan.setTransformationMethod(HideReturnsTransformationMethod.getInstance()); //密码可见
+            }
+        }else if(v.getId()==R.id.iv_open3){
+            if(isShow){
+                isShow=false;
+                et_user.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }else {
+                isShow=true;
+                et_user.setTransformationMethod(HideReturnsTransformationMethod.getInstance()); //密码可见
             }
         }
     }

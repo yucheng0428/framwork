@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_msg_content">
+
+
+    <TextView
+        android:id="@+id/tv_title_sort"
+        style="@style/textstyle_14_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="第一紧急联系人" />
+
+    <TextView
+        android:id="@+id/tv_phone_no"
+        style="@style/textstyle_13_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title_sort"
+        android:layout_marginTop="@dimen/padding_20"
+        android:text="11111111111" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/textstyle_15_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_phone_no"
+        android:layout_marginLeft="38dp"
+        android:layout_toRightOf="@+id/tv_phone_no"
+        android:singleLine="true"
+        android:text="姓名" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/padding_5"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_name"
+        android:background="@color/color_999999" />
+
+    <ImageView
+        android:id="@+id/iv_phone"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/img_telphone_img" />
+
+</RelativeLayout>

@@ -1,10 +1,16 @@
 package com.qyai.baidumap;
 
 
-import android.graphics.Color;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -14,15 +20,14 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapOptions;
-import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.Projection;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.baidu.mapapi.search.share.OnGetShareUrlResultListener;
 import com.baidu.mapapi.search.share.PoiDetailShareURLOption;
 import com.baidu.mapapi.search.share.ShareUrlResult;
@@ -30,39 +35,68 @@ import com.baidu.mapapi.search.share.ShareUrlSearch;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+
 @Route(path = "/maplib/GMapActivity")
 public class GMapActivity extends BaseHeadActivity implements LocationSource,
-        AMapLocationListener {
+        AMapLocationListener, AMap.OnMapTouchListener  {
 
+    @BindView(R2.id.layout_adress)
+    RelativeLayout layout_adress;
+
+    @BindView(R2.id.tv_adress)
+    TextView tv_adress;
+    @BindView(R2.id.tv_fuz)
+    TextView tv_fuz;
+    @BindView(R2.id.tv_share)
+    TextView tv_share;
     @BindView(R2.id.mv_foreground)
     MapView mapView;
     //初始化地图控制器对象
     AMap aMap;
-    private ShareUrlSearch shareUrlSearch;
     private OnLocationChangedListener mListener;
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
-    private static final int STROKE_COLOR = Color.argb(180, 3, 145, 255);
-    private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
 
+
+    boolean useMoveToLocationWithMapMode = true;
+
+    //自定义定位小蓝点的Marker
+    Marker locationMarker;
+
+    //坐标和经纬度转换工具
+    Projection projection;
     @Override
     public int layoutId() {
         return R.layout.activity_g_map;
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle bundle) {
-        super.onCreate(bundle);
-        mapView.onCreate(bundle);
+    protected void initUIData() {
+        setTvTitle("位置信息");
+        PermissionCheckUtils.requestPermissions(GMapActivity.this, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限
         if (aMap == null) {
             aMap = mapView.getMap();
             setUpMap();
         }
     }
+    @OnClick({R2.id.tv_fuz,R2.id.tv_share})
+    public void onClick(View view){
+        if(view.getId()==R.id.tv_fuz){
+            ClipboardManager cmb = (ClipboardManager)mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+            cmb.setText(tv_adress.getText().toString());
+            UIHelper.ToastMessage(mActivity,"已复制地址");
+        }else if(view.getId()==R.id.tv_share){
+//            layout_adress.setVisibility(View.GONE);
+            ShareUtils shareUtils=new ShareUtils();
+            shareUtils.shareMessage("分享",tv_adress.getText().toString(),"","","121212");
 
+        }
+    }
     /**
      * 设置一些amap的属性
      */
@@ -70,80 +104,13 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
         aMap.setLocationSource(this);// 设置定位监听
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        setupLocationStyle();
+        aMap.setOnMapTouchListener(this);
     }
-
-    private void setupLocationStyle() {
-        // 自定义系统定位蓝点
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
-        // 自定义定位蓝点图标
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.
-                fromResource(R.mipmap.gps_point));
-        // 自定义精度范围的圆形边框颜色
-        myLocationStyle.strokeColor(STROKE_COLOR);
-        //自定义精度范围的圆形边框宽度
-        myLocationStyle.strokeWidth(5);
-        // 设置圆形的填充颜色
-        myLocationStyle.radiusFillColor(FILL_COLOR);
-        // 将自定义的 myLocationStyle 对象添加到地图上
-        aMap.setMyLocationStyle(myLocationStyle);
-    }
-
     @Override
-    protected void initUIData() {
-        setTvTitle("位置信息");
-        setIvRightSrc(R.mipmap.icon_share);
-        hideIvRight(View.VISIBLE);
-        PermissionCheckUtils.requestPermissions(GMapActivity.this, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限
+    protected void onCreate(@Nullable Bundle bundle) {
+        super.onCreate(bundle);
+        mapView.onCreate(bundle);
     }
-
-    /**
-     * 设置显示坐标
-     */
-    public void showPostion() {
-        //参数依次是：视角调整区域的中心点坐标、希望调整到的缩放级别、俯仰角0°~45°（垂直与地图时为0）、偏航角 0~360° (正北方为0)
-        CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(39.977290, 116.337000), 18, 30, 0));
-        // 定义北京市经纬度坐标（此处以北京坐标为例）
-        LatLng centerBJPoint = new LatLng(39.904989, 116.405285);
-// 定义了一个配置 AMap 对象的参数类
-        AMapOptions mapOptions = new AMapOptions();
-// 设置了一个可视范围的初始化位置
-// CameraPosition 第一个参数： 目标位置的屏幕中心点经纬度坐标。
-// CameraPosition 第二个参数： 目标可视区域的缩放级别
-// CameraPosition 第三个参数： 目标可视区域的倾斜度，以角度为单位。
-// CameraPosition 第四个参数： 可视区域指向的方向，以角度为单位，从正北向顺时针方向计算，从0度到360度
-        mapOptions.camera(new CameraPosition(centerBJPoint, 10f, 0, 0));
-// 定义一个 MapView 对象，构造方法中传入 mapOptions 参数类
-        MapView mapView = new MapView(this, mapOptions);
-// 调用 onCreate方法 对 MapView LayoutParams 设置
-//        mapView.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void setOnClickIvRight() {
-        shareUrlSearch = ShareUrlSearch.newInstance();
-        shareUrlSearch.setOnGetShareUrlResultListener(new OnGetShareUrlResultListener() {
-            @Override
-            public void onGetPoiDetailShareUrlResult(ShareUrlResult shareUrlResult) {
-                String shareUrl = shareUrlResult.getUrl();
-                ShareUtils.shareMessage("分享", "测试分享", "", shareUrl, "");
-            }
-
-            @Override
-            public void onGetLocationShareUrlResult(ShareUrlResult shareUrlResult) {
-
-            }
-
-            @Override
-            public void onGetRouteShareUrlResult(ShareUrlResult shareUrlResult) {
-
-            }
-        });
-        shareUrlSearch.requestPoiDetailShareUrl(new PoiDetailShareURLOption().poiUid("65e1ee886c885190f60e77ff"));
-        shareUrlSearch.destroy();
-
-    }
-
     /**
      * 方法必须重写
      */
@@ -151,6 +118,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
     protected void onResume() {
         super.onResume();
         mapView.onResume();
+        useMoveToLocationWithMapMode = true;
     }
 
     /**
@@ -161,8 +129,8 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
         super.onPause();
         mapView.onPause();
         deactivate();
+        useMoveToLocationWithMapMode = false;
     }
-
 
     /**
      * 方法必须重写
@@ -184,16 +152,109 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
             mlocationClient.onDestroy();
         }
     }
+    /**
+     * 定位成功后回调函数
+     */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null
                     && amapLocation.getErrorCode() == 0) {
-                mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-                aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+                LatLng latLng = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                //展示自定义定位小蓝点
+                if(locationMarker == null) {
+                    //首次定位
+                    locationMarker = aMap.addMarker(new MarkerOptions().position(latLng)
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_my_postion))
+                            .anchor(0.5f, 0.5f));
+
+                    //首次定位,选择移动到地图中心点并修改级别到15级
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                } else {
+
+                    if(useMoveToLocationWithMapMode) {
+                        //二次以后定位，使用sdk中没有的模式，让地图和小蓝点一起移动到中心点（类似导航锁车时的效果）
+                        startMoveLocationAndMap(latLng);
+                    } else {
+                        startChangeLocation(latLng);
+                    }
+
+                }
+                    layout_adress.setVisibility(View.VISIBLE);
+                    tv_adress.setText(amapLocation.getAddress());
             } else {
-                String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
-                Log.e("AmapErr", errText);
+                String errText = "定位失败," + amapLocation.getErrorCode()+ ": " + amapLocation.getErrorInfo();
+                Log.e("AmapErr",errText);
+            }
+        }
+    }
+    /**
+     * 修改自定义定位小蓝点的位置
+     * @param latLng
+     */
+    private void startChangeLocation(LatLng latLng) {
+
+        if(locationMarker != null) {
+            LatLng curLatlng = locationMarker.getPosition();
+            if(curLatlng == null || !curLatlng.equals(latLng)) {
+                locationMarker.setPosition(latLng);
+            }
+        }
+    }
+
+    /**
+     * 同时修改自定义定位小蓝点和地图的位置
+     * @param latLng
+     */
+    private void startMoveLocationAndMap(LatLng latLng) {
+
+        //将小蓝点提取到屏幕上
+        if(projection == null) {
+            projection = aMap.getProjection();
+        }
+        if(locationMarker != null && projection != null) {
+            LatLng markerLocation = locationMarker.getPosition();
+            Point screenPosition = aMap.getProjection().toScreenLocation(markerLocation);
+            locationMarker.setPositionByPixels(screenPosition.x, screenPosition.y);
+
+        }
+
+        //移动地图，移动结束后，将小蓝点放到放到地图上
+        myCancelCallback.setTargetLatlng(latLng);
+        //动画移动的时间，最好不要比定位间隔长，如果定位间隔2000ms 动画移动时间最好小于2000ms，可以使用1000ms
+        //如果超过了，需要在myCancelCallback中进行处理被打断的情况
+        aMap.animateCamera(CameraUpdateFactory.changeLatLng(latLng),1000,myCancelCallback);
+
+    }
+    MyCancelCallback myCancelCallback = new MyCancelCallback();
+
+    @Override
+    public void onTouch(MotionEvent motionEvent) {
+        Log.i("amap","onTouch 关闭地图和小蓝点一起移动的模式");
+        useMoveToLocationWithMapMode = false;
+    }
+
+    /**
+     * 监控地图动画移动情况，如果结束或者被打断，都需要执行响应的操作
+     */
+    class MyCancelCallback implements AMap.CancelableCallback {
+
+        LatLng targetLatlng;
+        public void setTargetLatlng(LatLng latlng) {
+            this.targetLatlng = latlng;
+        }
+
+        @Override
+        public void onFinish() {
+            if(locationMarker != null && targetLatlng != null) {
+                locationMarker.setPosition(targetLatlng);
+            }
+        }
+
+        @Override
+        public void onCancel() {
+            if(locationMarker != null && targetLatlng != null) {
+                locationMarker.setPosition(targetLatlng);
             }
         }
     }
@@ -211,6 +272,8 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            //是指定位间隔
+            mLocationOption.setInterval(2000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，

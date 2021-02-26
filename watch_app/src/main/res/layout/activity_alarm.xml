@@ -16,25 +16,24 @@
             android:layout_centerInParent="true"
             android:orientation="horizontal"
             android:paddingBottom="5dp">
-
-            <TextView
-                android:id="@+id/tv_do"
-                style="@style/title_change_text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/padding_10"
-                android:background="@drawable/down_line"
-                android:gravity="center_vertical"
-                android:text="已处理" />
-
             <TextView
                 android:id="@+id/tv_no_do"
                 style="@style/title_change_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/padding_10"
                 android:gravity="center_vertical"
+                android:layout_marginRight="@dimen/padding_10"
                 android:text="未处理" />
+            <TextView
+                android:id="@+id/tv_do"
+                style="@style/title_change_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/padding_10"
+                android:background="@drawable/down_line"
+                android:gravity="center_vertical"
+                android:text="已处理" />
+
         </LinearLayout>
 
         <ImageView

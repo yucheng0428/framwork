@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.FileUtils;
 import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.PhoneUtils;
 import com.lib.common.baseUtils.SPValueUtil;
@@ -20,8 +21,12 @@ import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.widgt.CircularProgressView;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
+import com.qyai.watch_app.contacts.ContactsDialog;
+import com.qyai.watch_app.contacts.bean.ContactsInfo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -60,6 +65,7 @@ public class PersonDetailActivity extends BaseHeadActivity {
     TextView tv_result_2;
     int personId;
     String head_img;
+   List<ContactsInfo> contactsInfos;
 
     @Override
     public int layoutId() {
@@ -80,10 +86,11 @@ public class PersonDetailActivity extends BaseHeadActivity {
         if (view.getId() == R.id.iv_postion) {
             ARouter.getInstance().build("/maplib/GMapActivity").navigation();
         } else if (view.getId() == R.id.iv_phone) {
-            PhoneUtils.dialPhone(mActivity, "12131");
+            ContactsDialog dialog=new ContactsDialog(mActivity, contactsInfos);
+            dialog.show();
         } else if (view.getId() == R.id.iv_head) {
             if (SPValueUtil.isEmpty(head_img)) {
-                new LookBigPictureDialog(mActivity, Constants.imageUrl).show();
+                new LookBigPictureDialog(mActivity, FileUtils.base64ChangeBitmap(head_img)).show();
             }
         }
     }
@@ -103,8 +110,8 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     tv_hj_adress.setText(result.getData().getPersonDTO().getPermanentAddress());
                     tv_mesure_value.setText(changeD(result.getData().getPersonDetailDTO().getAlarmBloodPressureHigh()));
                     tv_mesure_value2.setText(changeD(result.getData().getPersonDetailDTO().getAlarmHeartRate()));
-                    Glide.with(mActivity).load(result.getData().getPersonDTO().getImg()).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
                     head_img = result.getData().getPersonDTO().getImg();
+                    Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(head_img)).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
                     tv_result_1.setText(result.getData().getSignNowDTO().getBloodPressureState()==null?"":result.getData().getSignNowDTO().getBloodPressureState());
                     tv_result_2.setText(result.getData().getSignNowDTO().getHeartRateState()==null?"":result.getData().getSignNowDTO().getHeartRateState());
                     String[] arr = getZ(result.getData().getPersonDetailDTO().getAlarmHeartRate());
@@ -115,6 +122,7 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     if (arr1 != null && arr1.length > 0) {
                         cpv2.setProgress((int) ((Float.valueOf(arr1[0]) / Float.valueOf(arr1[1])) * 100),2000);
                     }
+                    contactsInfos=changeList(result.getData().getPersonDTO());
                 }
             }
 
@@ -131,5 +139,19 @@ public class PersonDetailActivity extends BaseHeadActivity {
 
     public String[] getZ(String str) {
         return str.split(",");
+    }
+
+    public List<ContactsInfo> changeList(PersonDetailResult.DataBean.PersonDTOBean dtoBean){
+        List<ContactsInfo> infos=new ArrayList<>();
+        if(dtoBean!=null){
+            String arr[]=dtoBean.getEmergencyMan().split(",");
+            String phone[]=dtoBean.getEmergencyPhone().split(",");
+            if(arr.length>0&&phone.length>0&&arr.length==phone.length){
+                for(int i=0;i<arr.length;i++){
+                    infos.add(new ContactsInfo(i+"",phone[i],arr[i]));
+                }
+            }
+        }
+       return infos;
     }
 }

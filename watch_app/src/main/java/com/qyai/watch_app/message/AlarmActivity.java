@@ -44,7 +44,7 @@ public class AlarmActivity extends BaseActivity {
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
     AlarmAdapter alarmAdapter;
-    int itemType = 1;
+    int itemType = 2;
 
     @Override
     protected int layoutId() {

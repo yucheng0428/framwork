@@ -5,11 +5,9 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.netHttp.HttpReq;
-import com.lib.common.netHttp.HttpServiec;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 
 import java.util.ArrayList;
@@ -40,7 +38,6 @@ public class WebSocketUtlts {
     public void stompConnect(){
         mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, HttpReq.getInstence().getIp()+"websocket");
         connectStomp();
-
     }
     public void connectStomp() {
         mStompClient.withClientHeartbeat(1000).withServerHeartbeat(1000);
@@ -54,7 +51,6 @@ public class WebSocketUtlts {
                             LogUtil.e(TAG,"连接成功");
                             break;
                         case ERROR:
-                            Log.e(TAG, "Stomp connection error", lifecycleEvent.getException());
                             LogUtil.e(TAG,"Stomp connection error");
                             break;
                         case CLOSED:

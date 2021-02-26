@@ -40,7 +40,7 @@ public class XiaQuAdapter extends SimpleRecAdapter<XiaQuResult.DataBean.ListBean
        XiaQuResult.DataBean.ListBean info=data.get(position);
        holder.tv_name.setText(info.getName());
        holder.tv_sex.setText(info.getSexName());
-       if(info.getHealthInfo().equals("0")){
+       if(info.getHealthInfo()!=null&&info.getHealthInfo().equals("0")){
            holder.tv_stat.setText("健康特征正常！");
            holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_green));
        }else {

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.BufferedOutputStream;
@@ -599,4 +600,21 @@ public class FileUtils
 			{ ".z", "application/x-compress" },
 			{ ".zip", "application/x-zip-compressed" }, { "", "*/*" }
 	};
+
+	/**
+	 * base64转BIGMAP
+	 * @param base64
+	 * @return
+	 */
+	public static Bitmap base64ChangeBitmap(String base64){
+		String code = base64;
+		Bitmap bitmap = null;
+		try {
+			byte[] bitmapByte = Base64.decode(code, Base64.DEFAULT);
+			bitmap = BitmapFactory.decodeByteArray(bitmapByte, 0, bitmapByte.length);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bitmap;
+	}
 }

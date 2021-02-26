@@ -1,9 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".changepsw.ChangePswActivity">
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="79dp"
+        android:layout_height="79dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp"
+        android:src="@mipmap/icon_app" />
+
+    <RelativeLayout
+        android:id="@+id/ll_user"
+        style="@style/layout_edit_style"
+        android:layout_below="@+id/iv_icon"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="50dp">
+
+
+        <EditText
+            android:id="@+id/et_user"
+            style="@style/edittext_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@null"
+            android:hint="请输旧密码"
+            android:inputType="textPassword"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/iv_open3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/icon_open" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_psw"
+        style="@style/layout_edit_style"
+        android:layout_below="@+id/ll_user"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/edittext_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@null"
+            android:hint="请输入新密码"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/iv_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/icon_open" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_yzm"
+        style="@style/layout_edit_style"
+        android:layout_below="@+id/ll_psw"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp">
+
+
+        <EditText
+            android:id="@+id/et_password_agan"
+            style="@style/edittext_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@null"
+            android:hint="请输入新密码"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/iv_open2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/icon_open" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="290dp"
+        android:layout_height="44dp"
+        android:layout_below="@+id/ll_yzm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_blue"
+        android:text="注  册"
+        android:textColor="#FFFFFF"
+        android:textSize="8pt" />
+
+    <TextView
+        android:id="@+id/tv_go_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_ok"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:textSize="12dp" />
+</RelativeLayout>

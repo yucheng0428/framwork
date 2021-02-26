@@ -3,6 +3,7 @@ package com.lib.common.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.view.Display;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
 import com.lib.common.R;
+import com.lib.common.baseUtils.FileUtils;
 
 /**
  * 查看大图
@@ -32,6 +34,12 @@ public class LookBigPictureDialog extends Dialog {
         }
     }
 
+    public void setBase64(Bitmap base64){
+        if(base64!=null){
+            Glide.with(context).load(base64).placeholder(R.drawable.icon_loadings).skipMemoryCache(true).into(imageView);
+        }
+    }
+
     public LookBigPictureDialog(@NonNull Context context, String url) {
         super(context, R.style.DialogTheme);
         this.context = context;
@@ -40,7 +48,14 @@ public class LookBigPictureDialog extends Dialog {
         imageView = findViewById(R.id.image);
         setImgUrl(url);
     }
-
+    public LookBigPictureDialog(@NonNull Context context, Bitmap bitmap) {
+        super(context, R.style.DialogTheme);
+        this.context = context;
+        setWindow();
+        setContentView(R.layout.dialog_lookbig_picture);
+        imageView = findViewById(R.id.image);
+        setBase64(bitmap);
+    }
 
     public void setWindow() {
         // TODO Auto-generated method stub

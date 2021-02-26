@@ -54,7 +54,7 @@
         <!-- 高德key-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="f359330a60e43cd16d62deaa12aaa2b6"/>
+            android:value="2623e16ac001f885cbf15ef49e1204a2"/>
         <activity android:name=".MapActivity">
         </activity>
         <activity android:name=".postion.AddEnclosureActivity"/>

@@ -115,12 +115,14 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
             disposable.dispose();
         }
         if(isChange){
+            et_user.setHint("请输入手机号");
             et_password.setHint("请输入验证码");
             tv_forget_psw.setText("密码登录");
             tv_sendcode.setVisibility(View.VISIBLE);
             iv_open.setVisibility(View.GONE);
             isChange=false;
         }else {
+            et_user.setHint("请输入用户名");
             et_password.setHint("请输入密码");
             tv_forget_psw.setText("验证码登录");
             tv_sendcode.setVisibility(View.GONE);
@@ -133,7 +135,11 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
             if (!TextUtils.isEmpty(getUserName()) && !TextUtils.isEmpty(getPassWord())) {
+                if(isChange){
                 getMvpPresenter().loginding(getUserName(), getPassWord(),viewType);
+                }else {
+                    UIHelper.ToastMessage(mActivity,"暂时未提供验证码登录");
+                }
             }
         } else if (v.getId() == R.id.login_logo) {
             IphoneDialog iphoneDialog = new IphoneDialog(mActivity, new IphoneDialog.IphoneListener() {

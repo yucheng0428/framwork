@@ -146,7 +146,7 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
             }else {
                 tv_valueof_blood.setText("");
             }
-            Glide.with(mActivity).load(Constants.imageUrl).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
+            Glide.with(mActivity).load("").placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
         }
     }
 
