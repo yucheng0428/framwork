@@ -62,36 +62,36 @@
         <TextView
             android:id="@+id/tv_all"
             style="@style/alarm_text"
-            android:text="总人数:60" />
+            android:text="总人数:" />
         <TextView
             android:id="@+id/tv_alarm_all"
             style="@style/alarm_text"
             android:layout_below="@+id/tv_all"
-            android:text="告警总数：133"/>
+            android:text="告警总数："/>
         <TextView
             android:id="@+id/tv_nodo"
             style="@style/alarm_text"
             android:layout_below="@+id/tv_alarm_all"
-            android:text="未处理告警:60" />
+            android:text="未处理告警:" />
         <TextView
             android:id="@+id/tv_online"
             style="@style/alarm_text"
             android:layout_alignParentRight="true"
-            android:text="在线人数:60" />
+            android:text="在线人数:" />
 
         <TextView
             android:id="@+id/tv_today_alarm_all"
             style="@style/alarm_text"
             android:layout_below="@+id/tv_online"
             android:layout_alignParentRight="true"
-            android:text="今日告警总数:60" />
+            android:text="今日告警总数:" />
 
         <TextView
             android:id="@+id/tv_today_nodo"
             style="@style/alarm_text"
             android:layout_below="@+id/tv_today_alarm_all"
             android:layout_alignParentRight="true"
-            android:text="今日未处理告警:60" />
+            android:text="今日未处理告警:" />
     </RelativeLayout>
 
     <TextView

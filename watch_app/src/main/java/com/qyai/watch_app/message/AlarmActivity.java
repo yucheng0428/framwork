@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.base.BaseActivity;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.UIHelper;
@@ -26,7 +27,9 @@ import com.qyai.watch_app.message.bean.AlarmInfo;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.AlarmResult;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,6 +48,7 @@ public class AlarmActivity extends BaseActivity {
     RecyclerView recyclerView;
     AlarmAdapter alarmAdapter;
     int itemType = 2;
+    static int classId = 0;
 
     @Override
     protected int layoutId() {
@@ -54,6 +58,7 @@ public class AlarmActivity extends BaseActivity {
     @Override
     protected void initUIData(Bundle bundle) {
         setScreenModel(3);
+        classId=getIntent().getIntExtra("classId",0);
         setTranslucentStatusColor(mActivity.getResources().getColor(R.color.white));
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         recyclerView.setLayoutManager(layoutManager);
@@ -84,6 +89,9 @@ public class AlarmActivity extends BaseActivity {
                         //2是点击处理按钮;
                         intent.putExtra("type", 2);
                         startActivityForResult(intent, Constants.REQUEST_CODE);
+                        break;
+                    case 3:
+                        ARouter.getInstance().build("/maplib/GMapActivity").navigation();
                         break;
                 }
             }
@@ -129,11 +137,14 @@ public class AlarmActivity extends BaseActivity {
         HashMap req = new HashMap();
         req.put("dealStatus", type + "");
         req.put("page", "-1");
-
+        List<String> count = new ArrayList<>();
+        count.add(classId + "");
+        req.put("classId", count);
         //查询告警
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarm", req, new OnHttpCallBack<AlarmResult>() {
             @Override
             public void onSuccessful(int id, AlarmResult result) {
+                alarmAdapter.clearData();
                 if (result != null && result.getData().size() > 0) {
                     alarmAdapter.setData(result.getData());
                 }

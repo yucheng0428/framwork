@@ -162,6 +162,9 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                         //2是点击处理按钮;
                         startActivityForResult(intent, Constants.REQUEST_CODE);
                         break;
+                    case 3:
+                        ARouter.getInstance().build("/maplib/GMapActivity").navigation();
+                        break;
                 }
             }
         });
@@ -181,8 +184,8 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                 // Another interface callback
             }
         });
-        MessageService.initService(mActivity);
-        MessageService.setAlamListenser(this);
+//        MessageService.initService(mActivity);
+//        MessageService.setAlamListenser(this);
         getAllClass();
     }
 
@@ -203,6 +206,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             }
         } else if (view.getId() == R.id.ivRight) {
             intent.setClass(mActivity, AlarmActivity.class);
+            intent.putExtra("classId",classId);
             startActivity(intent);
         } else if (view.getId() == R.id.tv_xqsh) {
             intent.setClass(mActivity, XiaQuActivity.class);
@@ -292,9 +296,8 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarm", req, new OnHttpCallBack<AlarmResult>() {
             @Override
             public void onSuccessful(int id, AlarmResult result) {
-
+                alarmAdapter.clearData();
                 if (result != null && result.getData().size() > 0) {
-                    alarmAdapter.clearData();
                     alarmAdapter.setData(result.getData());
                 }
             }
@@ -336,7 +339,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     //获取辖区分类
     public void getAllClass() {
         HashMap req = new HashMap();
-        HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "jurisdiction/queryAllClass", req, new OnHttpCallBack<JusClassResult>() {
+        HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "/jurisdiction/queryAllClass/userClass", req, new OnHttpCallBack<JusClassResult>() {
             @Override
             public void onSuccessful(int id, JusClassResult result) {
                 if (result != null && result.getData() != null) {

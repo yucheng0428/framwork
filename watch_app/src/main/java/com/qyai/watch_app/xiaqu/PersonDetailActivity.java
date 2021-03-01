@@ -108,19 +108,28 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     tv_sex.setText(result.getData().getPersonDTO().getSexName());
                     tv_now_adress.setText(result.getData().getPersonDTO().getCurrentAddress());
                     tv_hj_adress.setText(result.getData().getPersonDTO().getPermanentAddress());
-                    tv_mesure_value.setText(changeD(result.getData().getPersonDetailDTO().getAlarmBloodPressureHigh()));
-                    tv_mesure_value2.setText(changeD(result.getData().getPersonDetailDTO().getAlarmHeartRate()));
+                    if(result.getData().getSignNowDTO().getBloodPressureLow()!=null&&result.getData().getSignNowDTO().getBloodPressureHigh()!=null){
+                        tv_mesure_value.setText(result.getData().getSignNowDTO().getBloodPressureLow()
+                                +"/"+result.getData().getSignNowDTO().getBloodPressureHigh()
+                        );
+                    }else {
+                        tv_mesure_value.setText("0/0");
+                    }
+                    if(SPValueUtil.isEmpty(result.getData().getSignNowDTO().getHeartRate())){
+                        tv_mesure_value2.setText(result.getData().getSignNowDTO().getHeartRate());
+                    }else {
+                        tv_mesure_value2.setText("0");
+                    }
                     head_img = result.getData().getPersonDTO().getImg();
                     Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(head_img)).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
                     tv_result_1.setText(result.getData().getSignNowDTO().getBloodPressureState()==null?"":result.getData().getSignNowDTO().getBloodPressureState());
                     tv_result_2.setText(result.getData().getSignNowDTO().getHeartRateState()==null?"":result.getData().getSignNowDTO().getHeartRateState());
-                    String[] arr = getZ(result.getData().getPersonDetailDTO().getAlarmHeartRate());
                     String[] arr1 = getZ(result.getData().getPersonDetailDTO().getAlarmOxygen());
-                    if (arr != null && arr.length > 0) {
-                        cpv.setProgress((int) ((Float.valueOf(arr[0]) / Float.valueOf(arr[1])) * 100),2000);
+                    if (result.getData().getSignNowDTO().getBloodPressureLow()!= null && result.getData().getSignNowDTO().getBloodPressureHigh()!=null) {
+                        cpv.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getBloodPressureLow()) / Float.valueOf(result.getData().getSignNowDTO().getBloodPressureHigh()) * 100)),2000);
                     }
-                    if (arr1 != null && arr1.length > 0) {
-                        cpv2.setProgress((int) ((Float.valueOf(arr1[0]) / Float.valueOf(arr1[1])) * 100),2000);
+                    if (arr1 != null && arr1.length > 0&&result.getData().getSignNowDTO().getHeartRate()!=null) {
+                        cpv2.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getHeartRate()) / Float.valueOf(arr1[1])) * 100),2000);
                     }
                     contactsInfos=changeList(result.getData().getPersonDTO());
                 }
@@ -143,12 +152,30 @@ public class PersonDetailActivity extends BaseHeadActivity {
 
     public List<ContactsInfo> changeList(PersonDetailResult.DataBean.PersonDTOBean dtoBean){
         List<ContactsInfo> infos=new ArrayList<>();
+        ContactsInfo contactsInfo=new ContactsInfo("当前联系人",dtoBean.getPhone(),dtoBean.getName());
+        infos.add(contactsInfo);
         if(dtoBean!=null){
             String arr[]=dtoBean.getEmergencyMan().split(",");
             String phone[]=dtoBean.getEmergencyPhone().split(",");
-            if(arr.length>0&&phone.length>0&&arr.length==phone.length){
+            if(arr.length>1&&phone.length>1&&arr.length==phone.length){
                 for(int i=0;i<arr.length;i++){
-                    infos.add(new ContactsInfo(i+"",phone[i],arr[i]));
+                    switch (i){
+                        case 0:
+                            infos.add(new ContactsInfo("第一紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 1:
+                            infos.add(new ContactsInfo("第二紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 2:
+                            infos.add(new ContactsInfo("第三紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 3:
+                            infos.add(new ContactsInfo("第四紧急联系人",phone[i],arr[i]));
+                            break;
+                        default:
+                            infos.add(new ContactsInfo("第"+(i+1)+"紧急联系人",phone[i],arr[i]));
+                            break;
+                    }
                 }
             }
         }

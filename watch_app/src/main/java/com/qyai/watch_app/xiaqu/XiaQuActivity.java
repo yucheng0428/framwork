@@ -19,6 +19,8 @@ import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
+import com.qyai.watch_app.contacts.ContactsDialog;
+import com.qyai.watch_app.contacts.bean.ContactsInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +67,9 @@ public class XiaQuActivity extends BaseHeadActivity {
                         break;
                     case 2:
                         //2是点击打电话;
-                        PhoneUtils.dialPhone(mActivity, model.getPhone());
+                        ContactsDialog dialog=new ContactsDialog(mActivity, changeList(model));
+                        dialog.show();
+//                        PhoneUtils.dialPhone(mActivity, model.getPhone());
                         break;
                     case 3:
                         ARouter.getInstance().build("/maplib/GMapActivity").navigation();
@@ -87,7 +91,37 @@ public class XiaQuActivity extends BaseHeadActivity {
 
     }
 
-
+    public List<ContactsInfo> changeList(XiaQuResult.DataBean.ListBean dtoBean){
+        List<ContactsInfo> infos=new ArrayList<>();
+        ContactsInfo contactsInfo=new ContactsInfo("当前联系人",dtoBean.getPhone(),dtoBean.getName());
+        infos.add(contactsInfo);
+        if(dtoBean!=null){
+            String arr[]=dtoBean.getEmergencyMan().split(",");
+            String phone[]=dtoBean.getEmergencyPhone().split(",");
+            if(arr.length>1&&phone.length>1&&arr.length==phone.length){
+                for(int i=0;i<arr.length;i++){
+                    switch (i){
+                        case 0:
+                            infos.add(new ContactsInfo("第一紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 1:
+                            infos.add(new ContactsInfo("第二紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 2:
+                            infos.add(new ContactsInfo("第三紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 3:
+                            infos.add(new ContactsInfo("第四紧急联系人",phone[i],arr[i]));
+                            break;
+                        default:
+                            infos.add(new ContactsInfo("第"+(i+1)+"紧急联系人",phone[i],arr[i]));
+                            break;
+                    }
+                }
+            }
+        }
+        return infos;
+    }
     /**
      * 获取辖区人员信息
      * /jurisdiction/selectUserJurisdictionList

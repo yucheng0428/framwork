@@ -20,11 +20,7 @@ public class LoginModel extends BaseModel {
         mPerrsenter = loginPersenter;
     }
 
-    public void LoginReq(final String name, final String password,String LOGIN_URL) {
-        Map<Object, Object> para = new HashMap<>();
-        para.put("account", name);
-        para.put("pwd", Utils.md5(password));
-        para.put("loginType", "phone");
+    public void LoginReq(Map<Object,Object>para,String LOGIN_URL) {
         HttpServiec.getInstance().postFlowableMap(100, LOGIN_URL,para, new OnHttpCallBack<String>() {
             @Override
             public void onSuccessful(int id, String baseResult) {
@@ -41,5 +37,24 @@ public class LoginModel extends BaseModel {
             }
         },String.class);
 
+    }
+
+    public void getVerificationCode(String phone, String url) {
+        Map<String, String> para = new HashMap<>();
+        HttpServiec.getInstance().getFlowbleData(101, url+phone,para, new OnHttpCallBack<String>() {
+            @Override
+            public void onSuccessful(int id, String baseResult) {
+                try {
+                    mPerrsenter.reqSuccessful(id,baseResult);
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFaild(int id, String baseResult, String err) {
+                mPerrsenter.reqErro(id,baseResult,err);
+            }
+        },String.class);
     }
 }

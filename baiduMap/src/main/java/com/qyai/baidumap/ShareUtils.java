@@ -31,8 +31,8 @@ public class ShareUtils {
                 if ("Wechat".equals(platform.getName())) {
                     paramsToShare.setTitle(title);
                     paramsToShare.setText(content);
-                    paramsToShare.setImageUrl(imageUrl);
-                    paramsToShare.setUrl(url);
+                    paramsToShare.setImageUrl("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.biaobaiju.com%2Fuploads%2F20180111%2F00%2F1515603525-qwkFGlSYdP.jpg&refer=http%3A%2F%2Fimage.biaobaiju.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1617157877&t=d67d7df351c3aafc756ae0e21c0e7ea3");
+                    paramsToShare.setUrl("http://bbs.mob.com/thread-24431-1-6.html");
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
                     Log.d("ShareSDK", paramsToShare.toMap().toString());
                 }

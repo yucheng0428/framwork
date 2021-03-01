@@ -40,13 +40,12 @@ public class AlarmAdapter extends SimpleRecAdapter<AlarmPushBean,AlarmAdapter.Vi
         AlarmPushBean info=data.get(position);
         holder.tv_time.setText(info.getCreateTime());
         holder.tv_title.setText(info.getContent());
+        holder.iv_icon.setText(info.getTypeName());
         //处理结果，1已处理，0未处理, 2忽略
             if(info.getDealStatus()==0){
-                holder.iv_icon.setImageResource(R.mipmap.icon_message_orange);
                 holder.tv_do.setVisibility(View.VISIBLE);
             }else if(info.getDealStatus()==1){
-                holder.iv_icon.setImageResource(R.mipmap.icon_message_blue);
-                holder.tv_do.setVisibility(View.GONE);
+                holder.tv_do.setVisibility(View.INVISIBLE);
             }
         holder.tv_do.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +55,14 @@ public class AlarmAdapter extends SimpleRecAdapter<AlarmPushBean,AlarmAdapter.Vi
                 }
             }
         });
+            holder.iv_postion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(getRecItemClick()!=null){
+                        getRecItemClick().onItemClick(position, data.get(position), 3, holder);
+                    }
+                }
+            });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,13 +75,15 @@ public class AlarmAdapter extends SimpleRecAdapter<AlarmPushBean,AlarmAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R2.id.iv_message_icon)
-        ImageView iv_icon;
+        TextView iv_icon;
         @BindView(R2.id.tv_time)
         TextView tv_time;
         @BindView(R2.id.tv_message_title)
         TextView tv_title;
         @BindView(R2.id.tv_do)
         TextView tv_do;
+        @BindView(R2.id.iv_postion)
+        ImageView iv_postion;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

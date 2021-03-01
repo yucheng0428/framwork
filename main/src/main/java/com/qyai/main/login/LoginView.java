@@ -22,4 +22,9 @@ public interface LoginView extends BaseView {
      */
     void loginNext(UserEvent event);
 
+
+    /**
+     *
+     */
+    void countDown();
 }

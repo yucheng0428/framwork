@@ -42,7 +42,7 @@ import butterknife.OnClick;
 
 public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.OnCheckedChangeListener {
     @BindView(R2.id.iv_head)
-    ImageView iv_head;
+    TextView iv_head;
     @BindView(R2.id.tv_title)
     TextView tv_title;
     @BindView(R2.id.tv_time)
@@ -124,13 +124,14 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
 
     public void setViewMsg() {
         if (info != null) {
-            tv_title.setText(info.getTypeName());
+            tv_title.setText(info.getFenceName());
             tv_time.setText(info.getCreateTime());
             tv_alarm_person.setText(info.getAuthorName());
             tv_alarm_wl.setText(info.getFenceName());
             tv_alarm_qy.setText(info.getAreaName());
             tv_alarm_content.setText(info.getContent());
             tv_alarm_result.setText(info.getDealContent());
+            iv_head.setText(info.getTypeName());
             if(SPValueUtil.isEmpty(info.getHealthType())){
                 switch (info.getHealthType()){
                     case "1":
@@ -146,7 +147,6 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
             }else {
                 tv_valueof_blood.setText("");
             }
-            Glide.with(mActivity).load("").placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
         }
     }
 
@@ -162,11 +162,9 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
 //        }
     }
 
-    @OnClick({R2.id.iv_head, R2.id.bt_do, R2.id.bt_nodo,R2.id.radioButton3})
+    @OnClick({ R2.id.bt_do, R2.id.bt_nodo,R2.id.radioButton3})
     public void onClick(View view) {
-        if (view.getId() == R.id.iv_head) {
-            new LookBigPictureDialog(mActivity, Constants.imageUrl).show();
-        } else if (view.getId() == R.id.bt_do) {
+         if (view.getId() == R.id.bt_do) {
               handlerAlarm(1);
         } else if (view.getId() == R.id.bt_nodo) {
                 handlerAlarm(2);
@@ -213,6 +211,10 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
     }
 
     public void handlerAlarm(int type) {
+        if(!SPValueUtil.isEmpty( ed_remaks.getText().toString())){
+            UIHelper.ToastMessage(mActivity,"请输入处理内容");
+            return;
+        }
         Map<Object, Object> parm = new HashMap<>();
         parm.put("id", info.getId());
         parm.put("dealContent", ed_remaks.getText().toString());

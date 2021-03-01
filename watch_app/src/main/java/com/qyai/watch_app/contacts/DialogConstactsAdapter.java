@@ -34,7 +34,7 @@ public class DialogConstactsAdapter extends SimpleRecAdapter<ContactsInfo, Dialo
     @Override
     public void onBindViewHolder(DialogConstactsAdapter.ViewHolder holder, int position) {
         ContactsInfo bean = data.get(position);
-        holder.tv_title_sort.setText("第" +(position+1)+"紧急联系人");
+        holder.tv_title_sort.setText(bean.getSort());
         holder.tv_phone_no.setText(bean.getPhoneNo());
         holder.tv_name.setText(bean.getName());
         holder.iv_phone.setOnClickListener(new View.OnClickListener() {

@@ -93,7 +93,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
         }else if(view.getId()==R.id.tv_share){
 //            layout_adress.setVisibility(View.GONE);
             ShareUtils shareUtils=new ShareUtils();
-            shareUtils.shareMessage("分享",tv_adress.getText().toString(),"","","121212");
+            shareUtils.shareMessage("分享",tv_adress.getText().toString(),null,null,"121212");
 
         }
     }

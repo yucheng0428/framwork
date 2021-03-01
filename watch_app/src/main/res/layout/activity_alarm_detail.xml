@@ -8,12 +8,15 @@
     android:paddingBottom="@dimen/padding_10">
 
 
-    <ImageView
+    <TextView
         android:id="@+id/iv_head"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="@dimen/padding_10"
-        android:src="@mipmap/ic_launcher" />
+        android:background="@color/bg_blue"
+        android:gravity="center"
+        android:textColor="@color/white"
+         />
 
     <TextView
         android:id="@+id/tv_title"

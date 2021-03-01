@@ -13,6 +13,7 @@ public class MyApplication extends BaseApp {
         super.onCreate();
         Common.initARouter(this);
         HttpReq.getInstence().setIp("http://124.71.140.164:16808/");
+//        HttpReq.getInstence().setIp("http://172.16.1.236:16800/");
     }
 
 }
