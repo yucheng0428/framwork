@@ -57,6 +57,8 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
     TextView tv_alarm_content;
     @BindView(R2.id.tv_alarm_result)
     TextView tv_alarm_result;
+    @BindView(R2.id.tv_alarm_result_content)
+    TextView tv_alarm_result_content;
     @BindView(R2.id.ed_remaks)
     EditText ed_remaks;
     @BindView(R2.id.tv_valueof_blood)
@@ -130,7 +132,8 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
             tv_alarm_wl.setText(info.getFenceName());
             tv_alarm_qy.setText(info.getAreaName());
             tv_alarm_content.setText(info.getContent());
-            tv_alarm_result.setText(info.getDealContent());
+            tv_alarm_result.setText(info.getDealStatusName());
+            tv_alarm_result_content.setText(info.getDealContent());
             iv_head.setText(info.getTypeName());
             if(SPValueUtil.isEmpty(info.getHealthType())){
                 switch (info.getHealthType()){

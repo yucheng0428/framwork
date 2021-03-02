@@ -106,8 +106,12 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     tv_mz.setText(result.getData().getPersonDTO().getNationName());
                     tv_name.setText(result.getData().getPersonDTO().getName());
                     tv_sex.setText(result.getData().getPersonDTO().getSexName());
-                    tv_now_adress.setText(result.getData().getPersonDTO().getCurrentAddress());
-                    tv_hj_adress.setText(result.getData().getPersonDTO().getPermanentAddress());
+                    if(SPValueUtil.isEmpty(result.getData().getPersonDTO().getcAddressName())){
+                        tv_now_adress.setText(result.getData().getPersonDTO().getcAddressName()+result.getData().getPersonDTO().getCurrentAddress());
+                    }
+                    if(SPValueUtil.isEmpty(result.getData().getPersonDTO().getpAddressName())){
+                        tv_hj_adress.setText(result.getData().getPersonDTO().getpAddressName()+result.getData().getPersonDTO().getPermanentAddress());
+                    }
                     if(result.getData().getSignNowDTO().getBloodPressureLow()!=null&&result.getData().getSignNowDTO().getBloodPressureHigh()!=null){
                         tv_mesure_value.setText(result.getData().getSignNowDTO().getBloodPressureLow()
                                 +"/"+result.getData().getSignNowDTO().getBloodPressureHigh()

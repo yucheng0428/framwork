@@ -135,7 +135,14 @@ public class AlarmActivity extends BaseActivity {
     //查询告警 0=未处理 1=已处理
     public void getAlarmList(int type) {
         HashMap req = new HashMap();
-        req.put("dealStatus", type + "");
+        if(type==0){
+            req.put("dealStatus", type + "");
+        }else {
+            List<String> count = new ArrayList<>();
+            count.add("1");
+            count.add("2");
+            req.put("dealStatusList", count);
+        }
         req.put("page", "-1");
         List<String> count = new ArrayList<>();
         count.add(classId + "");

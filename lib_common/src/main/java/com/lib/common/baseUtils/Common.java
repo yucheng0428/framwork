@@ -24,6 +24,7 @@ public class Common {
     public final static String USER_PASSWORD = "userpsw";
     public final static String BRACELET_MAC = "bracelet_mac";
     public final static String VIEWTYPE = "viewType";
+    public final static String JUSCLASSRESULT="JusClassResult";
     /**
      * 帮助文档
      */

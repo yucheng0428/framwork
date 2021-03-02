@@ -259,18 +259,84 @@ public class PersonDetailResult implements Serializable {
             private String jobStatusName;
             private String politicalStatusName;
             private String nationName;
-            private Object pProvinceName;
-            private Object pCityName;
-            private Object pDistrictName;
-            private Object cProvinceName;
-            private Object cCityName;
-            private Object cDistrictName;
+            private String pProvinceName;
+            private String pCityName;
+            private String pDistrictName;
+            private String cProvinceName;
+            private String cCityName;
+            private String cDistrictName;
+            private String cAddressName;
+            private String pAddressName;
             private String ccity;
             private String cdistrict;
             private String cprovince;
             private String pcity;
             private String pprovince;
             private String pdistrict;
+
+            public String getpProvinceName() {
+                return pProvinceName;
+            }
+
+            public void setpProvinceName(String pProvinceName) {
+                this.pProvinceName = pProvinceName;
+            }
+
+            public String getpCityName() {
+                return pCityName;
+            }
+
+            public void setpCityName(String pCityName) {
+                this.pCityName = pCityName;
+            }
+
+            public String getpDistrictName() {
+                return pDistrictName;
+            }
+
+            public void setpDistrictName(String pDistrictName) {
+                this.pDistrictName = pDistrictName;
+            }
+
+            public String getcProvinceName() {
+                return cProvinceName;
+            }
+
+            public void setcProvinceName(String cProvinceName) {
+                this.cProvinceName = cProvinceName;
+            }
+
+            public String getcCityName() {
+                return cCityName;
+            }
+
+            public void setcCityName(String cCityName) {
+                this.cCityName = cCityName;
+            }
+
+            public String getcDistrictName() {
+                return cDistrictName;
+            }
+
+            public void setcDistrictName(String cDistrictName) {
+                this.cDistrictName = cDistrictName;
+            }
+
+            public String getcAddressName() {
+                return cAddressName;
+            }
+
+            public void setcAddressName(String cAddressName) {
+                this.cAddressName = cAddressName;
+            }
+
+            public String getpAddressName() {
+                return pAddressName;
+            }
+
+            public void setpAddressName(String pAddressName) {
+                this.pAddressName = pAddressName;
+            }
 
             public int getPersonId() {
                 return personId;
@@ -550,54 +616,6 @@ public class PersonDetailResult implements Serializable {
 
             public void setNationName(String nationName) {
                 this.nationName = nationName;
-            }
-
-            public Object getPProvinceName() {
-                return pProvinceName;
-            }
-
-            public void setPProvinceName(Object pProvinceName) {
-                this.pProvinceName = pProvinceName;
-            }
-
-            public Object getPCityName() {
-                return pCityName;
-            }
-
-            public void setPCityName(Object pCityName) {
-                this.pCityName = pCityName;
-            }
-
-            public Object getPDistrictName() {
-                return pDistrictName;
-            }
-
-            public void setPDistrictName(Object pDistrictName) {
-                this.pDistrictName = pDistrictName;
-            }
-
-            public Object getCProvinceName() {
-                return cProvinceName;
-            }
-
-            public void setCProvinceName(Object cProvinceName) {
-                this.cProvinceName = cProvinceName;
-            }
-
-            public Object getCCityName() {
-                return cCityName;
-            }
-
-            public void setCCityName(Object cCityName) {
-                this.cCityName = cCityName;
-            }
-
-            public Object getCDistrictName() {
-                return cDistrictName;
-            }
-
-            public void setCDistrictName(Object cDistrictName) {
-                this.cDistrictName = cDistrictName;
             }
 
             public String getCcity() {

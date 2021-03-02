@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.FileUtils;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.recyclerView.SimpleRecAdapter;
 import com.qyai.watch_app.R;
@@ -47,7 +48,7 @@ public class XiaQuAdapter extends SimpleRecAdapter<XiaQuResult.DataBean.ListBean
            holder.tv_stat.setText("健康特征异常！");
            holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_red));
        }
-        Glide.with(context).load("").placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(holder.iv_head);
+        Glide.with(context).load(FileUtils.base64ChangeBitmap(info.getImg())).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(holder.iv_head);
        holder.iv_head.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

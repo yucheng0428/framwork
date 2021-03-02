@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -27,6 +28,7 @@ import com.lib.common.base.ViewManager;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
+import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.dialog.IphoneDialog;
@@ -68,8 +70,6 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     NavigationView nav_view;
     @BindView(R2.id.tvTitle)
     Spinner tvTitle;
-    @BindView(R2.id.tv_title)
-    TextView tv_title;
     @BindView(R2.id.ivLeft)
     ImageView ivLeft;
     @BindView(R2.id.ivRight)
@@ -112,7 +112,8 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     long mExitTime = 1000;
     UserEvent.UserData userData;
     JusClassAdapter jusClassAdapter;
-    static int classId = 0;
+     int classId = 0;
+
     @Override
     protected int layoutId() {
         return R.layout.activity_home_view2;
@@ -126,13 +127,12 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             tv_name.setText(userData.getUserInDeptDTO().getName());
             tv_phoenNo.setText("手机号码 : " + userData.getUserInDeptDTO().getMobilePhone());
             tv_project.setText("所属机构 : " + userData.getUserInDeptDTO().getDeptFullName());
-            if(SPValueUtil.isEmpty(userData.getUserInDeptDTO().getRoleName())){
+            if (SPValueUtil.isEmpty(userData.getUserInDeptDTO().getRoleName())) {
                 tv_user.setVisibility(View.VISIBLE);
                 tv_user.setText("职位 : " + userData.getUserInDeptDTO().getRoleName());
-            }else {
+            } else {
                 tv_user.setVisibility(View.GONE);
             }
-            tv_title.setText(userData.getUserInDeptDTO().getDeptName());
             if (SPValueUtil.isEmpty(userData.getUserInDeptDTO().getIcon())) {
                 Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(userData.getUserInDeptDTO().getIcon())).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
             }
@@ -174,8 +174,26 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int pos, long id) {
-                JusClassResult.DataBean dataBean = (JusClassResult.DataBean) jusClassAdapter.getItem(pos);
-                classId = dataBean.getId();
+                if (pos == 0 && classId == 0) {
+                    if (SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT))) {
+                        JusClassResult.DataBean dataBean = JSONObject.parseObject(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT), JusClassResult.DataBean.class);
+                        if (dataBean != null) {
+                            classId = dataBean.getId();
+                            int ps=0;
+                            for(int i=0;i<jusClassAdapter.getData().size();i++){
+                                if(dataBean.getId()==jusClassAdapter.getData().get(i).getId()){
+                                    ps=i;
+                                }
+                            }
+                            tvTitle.setSelection(ps, true);
+
+                        }
+                    }
+                } else {
+                    JusClassResult.DataBean dataBean = (JusClassResult.DataBean) jusClassAdapter.getItem(pos);
+                    SPValueUtil.saveStringValue(mActivity, Common.JUSCLASSRESULT, JSONObject.toJSONString(dataBean));
+                    classId = dataBean.getId();
+                }
                 reshData();
             }
 
@@ -184,18 +202,15 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                 // Another interface callback
             }
         });
-//        MessageService.initService(mActivity);
-//        MessageService.setAlamListenser(this);
+        MessageService.initService(mActivity);
+        MessageService.setAlamListenser(this);
         getAllClass();
     }
 
 
-
-
-
     @OnClick({
             R2.id.ivLeft, R2.id.tv_xqsh,
-            R2.id.ivRight, R2.id.tv_about, R2.id.tv_out_login, R2.id.tv_changePassword, R2.id.iv_head, R2.id.tv_title})
+            R2.id.ivRight, R2.id.tv_about, R2.id.tv_out_login, R2.id.tv_changePassword, R2.id.iv_head,})
     public void onClick(View view) {
         Intent intent = new Intent();
         if (view.getId() == R.id.ivLeft) {
@@ -206,7 +221,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             }
         } else if (view.getId() == R.id.ivRight) {
             intent.setClass(mActivity, AlarmActivity.class);
-            intent.putExtra("classId",classId);
+            intent.putExtra("classId", classId);
             startActivity(intent);
         } else if (view.getId() == R.id.tv_xqsh) {
             intent.setClass(mActivity, XiaQuActivity.class);
@@ -228,16 +243,15 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             if (SPValueUtil.isEmpty(userData.getUserInDeptDTO().getIcon())) {
                 new LookBigPictureDialog(mActivity, FileUtils.base64ChangeBitmap(userData.getUserInDeptDTO().getIcon())).show();
             }
-        } else if (view.getId() == R.id.tv_title) {
-            tvTitle.showContextMenu();
         }
     }
 
     public void loginOut() {
-        SPValueUtil.saveStringValue(mActivity, com.lib.common.baseUtils.Common.USER_DATA, "");
-        SPValueUtil.saveStringValue(mActivity, com.lib.common.baseUtils.Common.USER_TOKEN, "");
-        SPValueUtil.saveStringValue(mActivity, com.lib.common.baseUtils.Common.USER_PASSWORD, "");
-        SPValueUtil.saveStringValue(mActivity, com.lib.common.baseUtils.Common.USER_NAME, "");
+        SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, "");
+        SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, "");
+        SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, "");
+        SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, "");
+        SPValueUtil.saveStringValue(mActivity, Common.JUSCLASSRESULT, "");
         MessageService.stopService(mActivity);
         NetHeaderInterceptor.getInterceptor().setHeaders(new HashMap<>());
         HomeActivity2.this.finish();
@@ -344,10 +358,6 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             public void onSuccessful(int id, JusClassResult result) {
                 if (result != null && result.getData() != null) {
                     jusClassAdapter.setData(result.getData());
-                    if (result.getData().size() > 0) {
-                        classId = result.getData().get(0).getId();
-                        reshData();
-                    }
                 }
             }
 
@@ -359,7 +369,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     }
 
     //更新列表
-    public void reshData(){
+    public void reshData() {
         getCount(classId);
         getAlarmList(classId);
     }
@@ -385,9 +395,9 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
 
     @Override
     public void pushMsgReshList(AlarmPushBean bean) {
-           if(bean!=null&&bean.getDealStatus()==0){
-               alarmAdapter.getDataSource().add(0,bean);
-               alarmAdapter.notifyDataSetChanged();
-           }
+        if (bean != null && bean.getDealStatus() == 0) {
+            alarmAdapter.getDataSource().add(0, bean);
+            alarmAdapter.notifyDataSetChanged();
+        }
     }
 }

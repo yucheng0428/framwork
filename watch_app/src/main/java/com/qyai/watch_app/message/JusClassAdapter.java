@@ -26,6 +26,10 @@ public class JusClassAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public List<JusClassResult.DataBean> getData() {
+        return data;
+    }
+
     @Override
     public int getCount() {
         return data.size();

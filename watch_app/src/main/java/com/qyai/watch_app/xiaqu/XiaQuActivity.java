@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.FileUtils;
 import com.lib.common.baseUtils.PhoneUtils;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
@@ -53,7 +54,6 @@ public class XiaQuActivity extends BaseHeadActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
         adapter = new XiaQuAdapter(mActivity);
         recyclerView.setAdapter(adapter);
-//        adapter.setData(XiaQuInfo.getContactsInfoList());
         adapter.setRecItemClick(new RecyclerItemCallback<XiaQuResult.DataBean.ListBean, XiaQuAdapter.ViewHolder>() {
             @Override
             public void onItemClick(int position, XiaQuResult.DataBean.ListBean model, int tag, XiaQuAdapter.ViewHolder holder) {
@@ -76,13 +76,9 @@ public class XiaQuActivity extends BaseHeadActivity {
                         //2是点击打电话;
                         break;
                     case 4:
-                        String imageUrl="";
-                        if(model.getSex().equals("1")){
-                            imageUrl="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1289666865,1142307765&fm=26&gp=0.jpg";
-                        }else {
-                            imageUrl= Constants.imageUrl;
+                        if(SPValueUtil.isEmpty(model.getImg())){
+                            new LookBigPictureDialog(mActivity, FileUtils.base64ChangeBitmap(model.getImg())).show();
                         }
-                        new LookBigPictureDialog(mActivity, imageUrl).show();
                         break;
                 }
             }

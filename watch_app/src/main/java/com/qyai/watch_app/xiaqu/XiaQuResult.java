@@ -239,6 +239,7 @@ public class XiaQuResult implements Serializable {
              *
              */
 
+            private String img;
             private int personId;
             private String name;
             private String sex;
@@ -249,6 +250,14 @@ public class XiaQuResult implements Serializable {
             private String emergencyPhone;
             private String sexName;
             private String healthInfo;
+
+            public String getImg() {
+                return img;
+            }
+
+            public void setImg(String img) {
+                this.img = img;
+            }
 
             public String getHealthInfo() {
                 return healthInfo;

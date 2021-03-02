@@ -15,8 +15,7 @@
         android:layout_marginTop="@dimen/padding_10"
         android:background="@color/bg_blue"
         android:gravity="center"
-        android:textColor="@color/white"
-         />
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -50,7 +49,7 @@
             android:id="@+id/tv_valueof_blood"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:text="血压" />
     </LinearLayout>
 
@@ -119,11 +118,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout3"
+        android:layout_marginTop="@dimen/padding_10"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="告警内容：" />
 
@@ -140,21 +140,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout4"
+        android:layout_marginTop="@dimen/padding_10"
         android:orientation="vertical"
         android:visibility="visible">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:text="处理情况：" />
-
-        <TextView
-            android:id="@+id/tv_alarm_result"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_10"
-            android:text="" />
+            android:layout_marginTop="@dimen/padding_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="50dp"
+                android:text="处理情况：" />
+
+            <TextView
+                android:id="@+id/tv_alarm_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="50dp"
+                android:text="处理内容：" />
+
+            <TextView
+                android:id="@+id/tv_alarm_result_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -174,7 +202,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="处理情况：" />
 

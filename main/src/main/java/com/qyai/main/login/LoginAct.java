@@ -227,7 +227,9 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         NetHeaderInterceptor.getInterceptor().setHeaders(heard);
         SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, JSON.toJSONString(userData));
         SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getUserInDeptDTO().getToken() + "");
-        SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
+        if(isChange){
+            SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
+        }
         SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, getUserName());
         btn_login.setEnabled(true);
         hidLodingDialog();
