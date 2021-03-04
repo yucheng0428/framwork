@@ -7,8 +7,8 @@ MobSDK {
         loopShare true
         devInfo {
             Wechat {
-                appId "wx058b3b9fe481441b"
-                appSecret "f37961dda3d93783ff77ceafe6e3e147"
+                appId "wx6fd211ef82fd1bc3"
+                appSecret "61005966eba3a5216fa285f73236f343"
                 userName "gh_afb25ac019c9"
                 path "pages/index/index.html?id=1"
                 withShareTicket true
@@ -22,8 +22,8 @@ MobSDK {
                 enable true
             }
             WechatMoments {
-                appId "wx058b3b9fe481441b"
-                appSecret "f37961dda3d93783ff77ceafe6e3e147"
+                appId "wx6fd211ef82fd1bc3"
+                appSecret "61005966eba3a5216fa285f73236f343"
             }
 
         }

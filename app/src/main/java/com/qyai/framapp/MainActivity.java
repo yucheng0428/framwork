@@ -51,10 +51,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initUIData(Bundle bundle) {
         setTranslucentNavigationColor(getResources().getColor(R.color.half_transparent));
-        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE,  new String[]{
-                Manifest.permission.CAMERA,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE}); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限
         if (Utils.hasPermission(mActivity, android.Manifest.permission.CAMERA,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE)) {

@@ -112,7 +112,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     long mExitTime = 1000;
     UserEvent.UserData userData;
     JusClassAdapter jusClassAdapter;
-     int classId = 0;
+    int classId = 0;
 
     @Override
     protected int layoutId() {
@@ -179,15 +179,19 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                         JusClassResult.DataBean dataBean = JSONObject.parseObject(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT), JusClassResult.DataBean.class);
                         if (dataBean != null) {
                             classId = dataBean.getId();
-                            int ps=0;
-                            for(int i=0;i<jusClassAdapter.getData().size();i++){
-                                if(dataBean.getId()==jusClassAdapter.getData().get(i).getId()){
-                                    ps=i;
+                            int ps = 0;
+                            for (int i = 0; i < jusClassAdapter.getData().size(); i++) {
+                                if (dataBean.getId() == jusClassAdapter.getData().get(i).getId()) {
+                                    ps = i;
                                 }
                             }
                             tvTitle.setSelection(ps, true);
 
                         }
+                    } else {
+                        JusClassResult.DataBean dataBean = (JusClassResult.DataBean) jusClassAdapter.getItem(pos);
+                        SPValueUtil.saveStringValue(mActivity, Common.JUSCLASSRESULT, JSONObject.toJSONString(dataBean));
+                        classId = dataBean.getId();
                     }
                 } else {
                     JusClassResult.DataBean dataBean = (JusClassResult.DataBean) jusClassAdapter.getItem(pos);
@@ -353,7 +357,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     //获取辖区分类
     public void getAllClass() {
         HashMap req = new HashMap();
-        HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "/jurisdiction/queryAllClass/userClass", req, new OnHttpCallBack<JusClassResult>() {
+        HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "jurisdiction/queryAllClass/userClass", req, new OnHttpCallBack<JusClassResult>() {
             @Override
             public void onSuccessful(int id, JusClassResult result) {
                 if (result != null && result.getData() != null) {
@@ -370,8 +374,10 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
 
     //更新列表
     public void reshData() {
-        getCount(classId);
-        getAlarmList(classId);
+        if (classId != 0) {
+            getCount(classId);
+            getAlarmList(classId);
+        }
     }
 
     @Override
@@ -396,8 +402,9 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     @Override
     public void pushMsgReshList(AlarmPushBean bean) {
         if (bean != null && bean.getDealStatus() == 0) {
-            alarmAdapter.getDataSource().add(0, bean);
-            alarmAdapter.notifyDataSetChanged();
+//            alarmAdapter.getDataSource().add(0, bean);
+//            alarmAdapter.notifyDataSetChanged();
+            reshData();
         }
     }
 }

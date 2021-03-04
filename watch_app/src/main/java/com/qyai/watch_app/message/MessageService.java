@@ -199,11 +199,12 @@ public class MessageService extends Service  {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        queryAlarmInSignHandler.postDelayed(runnable, intervalTime);
+//        queryAlarmInSignHandler.postDelayed(runnable, intervalTime);
         //启动长连接
         webSocketUtlts=new WebSocketUtlts(getApplicationContext(), new PushListener() {
             @Override
             public void pushMsg(AlarmPushBean bean) {
+                // TODO: 2021/3/4 这里要做一个ClassId 的判断 
                 createNotification(bean);
                 mAlamListenser.pushMsgReshList(bean);
             }

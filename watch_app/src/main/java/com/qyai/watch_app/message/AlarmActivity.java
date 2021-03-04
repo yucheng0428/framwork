@@ -48,7 +48,7 @@ public class AlarmActivity extends BaseActivity {
     RecyclerView recyclerView;
     AlarmAdapter alarmAdapter;
     int itemType = 2;
-    static int classId = 0;
+    int classId = 0;
 
     @Override
     protected int layoutId() {
@@ -134,6 +134,9 @@ public class AlarmActivity extends BaseActivity {
 
     //查询告警 0=未处理 1=已处理
     public void getAlarmList(int type) {
+        if(classId==0){
+            return;
+        }
         HashMap req = new HashMap();
         if(type==0){
             req.put("dealStatus", type + "");

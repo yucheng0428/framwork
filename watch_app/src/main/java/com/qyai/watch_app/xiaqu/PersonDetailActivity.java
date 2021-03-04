@@ -112,10 +112,8 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     if(SPValueUtil.isEmpty(result.getData().getPersonDTO().getpAddressName())){
                         tv_hj_adress.setText(result.getData().getPersonDTO().getpAddressName()+result.getData().getPersonDTO().getPermanentAddress());
                     }
-                    if(result.getData().getSignNowDTO().getBloodPressureLow()!=null&&result.getData().getSignNowDTO().getBloodPressureHigh()!=null){
-                        tv_mesure_value.setText(result.getData().getSignNowDTO().getBloodPressureLow()
-                                +"/"+result.getData().getSignNowDTO().getBloodPressureHigh()
-                        );
+                    if(result.getData().getSignNowDTO().getTemperature()!=null){
+                        tv_mesure_value.setText(result.getData().getSignNowDTO().getTemperature());
                     }else {
                         tv_mesure_value.setText("0/0");
                     }
@@ -126,11 +124,11 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     }
                     head_img = result.getData().getPersonDTO().getImg();
                     Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(head_img)).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
-                    tv_result_1.setText(result.getData().getSignNowDTO().getBloodPressureState()==null?"":result.getData().getSignNowDTO().getBloodPressureState());
+                    tv_result_1.setText(result.getData().getSignNowDTO().getTemperatureState()==null?"":result.getData().getSignNowDTO().getTemperatureState());
                     tv_result_2.setText(result.getData().getSignNowDTO().getHeartRateState()==null?"":result.getData().getSignNowDTO().getHeartRateState());
                     String[] arr1 = getZ(result.getData().getPersonDetailDTO().getAlarmOxygen());
                     if (result.getData().getSignNowDTO().getBloodPressureLow()!= null && result.getData().getSignNowDTO().getBloodPressureHigh()!=null) {
-                        cpv.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getBloodPressureLow()) / Float.valueOf(result.getData().getSignNowDTO().getBloodPressureHigh()) * 100)),2000);
+                        cpv.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getTemperature()) / Float.valueOf(result.getData().getSignNowDTO().getBloodPressureHigh()) * 100)),2000);
                     }
                     if (arr1 != null && arr1.length > 0&&result.getData().getSignNowDTO().getHeartRate()!=null) {
                         cpv2.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getHeartRate()) / Float.valueOf(arr1[1])) * 100),2000);
@@ -146,9 +144,6 @@ public class PersonDetailActivity extends BaseHeadActivity {
         }, PersonDetailResult.class);
     }
 
-    public String changeD(String str) {
-        return str.replace(",", "/");
-    }
 
     public String[] getZ(String str) {
         return str.split(",");
@@ -161,7 +156,7 @@ public class PersonDetailActivity extends BaseHeadActivity {
         if(dtoBean!=null){
             String arr[]=dtoBean.getEmergencyMan().split(",");
             String phone[]=dtoBean.getEmergencyPhone().split(",");
-            if(arr.length>1&&phone.length>1&&arr.length==phone.length){
+            if(arr.length>0&&phone.length>0&&arr.length==phone.length){
                 for(int i=0;i<arr.length;i++){
                     switch (i){
                         case 0:
@@ -175,6 +170,12 @@ public class PersonDetailActivity extends BaseHeadActivity {
                             break;
                         case 3:
                             infos.add(new ContactsInfo("第四紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 4:
+                            infos.add(new ContactsInfo("第五紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 5:
+                            infos.add(new ContactsInfo("第六紧急联系人",phone[i],arr[i]));
                             break;
                         default:
                             infos.add(new ContactsInfo("第"+(i+1)+"紧急联系人",phone[i],arr[i]));

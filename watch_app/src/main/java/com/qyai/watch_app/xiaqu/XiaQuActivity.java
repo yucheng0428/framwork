@@ -36,7 +36,7 @@ public class XiaQuActivity extends BaseHeadActivity {
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
     XiaQuAdapter adapter;
-    static int classId;
+     int classId;
 
 
     @Override
@@ -94,7 +94,7 @@ public class XiaQuActivity extends BaseHeadActivity {
         if(dtoBean!=null){
             String arr[]=dtoBean.getEmergencyMan().split(",");
             String phone[]=dtoBean.getEmergencyPhone().split(",");
-            if(arr.length>1&&phone.length>1&&arr.length==phone.length){
+            if(arr.length>0&&phone.length>0&&arr.length==phone.length){
                 for(int i=0;i<arr.length;i++){
                     switch (i){
                         case 0:
@@ -108,6 +108,12 @@ public class XiaQuActivity extends BaseHeadActivity {
                             break;
                         case 3:
                             infos.add(new ContactsInfo("第四紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 4:
+                            infos.add(new ContactsInfo("第五紧急联系人",phone[i],arr[i]));
+                            break;
+                        case 5:
+                            infos.add(new ContactsInfo("第六紧急联系人",phone[i],arr[i]));
                             break;
                         default:
                             infos.add(new ContactsInfo("第"+(i+1)+"紧急联系人",phone[i],arr[i]));
@@ -124,6 +130,9 @@ public class XiaQuActivity extends BaseHeadActivity {
      * 查询辖区人员列表
      */
     public void getUserList() {
+        if(classId==0){
+            return;
+        }
         HashMap req = new HashMap();
         req.put("limit", 10);
         req.put("page", 1);
