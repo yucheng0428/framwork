@@ -1,11 +1,11 @@
 apply plugin: 'com.jakewharton.butterknife'
+
 if (isModuleMap.toBoolean()) {
     apply plugin: 'com.android.application'
 }else {
     apply plugin: "com.android.library"
 }
 apply plugin: 'com.mob.sdk'
-
 MobSDK {
     appKey "31d9bf7980980"
     appSecret "c3f19e83008e06f4e9ff5ca1899e1280"
@@ -14,7 +14,7 @@ MobSDK {
         devInfo {
             Wechat {
                 appId "wx6fd211ef82fd1bc3"
-                appSecret "61005966eba3a5216fa285f73236f343"
+                appSecret "3adfce3cfd76d44ce2c0919e3b02cb87"
                 userName "gh_afb25ac019c9"
                 path "pages/index/index.html?id=1"
                 withShareTicket true
@@ -29,9 +29,8 @@ MobSDK {
             }
             WechatMoments {
                 appId "wx6fd211ef82fd1bc3"
-                appSecret "61005966eba3a5216fa285f73236f343"
+                appSecret "3adfce3cfd76d44ce2c0919e3b02cb87"
             }
-
         }
     }
 }

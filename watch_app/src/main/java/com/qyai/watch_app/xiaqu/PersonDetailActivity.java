@@ -124,7 +124,7 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     }
                     head_img = result.getData().getPersonDTO().getImg();
                     Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(head_img)).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
-                    tv_result_1.setText(result.getData().getSignNowDTO().getTemperatureState()==null?"":result.getData().getSignNowDTO().getTemperatureState());
+                    tv_result_1.setText(result.getData().getSignNowDTO().getTemperatureState()==null?"正常":result.getData().getSignNowDTO().getTemperatureState());
                     tv_result_2.setText(result.getData().getSignNowDTO().getHeartRateState()==null?"":result.getData().getSignNowDTO().getHeartRateState());
                     String[] arr1 = getZ(result.getData().getPersonDetailDTO().getAlarmOxygen());
                     if (result.getData().getSignNowDTO().getBloodPressureLow()!= null && result.getData().getSignNowDTO().getBloodPressureHigh()!=null) {

@@ -5,8 +5,6 @@ if (isModuleWatch.toBoolean()) {
     apply plugin: "com.android.library"
 }
 apply plugin: 'com.mob.sdk'
-
-
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     defaultConfig {

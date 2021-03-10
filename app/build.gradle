@@ -8,7 +8,7 @@ MobSDK {
         devInfo {
             Wechat {
                 appId "wx6fd211ef82fd1bc3"
-                appSecret "61005966eba3a5216fa285f73236f343"
+                appSecret "3adfce3cfd76d44ce2c0919e3b02cb87"
                 userName "gh_afb25ac019c9"
                 path "pages/index/index.html?id=1"
                 withShareTicket true
@@ -23,9 +23,8 @@ MobSDK {
             }
             WechatMoments {
                 appId "wx6fd211ef82fd1bc3"
-                appSecret "61005966eba3a5216fa285f73236f343"
+                appSecret "3adfce3cfd76d44ce2c0919e3b02cb87"
             }
-
         }
     }
 }
@@ -46,6 +45,26 @@ android {
                 arguments = [moduleName: project.getName()]
             }
         }
+        signingConfigs {
+            config {
+                keyAlias 'key0'
+                keyPassword 'qianyang123'
+                storeFile file('../qianyang.jks')
+                storePassword 'qianyang123'
+            }
+            release {
+                keyAlias 'key0'
+                keyPassword 'qianyang123'
+                storeFile file('../qianyang.jks')
+                storePassword 'qianyang123'
+            }
+            debug {
+                keyAlias 'key0'
+                keyPassword 'qianyang123'
+                storeFile file('../qianyang.jks')
+                storePassword 'qianyang123'
+            }
+        }
     }
 
     buildTypes {
@@ -53,6 +72,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
     }
     compileOptions {
         sourceCompatibility rootProject.ext.javaVersion

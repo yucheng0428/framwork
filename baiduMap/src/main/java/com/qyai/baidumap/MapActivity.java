@@ -20,8 +20,10 @@ import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.qyai.baidumap.postion.MyLocationListener;
 
 import butterknife.BindView;
-import cn.sharesdk.framework.ShareSDK;
 
+/**
+ * 百度地图
+ */
 @Route(path = "/maplib/MapActivity")
 public class MapActivity extends BaseHeadActivity {
 

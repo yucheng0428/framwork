@@ -16,8 +16,8 @@
 <Tumblr Enable="false" />
 <Email Enable="false" />
 <ShortMessage Enable="true" />
-<Wechat AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" userName="gh_afb25ac019c9" path="pages/index/index.html?id=1" WithShareTicket="true" MiniprogramType="2" />
-<WechatMoments AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" />
+<Wechat AppId="wx6fd211ef82fd1bc3" AppSecret="3adfce3cfd76d44ce2c0919e3b02cb87" userName="gh_afb25ac019c9" path="pages/index/index.html?id=1" WithShareTicket="true" MiniprogramType="2" />
+<WechatMoments AppId="wx6fd211ef82fd1bc3" AppSecret="3adfce3cfd76d44ce2c0919e3b02cb87" />
 <QQ Enable="false" />
 <Instapaper Enable="false" />
 <Pocket Enable="false" />
