@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.recyclerView.RecyclerItemCallback;
+import com.lib.common.widgt.RefreshAllLayout;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.bean.MessageBean;
@@ -14,6 +15,8 @@ import com.qyai.watch_app.message.bean.MessageBean;
 import butterknife.BindView;
 
 public class MessageActivity extends BaseHeadActivity {
+    @BindView(R2.id.swipeRefreshLayout)
+    RefreshAllLayout swipeRefreshLayout;
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
     MessageAdapter adapter;
@@ -37,6 +40,26 @@ public class MessageActivity extends BaseHeadActivity {
                 super.onItemClick(position, model, tag, holder);
                 Intent intent=new Intent(mActivity,MessageDetailAct.class);
                 startActivity(intent);
+            }
+        });
+        initRefreshLayout();
+    }
+
+    private void initRefreshLayout() {
+        swipeRefreshLayout.setCanRefresh(true);
+        swipeRefreshLayout.setCanLoadMore(false);
+        swipeRefreshLayout.setLoadListener(new RefreshAllLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                adapter.clearData();
+                adapter.setData(MessageBean.getMessgeList());
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new RefreshAllLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.clearData();
+                adapter.setData(MessageBean.getMessgeList());
             }
         });
     }

@@ -12,7 +12,7 @@ public interface SwipeProgressInterface {
      * 进度动画循环间隔时间
      */
     int ANIMATION_DURATION_MS_NORMAL = 2000;
-    int ANIMATION_DURATION_MS_SHORT = 1500;
+    int ANIMATION_DURATION_MS_SHORT = 11500;
     int ANIMATION_DURATION_MS_LONG = 3500;
 
     /**

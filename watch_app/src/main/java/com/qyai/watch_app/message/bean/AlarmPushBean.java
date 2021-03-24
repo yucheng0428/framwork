@@ -78,6 +78,24 @@ public class AlarmPushBean implements Serializable {
     private String dealStatusName;
     private String dealOpinionName;
     private String typeName;
+    private  String temperature;
+    private  String heartRate;
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public String getHeartRate() {
+        return heartRate;
+    }
+
+    public void setHeartRate(String heartRate) {
+        this.heartRate = heartRate;
+    }
 
     public String getId() {
         return id;

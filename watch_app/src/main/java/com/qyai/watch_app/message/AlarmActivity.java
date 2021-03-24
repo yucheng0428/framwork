@@ -2,6 +2,7 @@ package com.qyai.watch_app.message;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,10 +21,10 @@ import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
+import com.lib.common.widgt.RefreshAllLayout;
+import com.lib.common.widgt.swiprefresh.SwipeRefreshLayout;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
-import com.qyai.watch_app.home2.HomeActivity2;
-import com.qyai.watch_app.message.bean.AlarmInfo;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.AlarmResult;
 
@@ -44,10 +45,13 @@ public class AlarmActivity extends BaseActivity {
     TextView tv_do;
     @BindView(R2.id.tv_no_do)
     TextView tv_no_do;
+    @BindView(R2.id.swipeRefreshLayout)
+    RefreshAllLayout swipeRefreshLayout;
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
     AlarmAdapter alarmAdapter;
     int itemType = 2;
+    int type=0;
     int classId = 0;
 
     @Override
@@ -96,9 +100,26 @@ public class AlarmActivity extends BaseActivity {
                 }
             }
         });
+        initRefreshLayout();
         changeItem();
     }
 
+    private void initRefreshLayout() {
+        swipeRefreshLayout.setCanRefresh(false);
+        swipeRefreshLayout.setCanLoadMore(false);
+        swipeRefreshLayout.setLoadListener(new RefreshAllLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                getAlarmList(type);
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new RefreshAllLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAlarmList(type);
+            }
+        });
+    }
 
     public void changeItem() {
         //处理结果，1已处理，0未处理, 2忽略
@@ -108,17 +129,18 @@ public class AlarmActivity extends BaseActivity {
             tv_no_do.setBackgroundResource(0);
             tv_no_do.setTextColor(getResources().getColor(R.color.color_999999));
             alarmAdapter.clearData();
-            getAlarmList(1);
+            type=1;
             itemType = 2;
         } else {
             alarmAdapter.clearData();
-            getAlarmList(0);
             itemType = 1;
+            type=0;
             tv_no_do.setTextColor(getResources().getColor(R.color.color_248bfe));
             tv_no_do.setBackgroundResource(R.drawable.down_line);
             tv_do.setBackgroundResource(0);
             tv_do.setTextColor(getResources().getColor(R.color.color_999999));
         }
+        getAlarmList(type);
     }
 
     @OnClick({R2.id.ivLeft, R2.id.tv_no_do, R2.id.tv_do})
@@ -146,10 +168,11 @@ public class AlarmActivity extends BaseActivity {
             count.add("2");
             req.put("dealStatusList", count);
         }
+        req.put("type","-1");
         req.put("page", "-1");
         List<String> count = new ArrayList<>();
         count.add(classId + "");
-        req.put("classId", count);
+//        req.put("classId", count);
         //查询告警
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarm", req, new OnHttpCallBack<AlarmResult>() {
             @Override
@@ -158,6 +181,8 @@ public class AlarmActivity extends BaseActivity {
                 if (result != null && result.getData().size() > 0) {
                     alarmAdapter.setData(result.getData());
                 }
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setLoading(false);
             }
 
             @Override

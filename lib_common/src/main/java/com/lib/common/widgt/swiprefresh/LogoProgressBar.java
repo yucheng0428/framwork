@@ -53,13 +53,13 @@ public class LogoProgressBar extends BaseSwipProgressBar {
         final int width = mBounds.width();
         final int height = mBounds.height();
         LOGO_MARGINTOP = Math.max((height - logoHeight), 0)/2;
-        int restoreCount = canvas.save();
-        canvas.clipRect(mBounds);
+        int restoreCount = canvas.save();//画布将当前的状态保存
+        canvas.clipRect(mBounds);//设置画布的显示区域
 
         if(mRunning || mFinishTime > 0){
-            long now = AnimationUtils.currentAnimationTimeMillis();
-            long elapsed = (now - mStartTime) % ANIMATION_DURATION_MS_SHORT;
-            int floor = (int) Math.floor((now - mStartTime) / (float)ANIMATION_DURATION_MS_SHORT);
+            long now = AnimationUtils.currentAnimationTimeMillis();//开始时间
+            long elapsed = (now - mStartTime) % ANIMATION_DURATION_MS_SHORT;//经过的时间
+            int floor = (int) Math.floor((now - mStartTime) / (float)ANIMATION_DURATION_MS_SHORT);//最终时间
             float loadProgress = elapsed / (float)ANIMATION_DURATION_MS_SHORT;
             int progressLum = floor%2 == 0 ? (int) (60 - loadProgress * 120) : (int) (60 - (1-loadProgress) * 120);
             drawLines(canvas, R.color.color_0093dd);

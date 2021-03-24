@@ -40,7 +40,6 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tv_time)
     TextView text_time;
     Disposable disposable;
-    int viewType=2;
     boolean isLogin=false;
 
     @Override
@@ -86,7 +85,7 @@ public class MainActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     if(isLogin){
-                                        if(viewType==1){
+                                        if(Common.viewType==1){
                                             ARouter.getInstance().build("/watch/HomeActivity").navigation();
                                         }else {
                                             ARouter.getInstance().build("/watch/HomeActivity2").navigation();
@@ -95,7 +94,7 @@ public class MainActivity extends BaseActivity {
                                         ARouter.getInstance().build("/main/login")
                                                 .withString("userName", "SH")
                                                 .withString("psw", "888888")
-                                                .withInt("viewType",viewType)
+                                                .withInt("viewType",Common.viewType)
                                                 .navigation();
                                     }
                                 }

@@ -242,9 +242,9 @@ public class SwipeRefreshLayout extends ViewGroup implements SwipeRefreshScrollI
                 android.R.integer.config_mediumAnimTime);
 
         setWillNotDraw(false);
-        mProgressBar = new LogoProgressBar(this, Utils.dip2px(context, 24), Utils.sp2px(context, 3));
+        mProgressBar = new LogoProgressBar(this, Utils.dip2px(context, 24), Utils.dip2px(context, 3));
         mProgressBar.setRunningListener(runningListener);
-        mProgressBarBottom = new LoadMoreProgressBar(this, Utils.sp2px(context, 13));
+        mProgressBarBottom = new LoadMoreProgressBar(this, Utils.dip2px(context, 13));
         mProgressBarBottom.setRunningListener(runningListener);
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
         mProgressBarHeight = (int) (metrics.density * PROGRESS_BAR_HEIGHT);

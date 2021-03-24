@@ -68,7 +68,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     @Autowired
     public String psw;
     @Autowired
-    public int viewType = 1;
+    public int viewType = Common.viewType;
     boolean isShow = false;
     boolean isChange = true;
     boolean isCode = false;

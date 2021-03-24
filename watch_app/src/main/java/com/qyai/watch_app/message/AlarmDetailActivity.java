@@ -59,11 +59,16 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
     TextView tv_alarm_result;
     @BindView(R2.id.tv_alarm_result_content)
     TextView tv_alarm_result_content;
+    @BindView(R2.id.tv_alarm_result_dealUser)
+    TextView tv_alarm_result_dealUser;
+    @BindView(R2.id.tv_alarm_result_dealOpinion)
+    TextView tv_alarm_result_dealOpinion;
     @BindView(R2.id.ed_remaks)
     EditText ed_remaks;
-    @BindView(R2.id.tv_valueof_blood)
-    TextView tv_valueof_blood;
-
+    @BindView(R2.id.tv_valueof_heartRate)
+    TextView tv_valueof_heartRate;
+    @BindView(R2.id.tv_valueof_temperature)
+    TextView tv_valueof_temperature;
     @BindView(R2.id.radioGroup)
     RadioGroup radioGroup;
     @BindView(R2.id.radioButton1)
@@ -134,21 +139,18 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
             tv_alarm_content.setText(info.getContent());
             tv_alarm_result.setText(info.getDealStatusName());
             tv_alarm_result_content.setText(info.getDealContent());
+            tv_alarm_result_dealOpinion.setText(info.getDealOpinionName());
+            tv_alarm_result_dealUser.setText(info.getDealUserName());
             iv_head.setText(info.getTypeName());
-            if(SPValueUtil.isEmpty(info.getHealthType())){
-                switch (info.getHealthType()){
-                    case "1":
-                        tv_valueof_blood.setText("心率检测");
-                        break;
-                    case "2":
-                        tv_valueof_blood.setText("血压检测");
-                        break;
-                    case "3":
-                        tv_valueof_blood.setText("体温检测");
-                        break;
-                }
+            if(SPValueUtil.isEmpty(info.getHeartRate())){
+                tv_valueof_heartRate.setText("心率:"+info.getHeartRate());
             }else {
-                tv_valueof_blood.setText("");
+                tv_valueof_heartRate.setText("心率:");
+            }
+            if(SPValueUtil.isEmpty(info.getTemperature())){
+                tv_valueof_temperature.setText("体温:"+info.getTemperature());
+            }else {
+                tv_valueof_temperature.setText("体温:");
             }
         }
     }
@@ -183,14 +185,14 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
                 public void onDialogClick(View view) {
                     radioButton1.setChecked(false);
                     radioButton3.setChecked(true);
-                    option=3;
+                    option=2;
                 }
             },false,"提示","是否今日不在告警","取消","确定");
             iphoneDialog.show();
         }else if(view.getId()==R.id.radioButton1){
             radioButton1.setChecked(true);
             radioButton3.setChecked(false);
-            option=1;
+            option=0;
         }
 
     }
