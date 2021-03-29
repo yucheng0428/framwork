@@ -2,7 +2,6 @@ package com.qyai.watch_app.message;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +21,6 @@ import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.lib.common.widgt.RefreshAllLayout;
-import com.lib.common.widgt.swiprefresh.SwipeRefreshLayout;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
@@ -172,7 +170,7 @@ public class AlarmActivity extends BaseActivity {
         req.put("page", "-1");
         List<String> count = new ArrayList<>();
         count.add(classId + "");
-//        req.put("classId", count);
+        req.put("classId", count);
         //查询告警
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarm", req, new OnHttpCallBack<AlarmResult>() {
             @Override
