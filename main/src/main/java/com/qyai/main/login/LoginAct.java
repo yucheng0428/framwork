@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -227,6 +228,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         NetHeaderInterceptor.getInterceptor().setHeaders(heard);
         SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, JSON.toJSONString(userData));
         SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, userData.getUserInDeptDTO().getToken() + "");
+        SPValueUtil.saveStringValue(mActivity,Common.USER_ID,userData.getUserInDeptDTO().getUserId());
         if(isChange){
             SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, getPassWord());
         }

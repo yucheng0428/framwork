@@ -20,9 +20,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 public class Common {
 
     public final static  int viewType=2;
-    public final  static String HTTP_REQ="http://124.71.140.164:16808/";
+    public final static String HTTP_REQ="http://124.71.140.164:16808/";
     public final static String USER_DATA = "user_data";
     public final static String USER_TOKEN = "user_tonken";
+    public final static  String USER_ID="user_id";
     public final static String USER_NAME = "userName";
     public final static String USER_PASSWORD = "userpsw";
     public final static String BRACELET_MAC = "bracelet_mac";

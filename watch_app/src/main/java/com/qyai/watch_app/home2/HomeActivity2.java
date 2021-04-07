@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -28,7 +26,6 @@ import com.lib.common.base.ViewManager;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
-import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.dialog.IphoneDialog;
@@ -48,11 +45,11 @@ import com.qyai.watch_app.message.AlarmDetailActivity;
 import com.qyai.watch_app.message.JusClassAdapter;
 import com.qyai.watch_app.message.MessageService;
 import com.qyai.watch_app.message.bean.AlarmCountResult;
-import com.qyai.watch_app.message.bean.AlarmInfo;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.AlarmResult;
 import com.qyai.watch_app.message.bean.JusClassResult;
 import com.qyai.watch_app.message.websocket.AlamListenser;
+import com.qyai.watch_app.utils.GpsLactionUtils;
 import com.qyai.watch_app.xiaqu.XiaQuActivity;
 
 import java.util.ArrayList;
@@ -209,6 +206,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         MessageService.initService(mActivity);
         MessageService.setAlamListenser(this);
         getAllClass();
+        GpsLactionUtils.getInstance(mActivity).startGps();
     }
 
 
@@ -284,6 +282,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     protected void onDestroy() {
         super.onDestroy();
         MessageService.stopService(mActivity);
+        GpsLactionUtils.getInstance(mActivity).stopGps();
     }
 
 
