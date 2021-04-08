@@ -1,9 +1,11 @@
 package com.qyai.watch_app.message.bean;
 
+import com.lib.common.baseUtils.baseModle.BaseResult;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class CommonResult implements Serializable {
+public class CommonResult extends BaseResult implements Serializable {
 
 
     /**
@@ -12,25 +14,8 @@ public class CommonResult implements Serializable {
      * data : [{"id":53,"content":"45654645","date":"2021-01-28 15:30:29"},{"id":54,"content":"明航","date":"2021-01-28 15:30:29"},{"id":55,"content":"明航2","date":"2021-01-28 15:30:29"}]
      */
 
-    private String msg;
-    private String code;
     private List<DataBean> data;
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public List<DataBean> getData() {
         return data;

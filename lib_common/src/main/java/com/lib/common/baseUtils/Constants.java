@@ -11,7 +11,6 @@ public class Constants {
 
     public static final String CAMERA_TEMP_PATH = "camera_temp_path";
     public static boolean isDebug = true;
-    public static boolean isShowLog = true;
     public static String STORAGE_PICTURE = "/pic";// 相关图片存放路径
     public static String STORAGE_VIDEO = "/video";// 相关视频存放路径
     public static String STORAGE_FILE = "/file";// 相关文件存放路径

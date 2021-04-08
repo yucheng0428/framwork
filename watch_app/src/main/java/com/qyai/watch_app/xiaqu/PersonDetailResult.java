@@ -1,9 +1,11 @@
 package com.qyai.watch_app.xiaqu;
 
+import com.lib.common.baseUtils.baseModle.BaseResult;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class PersonDetailResult implements Serializable {
+public class PersonDetailResult extends BaseResult implements Serializable {
 
     /**
      * msg : 查询成功!
@@ -11,25 +13,8 @@ public class PersonDetailResult implements Serializable {
      * data : {"personDTO":{"personId":400,"jobNumber":"","name":"aday","sex":"1","company":"","duty":"","personType":13,"phone":"15927387000","idcard":"420982199308220038","status":"1","ownerCompany":"","skillLevel":"1","jobStatus":"1","permanentAddress":"","currentAddress":"","politicalStatus":"2","nation":"1","emergencyMan":"","emergencyPhone":"","img":"","updateTime":"2021-02-17 10:55:57","updateUser":null,"createTime":"2021-02-05 10:36:50","createUser":null,"job":"","age":0,"ygxz":"1","ygxzName":"企内","sexName":"男","personTypeName":"医生","statusName":"有效","skillLevelName":"初级工","jobStatusName":"在岗","politicalStatusName":"群众","nationName":"汉族","pProvinceName":null,"pCityName":null,"pDistrictName":null,"cProvinceName":null,"cCityName":null,"cDistrictName":null,"ccity":"","cdistrict":"","cprovince":"","pcity":"","pprovince":"","pdistrict":""},"type":"1","startDate":null,"endDate":null,"tagType":"1","deviceId":"42489","fenceDTOList":[],"areaLimitDTOS":[],"trainDTOList":[],"personDetailDTO":{"id":158,"personId":400,"alarmTemperature":"36.1,37.2","alarmHeartRate":"60,100","alarmOxygen":"90,100","alarmBreathingRate":"12,24","alarmBloodPressureHigh":"90,139","alarmBloodPressureLow":"60,89","operateId":"00","operateTime":"2021-02-17 10:55:57"},"personDiseasesDTOS":[],"tagTypeName":"标签"}
      */
 
-    private String msg;
-    private String code;
     private DataBean data;
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public DataBean getData() {
         return data;

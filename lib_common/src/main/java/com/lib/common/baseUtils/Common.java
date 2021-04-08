@@ -42,7 +42,7 @@ public class Common {
     //是否打印到sd卡上
     public static boolean LOG_SDCARD_ENABLE = true;
 
-    public static String LOG_FILE_NAME = "superEnntrance/log.txt";
+    public static String LOG_FILE_NAME = "FramApp/log.txt";
 
 
     public final static int PERMISSIONS_REQUEST = 199;//权限获取返回

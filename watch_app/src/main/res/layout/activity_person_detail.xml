@@ -82,7 +82,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_value1"
             android:orientation="vertical">
-
+            <TextView
+                style="@style/weight_style"
+                android:layout_margin="@dimen/padding_10"
+                android:text="现居地" />
             <TextView
                 android:id="@+id/tv_now_adress"
                 style="@style/weight_style_value"
@@ -92,18 +95,13 @@
             <TextView
                 style="@style/weight_style"
                 android:layout_margin="@dimen/padding_10"
-                android:text="现居地" />
-
+                android:text="户籍所在地" />
             <TextView
                 android:id="@+id/tv_hj_adress"
                 style="@style/weight_style_value"
                 android:layout_margin="@dimen/padding_10"
                 android:text="" />
 
-            <TextView
-                style="@style/weight_style"
-                android:layout_margin="@dimen/padding_10"
-                android:text="户籍所在地" />
         </LinearLayout>
 
         <ImageView

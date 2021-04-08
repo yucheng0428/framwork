@@ -50,6 +50,7 @@ import com.qyai.watch_app.message.bean.AlarmResult;
 import com.qyai.watch_app.message.bean.JusClassResult;
 import com.qyai.watch_app.message.websocket.AlamListenser;
 import com.qyai.watch_app.utils.GpsLactionUtils;
+import com.qyai.watch_app.utils.OnlyUserUtils;
 import com.qyai.watch_app.xiaqu.XiaQuActivity;
 
 import java.util.ArrayList;
@@ -125,7 +126,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             tv_phoenNo.setText("手机号码 : " + userData.getUserInDeptDTO().getMobilePhone());
             tv_project.setText("所属机构 : " + userData.getUserInDeptDTO().getDeptFullName());
             if (SPValueUtil.isEmpty(userData.getUserInDeptDTO().getRoleName())) {
-                tv_user.setVisibility(View.VISIBLE);
+                tv_user.setVisibility(View.GONE);
                 tv_user.setText("职位 : " + userData.getUserInDeptDTO().getRoleName());
             } else {
                 tv_user.setVisibility(View.GONE);
@@ -237,7 +238,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             IphoneDialog iphoneDialog = new IphoneDialog(mActivity, new IphoneDialog.IphoneListener() {
                 @Override
                 public void upContent(String string) {
-                    loginOut();
+                   OnlyUserUtils.loginOut(mActivity);
                 }
             }, false, "提示", "是否要退出登录");
             iphoneDialog.show();
@@ -248,35 +249,6 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         }
     }
 
-    public void loginOut() {
-        SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, "");
-        SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, "");
-        SPValueUtil.saveStringValue(mActivity, Common.USER_PASSWORD, "");
-        SPValueUtil.saveStringValue(mActivity, Common.USER_NAME, "");
-        SPValueUtil.saveStringValue(mActivity, Common.JUSCLASSRESULT, "");
-        MessageService.stopService(mActivity);
-        NetHeaderInterceptor.getInterceptor().setHeaders(new HashMap<>());
-        HomeActivity2.this.finish();
-        ARouter.getInstance().build("/main/login")
-                .withString("userName", "")
-                .withString("psw", "")
-                .withInt("viewType", 2)
-                .navigation();
-//        Map<Object, Object> para = new HashMap<>();
-//        HttpServiec.getInstance().postFlowableMap(100, Common.LOGIN_OUT,para, new OnHttpCallBack<String>() {
-//            @Override
-//            public void onSuccessful(int id, String baseResult) {
-//                BaseResult event= JSONObject.parseObject((String) baseResult,BaseResult.class);
-//                if(event!=null&&event.getCode().equals("000000")){
-//                }
-//            }
-//
-//            @Override
-//            public void onFaild(int id, String baseResult, String err) {
-//                UIHelper.ToastMessage(HomeActivity2.this,err);
-//            }
-//        },String.class);
-    }
 
     @Override
     protected void onDestroy() {
@@ -309,13 +281,16 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         List<String> count = new ArrayList<>();
         count.add(clas + "");
         req.put("classId", count);
+        req.put("type","-1");
         //查询告警
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarm", req, new OnHttpCallBack<AlarmResult>() {
             @Override
             public void onSuccessful(int id, AlarmResult result) {
                 alarmAdapter.clearData();
-                if (result != null && result.getData().size() > 0) {
+                if (result != null && result.getData().size() > 0&&result.getCode().equals("000000")) {
                     alarmAdapter.setData(result.getData());
+                }else if(result != null &&result.getCode().equals("402")){
+                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
 
@@ -336,13 +311,15 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarmCount", req, new OnHttpCallBack<AlarmCountResult>() {
             @Override
             public void onSuccessful(int id, AlarmCountResult result) {
-                if (result != null && result.getData() != null) {
+                if (result != null && result.getData() != null&&result.getCode().equals("000000")) {
                     tv_all.setText("总人数:" + result.getData().getPersonCount());
                     tv_alarm_all.setText("告警总数:" + result.getData().getAlarmCount());
                     tv_nodo.setText("未处理告警:" + result.getData().getPendingAlarmCount());
                     tv_online.setText("在线人数:" + result.getData().getPersonOnLineCount());
                     tv_today_alarm_all.setText("今日告警总数:" + result.getData().getToDayAlarmCount());
                     tv_today_nodo.setText("今日未处理告警:" + result.getData().getToDayPendingAlarmCount());
+                }else if(result != null &&result.getCode().equals("402")){
+                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
 
@@ -359,8 +336,10 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "jurisdiction/queryAllClass/userClass", req, new OnHttpCallBack<JusClassResult>() {
             @Override
             public void onSuccessful(int id, JusClassResult result) {
-                if (result != null && result.getData() != null) {
+                if (result != null && result.getData() != null&&result.getCode().equals("000000")) {
                     jusClassAdapter.setData(result.getData());
+                }else if(result != null &&result.getCode().equals("402")){
+                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
 
@@ -401,8 +380,6 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     @Override
     public void pushMsgReshList(AlarmPushBean bean) {
         if (bean != null && bean.getDealStatus() == 0) {
-//            alarmAdapter.getDataSource().add(0, bean);
-//            alarmAdapter.notifyDataSetChanged();
             reshData();
         }
     }

@@ -1,9 +1,11 @@
 package com.qyai.watch_app.xiaqu;
 
+import com.lib.common.baseUtils.baseModle.BaseResult;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class XiaQuResult implements Serializable {
+public class XiaQuResult extends BaseResult implements Serializable {
 
 
     /**
@@ -12,25 +14,7 @@ public class XiaQuResult implements Serializable {
      * data : {"total":14,"list":[{"personId":395,"name":"时间测试123","sex":"1","personType":13,"personTypeName":"医生","phone":"1234567890","emergencyMan":"","emergencyPhone":"","sexName":"男"},{"personId":396,"name":"测试码看么么么么么123","sex":"1","personType":13,"personTypeName":"医生","phone":"1234567890","emergencyMan":"","emergencyPhone":"","sexName":"男"},{"personId":391,"name":"测试123","sex":"1","personType":12,"personTypeName":"医疗","phone":"12345678901","emergencyMan":"","emergencyPhone":"","sexName":"男"},{"personId":385,"name":"请问111111","sex":"1","personType":12,"personTypeName":"医疗","phone":"15527951341","emergencyMan":"","emergencyPhone":"","sexName":"男"},{"personId":378,"name":"医疗医疗132131","sex":"1","personType":12,"personTypeName":"医疗","phone":"","emergencyMan":"唐某史","emergencyPhone":"10086","sexName":"男"},{"personId":380,"name":"医疗胸卡123","sex":"1","personType":12,"personTypeName":"医疗","phone":"","emergencyMan":"","emergencyPhone":"","sexName":"男"},{"personId":376,"name":"樱桃小丸子手表测试","sex":"1","personType":14,"personTypeName":"护士","phone":"19522913080","emergencyMan":"","emergencyPhone":"","sexName":"男"},{"personId":304,"name":"护国神牛","sex":"1","personType":13,"personTypeName":"医生","phone":"1527313","emergencyMan":"驱蚊器,阿发","emergencyPhone":"123124142421,124124234244","sexName":"男"},{"personId":400,"name":"aday","sex":"1","personType":13,"personTypeName":"医生","phone":"15927387000","emergencyMan":"","emergencyPhone":"","sexName":"男"},{"personId":399,"name":"凄凄切切群群群群群群群","sex":"1","personType":13,"personTypeName":"医生","phone":"","emergencyMan":"","emergencyPhone":"","sexName":"男"}],"pageNum":1,"pageSize":10,"size":10,"startRow":0,"endRow":9,"pages":1,"prePage":0,"nextPage":0,"isFirstPage":true,"isLastPage":true,"hasPreviousPage":false,"hasNextPage":false,"navigatePages":8,"navigatepageNums":[1],"navigateFirstPage":1,"navigateLastPage":1}
      */
 
-    private String msg;
-    private String code;
     private DataBean data;
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public DataBean getData() {
         return data;

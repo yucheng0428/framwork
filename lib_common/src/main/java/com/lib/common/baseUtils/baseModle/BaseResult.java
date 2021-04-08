@@ -1,10 +1,12 @@
 package com.lib.common.baseUtils.baseModle;
 
+import java.io.Serializable;
+
 /**
  * Created by yucheng on 2017-06-07.
  */
 
-public class BaseResult {
+public class BaseResult implements Serializable {
 
     /**
      * msg : 5

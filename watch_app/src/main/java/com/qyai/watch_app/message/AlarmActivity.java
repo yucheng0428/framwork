@@ -25,6 +25,7 @@ import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.AlarmResult;
+import com.qyai.watch_app.utils.OnlyUserUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -176,8 +177,10 @@ public class AlarmActivity extends BaseActivity {
             @Override
             public void onSuccessful(int id, AlarmResult result) {
                 alarmAdapter.clearData();
-                if (result != null && result.getData().size() > 0) {
+                if (result != null && result.getData().size() > 0&&result.getCode().equals("000000")) {
                     alarmAdapter.setData(result.getData());
+                }else if(result != null &&result.getCode().equals("402")){
+                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
                 swipeRefreshLayout.setRefreshing(false);
                 swipeRefreshLayout.setLoading(false);

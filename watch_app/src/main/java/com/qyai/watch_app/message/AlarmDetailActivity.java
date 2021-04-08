@@ -31,6 +31,7 @@ import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.bean.AlarmInfo;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.CommonResult;
+import com.qyai.watch_app.utils.OnlyUserUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,7 +141,7 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
             tv_alarm_result.setText(info.getDealStatusName());
             tv_alarm_result_content.setText(info.getDealContent());
             tv_alarm_result_dealOpinion.setText(info.getDealOpinionName());
-            tv_alarm_result_dealUser.setText(info.getDealUserName());
+            tv_alarm_result_dealUser.setText(info.getDealUserName()!=null?info.getDealUserName():info.getDealUser());
             iv_head.setText(info.getTypeName());
             if(SPValueUtil.isEmpty(info.getHeartRate())){
                 tv_valueof_heartRate.setText("心率:"+info.getHeartRate());
@@ -187,7 +188,7 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
                     radioButton3.setChecked(true);
                     option=2;
                 }
-            },false,"提示","是否今日不在告警","取消","确定");
+            },false,"提示","是否今日不再告警","取消","确定");
             iphoneDialog.show();
         }else if(view.getId()==R.id.radioButton1){
             radioButton1.setChecked(true);
@@ -202,9 +203,11 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
         HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "/alarm/queryCommonWords", para, new OnHttpCallBack<CommonResult>() {
             @Override
             public void onSuccessful(int id, CommonResult result) {
-                if (result != null && result.getData().size() > 0) {
+                if (result != null && result.getData().size() > 0&&result.getCode().equals("000000")) {
                     adapter.setData(result.getData());
                     ed_remaks.setText(result.getData().get(0).getContent());
+                }else if(result!=null&&result.getCode().equals("402")){
+                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
 
@@ -237,6 +240,8 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
                     UIHelper.ToastMessage(mActivity,result.getMsg());
                     setResult(Constants.REQUEST_CODE);
                     mActivity.finish();
+                }else if(result!=null&&result.getCode().equals("402")){
+                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
 

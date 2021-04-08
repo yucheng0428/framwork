@@ -84,8 +84,8 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     @Override
     protected void initUIData(Bundle bundle) {
         setTranslucentNavigationColor(getResources().getColor(R.color.half_transparent));
-        et_password.setText(psw == null ? "888888" : psw);
-        et_user.setText(userName == null ? "SH" : userName);
+        et_password.setText(SPValueUtil.getStringValue(mActivity,Common.USER_PASSWORD));
+        et_user.setText(SPValueUtil.getStringValue(mActivity,Common.USER_NAME));
         loginType(viewType);
         setScreenModel(2);
         Common.openGPSSEtting(mActivity);
@@ -97,6 +97,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         if (type == 2) {
             tv_register.setVisibility(View.GONE);
             tv_forget_psw.setText("验证码登录");
+            tv_forget_psw.setVisibility(View.GONE);
             tv_forget_psw.setTextColor(getResources().getColor(R.color.color_248bfe));
             tv_forget_psw.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         } else {

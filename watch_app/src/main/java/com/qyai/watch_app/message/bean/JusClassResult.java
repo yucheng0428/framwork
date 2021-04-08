@@ -1,9 +1,11 @@
 package com.qyai.watch_app.message.bean;
 
+import com.lib.common.baseUtils.baseModle.BaseResult;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class JusClassResult implements Serializable{
+public class JusClassResult extends BaseResult implements Serializable{
 
 
     /**
@@ -12,25 +14,8 @@ public class JusClassResult implements Serializable{
      * data : [{"id":12,"name":"医疗","operateId":null,"operateTime":1611654590000,"type":"1","userId":null,"modelNum":null,"appCode":null,"mapId":null,"x":null,"y":null,"z":null,"userName":"","userPhone":null,"pid":0},{"id":1,"name":"镇江石化","operateId":"1","operateTime":1606242389179,"type":"1","userId":"6","modelNum":null,"appCode":null,"mapId":null,"x":null,"y":null,"z":null,"userName":"sdfsd\\","userPhone":null,"pid":0},{"id":8,"name":"仪征化纤","operateId":"1","operateTime":1609315906000,"type":"1","userId":null,"modelNum":null,"appCode":null,"mapId":null,"x":null,"y":null,"z":null,"userName":"","userPhone":null,"pid":0}]
      */
 
-    private String msg;
-    private String code;
     private List<DataBean> data;
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public List<DataBean> getData() {
         return data;

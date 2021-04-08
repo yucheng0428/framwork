@@ -18,7 +18,6 @@ import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
-import com.qyai.watch_app.home2.UserEvent;
 
 import java.util.Iterator;
 import java.util.List;
@@ -56,7 +55,7 @@ public class GpsLactionUtils {
         else {
             Toast.makeText(mActivity, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
         }
-        LogUtil.e("Gps","startGps()");
+        LogUtil.d("Gps","startGps()");
         setInitListener();
         locationManager.addGpsStatusListener(gpsListener);
 //            // 监视地理位置变化，第二个和第三个参数分别为更新的最短时间minTime和最短距离minDistace
@@ -65,7 +64,7 @@ public class GpsLactionUtils {
 
     @SuppressLint("MissingPermission")
     public  void  stopGps(){
-        LogUtil.e("Gps","stopGps()");
+        LogUtil.d("Gps","stopGps()");
         if(locationManager==null){
             return;
         }
@@ -84,12 +83,10 @@ public class GpsLactionUtils {
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp()+"user/addPosition", gpsReq, new OnHttpCallBack() {
             @Override
             public void onSuccessful(int id, Object o) {
-//                LogUtil.e("GPS_REQ_onSuccessful", o.toString());
             }
 
             @Override
             public void onFaild(int id, Object o, String err) {
-//                LogUtil.e("GPS_REQ_onFaild", err);
             }
         }, String.class);
     }
@@ -102,8 +99,8 @@ public class GpsLactionUtils {
                 if (locationManager==null){
                     return;
                 }
-                LogUtil.e("Gps","onLocationChanged：改变位置");
-                UIHelper.ToastMessage(mActivity.getApplicationContext(), "onLocationChanged：改变位置");
+                LogUtil.d("Gps","onLocationChanged：改变位置");
+//                UIHelper.ToastMessage(mActivity.getApplicationContext(), "onLocationChanged：改变位置");
                 try {
                     sendLoaction(getNewInfo(location));
                 }catch (Exception e){
@@ -116,18 +113,18 @@ public class GpsLactionUtils {
                 switch (i) {
                     //GPS状态为可见时
                     case LocationProvider.AVAILABLE:
-                        LogUtil.e("Gps","onStatusChanged：当前GPS状态为可见状态");
-                        UIHelper.ToastMessage(mActivity.getApplicationContext(), "onStatusChanged：当前GPS状态为可见状态");
+                        LogUtil.d("Gps","onStatusChanged：当前GPS状态为可见状态");
+//                        UIHelper.ToastMessage(mActivity.getApplicationContext(), "onStatusChanged：当前GPS状态为可见状态");
 
                         break;
                     //GPS状态为服务区外时
                     case LocationProvider.OUT_OF_SERVICE:
-                        LogUtil.e("Gps","onStatusChanged:当前GPS状态为服务区外状态");
+                        LogUtil.d("Gps","onStatusChanged:当前GPS状态为服务区外状态");
 
                         break;
                     //GPS状态为暂停服务时
                     case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                        LogUtil.e("Gps","onStatusChanged:当前GPS状态为暂停服务状态");
+                        LogUtil.d("Gps","onStatusChanged:当前GPS状态为暂停服务状态");
 
                         break;
                 }
@@ -147,14 +144,14 @@ public class GpsLactionUtils {
             public void onGpsStatusChanged(int event) {
                 switch (event) {
                     case GpsStatus.GPS_EVENT_FIRST_FIX:
-                        LogUtil.e("Gps", "第一次定位");
+                        LogUtil.d("Gps", "第一次定位");
                         break;
                     // 卫星状态改变
                     case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
                         if(locationManager==null){
                             return;
                         }
-                        LogUtil.e("Gps", "卫星状态改变");
+                        LogUtil.d("Gps", "卫星状态改变");
                         GpsStatus gpsStatus = locationManager.getGpsStatus(null);
                         // 获取卫星颗数的默认最大值
                         int maxSatellites = gpsStatus.getMaxSatellites();
@@ -166,22 +163,22 @@ public class GpsLactionUtils {
                             GpsSatellite s = iters.next();
                             count++;
                         }
-                        LogUtil.e("Gps","搜索到：" + count + "颗卫星");
+                        LogUtil.d("Gps","搜索到：" + count + "颗卫星");
                         break;
                     //GPS状态为可见时
                     case LocationProvider.AVAILABLE:
-                        LogUtil.e("Gps","onGpsStatusChanged：当前GPS状态为可见状态");
-                        UIHelper.ToastMessage(mActivity.getApplicationContext(), "onGpsStatusChanged：当前GPS状态为可见状态");
+                        LogUtil.d("Gps","onGpsStatusChanged：当前GPS状态为可见状态");
+//                        UIHelper.ToastMessage(mActivity.getApplicationContext(), "onGpsStatusChanged：当前GPS状态为可见状态");
 
                         break;
                     //GPS状态为服务区外时
                     case LocationProvider.OUT_OF_SERVICE:
-                        LogUtil.e("Gps","onGpsStatusChanged:当前GPS状态为服务区外状态");
+                        LogUtil.d("Gps","onGpsStatusChanged:当前GPS状态为服务区外状态");
 
                         break;
                     //GPS状态为暂停服务时
                     case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                        LogUtil.e("Gps","onGpsStatusChanged:当前GPS状态为暂停服务状态");
+                        LogUtil.d("Gps","onGpsStatusChanged:当前GPS状态为暂停服务状态");
 
                         break;
                 }
@@ -191,8 +188,8 @@ public class GpsLactionUtils {
 
 
     public  LactionInfo getNewInfo(Location location){
-        UIHelper.ToastMessage(mActivity,"经纬度longitude:" + location.getLongitude() + "latitude: " + location.getLatitude());
-        LogUtil.e("GPS","onGpsStatusChanged:当前GPS状态为暂停服务状态");
+//        UIHelper.ToastMessage(mActivity,"经纬度longitude:" + location.getLongitude() + "latitude: " + location.getLatitude());
+        LogUtil.d("GPS","onGpsStatusChanged:当前GPS状态为暂停服务状态");
         LactionInfo info=new LactionInfo();
         if (location != null) {
             info.setLocX(location.getLongitude() + "");

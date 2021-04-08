@@ -22,6 +22,7 @@ import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.contacts.ContactsDialog;
 import com.qyai.watch_app.contacts.bean.ContactsInfo;
+import com.qyai.watch_app.utils.OnlyUserUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,6 +147,8 @@ public class XiaQuActivity extends BaseHeadActivity {
                     if(result.getData().getList()!=null&&result.getData().getList().size()>0){
                         adapter.setData(result.getData().getList());
                     }
+                }else if(result!=null&&result.getCode().equals("402")){
+                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
 

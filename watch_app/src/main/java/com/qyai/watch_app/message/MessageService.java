@@ -199,7 +199,7 @@ public class MessageService extends Service  {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        queryAlarmInSignHandler.postDelayed(runnable, intervalTime);
+        queryAlarmInSignHandler.postDelayed(runnable, intervalTime);
         //启动长连接
         webSocketUtlts=new WebSocketUtlts(getApplicationContext(), new PushListener() {
             @Override

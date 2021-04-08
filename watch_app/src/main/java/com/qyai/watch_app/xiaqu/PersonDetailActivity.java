@@ -23,6 +23,7 @@ import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.contacts.ContactsDialog;
 import com.qyai.watch_app.contacts.bean.ContactsInfo;
+import com.qyai.watch_app.utils.OnlyUserUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -134,6 +135,8 @@ public class PersonDetailActivity extends BaseHeadActivity {
                         cpv2.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getHeartRate()) / Float.valueOf(arr1[1])) * 100),2000);
                     }
                     contactsInfos=changeList(result.getData().getPersonDTO());
+                }else if(result!=null&&result.getCode().equals("402")){
+                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
 
