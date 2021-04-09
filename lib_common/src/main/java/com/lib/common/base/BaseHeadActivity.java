@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.R;
 import com.lib.common.baseUtils.Utils;
 import com.lib.common.baseUtils.ZTLUtils;
@@ -82,6 +83,7 @@ public abstract class BaseHeadActivity extends FragmentActivity {
             new ZTLUtils(this).initSystemBar(this, R.color.white);
         }
         mActivity = this;
+        ARouter.getInstance().inject(this);
         ViewManager.getInstance().addActivity(this);
         llContainer = findViewById(R.id.llcontainer);
         View subView = LayoutInflater.from(this).inflate(layoutId(), null);

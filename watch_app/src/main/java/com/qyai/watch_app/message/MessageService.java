@@ -24,6 +24,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.lib.common.base.BaseApp;
 import com.lib.common.baseUtils.LogUtil;
+import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
@@ -42,7 +43,7 @@ import ua.naiksoftware.stomp.StompClient;
 import ua.naiksoftware.stomp.dto.StompMessage;
 
 
-public class MessageService extends Service  {
+public class MessageService extends Service {
     public static final String CHANNEL_ID_STRING = "service_message";
     private static AlamListenser mAlamListenser;
 
@@ -54,7 +55,7 @@ public class MessageService extends Service  {
     private NotificationChannel notificationChannel = null;
     String CHANNEL_ONE_NAME = "One";
     String CHANNEL_ONE_ID = "com.qyai.base";
-    private int intervalTime=10000;
+    private int intervalTime = 10000;
     WebSocketUtlts webSocketUtlts;
 
 
@@ -81,12 +82,14 @@ public class MessageService extends Service  {
         }
 
     };
+
     /**
      * 停止轮询告警
      */
     private void stopRunnable() {
         queryAlarmInSignHandler.removeCallbacksAndMessages(null);
     }
+
     //轮询告警
     public void queryAlarmInSign() {
         mAlamListenser.reshAlamList();
@@ -97,6 +100,7 @@ public class MessageService extends Service  {
     public Context getApplicationContext() {
         return BaseApp.getIns();
     }
+
     /**
      * 创建手机信息通知，进行业务内容提醒
      *
@@ -106,7 +110,7 @@ public class MessageService extends Service  {
         Intent intent = new Intent(this.getApplicationContext(), AlarmDetailActivity.class);
         // 点击Notification不重启MainActivity.class
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.putExtra("info",bean);
+        intent.putExtra("info", bean);
         PendingIntent pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 10001, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         String content = bean.getContent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -156,9 +160,6 @@ public class MessageService extends Service  {
     }
 
 
-
-
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -201,18 +202,19 @@ public class MessageService extends Service  {
     public int onStartCommand(Intent intent, int flags, int startId) {
         queryAlarmInSignHandler.postDelayed(runnable, intervalTime);
         //启动长连接
-        webSocketUtlts=new WebSocketUtlts(getApplicationContext(), new PushListener() {
+        webSocketUtlts = new WebSocketUtlts(getApplicationContext(), new PushListener() {
             @Override
             public void pushMsg(AlarmPushBean bean) {
-                // TODO: 2021/3/4 这里要做一个ClassId 的判断 
-                createNotification(bean);
-                mAlamListenser.pushMsgReshList(bean);
+                // TODO: 2021/3/4 这里要做一个ClassId 的判断
+                if (SPValueUtil.isEmpty(bean.getFenceName())&& SPValueUtil.isEmpty(bean.getContent())) {
+                    createNotification(bean);
+                    mAlamListenser.pushMsgReshList(bean);
+                }
             }
         });
         webSocketUtlts.stompConnect();
         return START_STICKY;
     }
-
 
 
     public static void initService(Activity activity) {
@@ -236,7 +238,7 @@ public class MessageService extends Service  {
         stopRunnable();
         NotificationManager mManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mManager.cancel(10001);
-        if(webSocketUtlts!=null){
+        if (webSocketUtlts != null) {
             webSocketUtlts.stopConnect();
         }
     }

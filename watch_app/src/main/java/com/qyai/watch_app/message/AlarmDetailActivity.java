@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
@@ -146,12 +147,12 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
             if(SPValueUtil.isEmpty(info.getHeartRate())){
                 tv_valueof_heartRate.setText("心率:"+info.getHeartRate());
             }else {
-                tv_valueof_heartRate.setText("心率:");
+                tv_valueof_heartRate.setText("");
             }
             if(SPValueUtil.isEmpty(info.getTemperature())){
                 tv_valueof_temperature.setText("体温:"+info.getTemperature());
             }else {
-                tv_valueof_temperature.setText("体温:");
+                tv_valueof_temperature.setText("");
             }
         }
     }
@@ -206,7 +207,7 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
                 if (result != null && result.getData().size() > 0&&result.getCode().equals("000000")) {
                     adapter.setData(result.getData());
                     ed_remaks.setText(result.getData().get(0).getContent());
-                }else if(result!=null&&result.getCode().equals("402")){
+                }else if(result!=null&&result.getCode().equals(Common.CATCH_CODE)){
                     OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
@@ -240,7 +241,7 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
                     UIHelper.ToastMessage(mActivity,result.getMsg());
                     setResult(Constants.REQUEST_CODE);
                     mActivity.finish();
-                }else if(result!=null&&result.getCode().equals("402")){
+                }else if(result!=null&&result.getCode().equals(Common.CATCH_CODE)){
                     OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }

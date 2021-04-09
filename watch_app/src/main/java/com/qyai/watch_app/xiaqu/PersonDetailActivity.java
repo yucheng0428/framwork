@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
 import com.lib.common.baseUtils.LogUtil;
@@ -85,7 +86,8 @@ public class PersonDetailActivity extends BaseHeadActivity {
     @OnClick({R2.id.iv_phone, R2.id.iv_postion, R2.id.iv_head})
     public void onClcik(View view) {
         if (view.getId() == R.id.iv_postion) {
-            ARouter.getInstance().build("/maplib/GMapActivity").navigation();
+            ARouter.getInstance().build("/maplib/GMapActivity").
+                    withString("personId",personId+"").navigation();
         } else if (view.getId() == R.id.iv_phone) {
             ContactsDialog dialog=new ContactsDialog(mActivity, contactsInfos);
             dialog.show();
@@ -113,15 +115,13 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     if(SPValueUtil.isEmpty(result.getData().getPersonDTO().getpAddressName())){
                         tv_hj_adress.setText(result.getData().getPersonDTO().getpAddressName()+result.getData().getPersonDTO().getPermanentAddress());
                     }
-                    if(result.getData().getSignNowDTO().getTemperature()!=null){
-                        tv_mesure_value.setText(result.getData().getSignNowDTO().getTemperature());
-                    }else {
-                        tv_mesure_value.setText("0/0");
-                    }
-                    if(SPValueUtil.isEmpty(result.getData().getSignNowDTO().getHeartRate())){
-                        tv_mesure_value2.setText(result.getData().getSignNowDTO().getHeartRate());
-                    }else {
-                        tv_mesure_value2.setText("0");
+                    if(result.getData().getSignNowDTO()!=null){
+                        if(SPValueUtil.isEmpty(result.getData().getSignNowDTO().getTemperature())){
+                            tv_mesure_value.setText(result.getData().getSignNowDTO().getTemperature());
+                        }
+                        if(SPValueUtil.isEmpty(result.getData().getSignNowDTO().getHeartRate())){
+                            tv_mesure_value2.setText(result.getData().getSignNowDTO().getHeartRate());
+                        }
                     }
                     head_img = result.getData().getPersonDTO().getImg();
                     Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(head_img)).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
@@ -135,7 +135,7 @@ public class PersonDetailActivity extends BaseHeadActivity {
                         cpv2.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getHeartRate()) / Float.valueOf(arr1[1])) * 100),2000);
                     }
                     contactsInfos=changeList(result.getData().getPersonDTO());
-                }else if(result!=null&&result.getCode().equals("402")){
+                }else if(result!=null&&result.getCode().equals(Common.CATCH_CODE)){
                     OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }

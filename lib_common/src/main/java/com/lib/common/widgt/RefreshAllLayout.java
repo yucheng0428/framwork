@@ -25,6 +25,7 @@ import com.lib.common.widgt.swiprefresh.BaseSwipProgressBar;
 import com.lib.common.widgt.swiprefresh.LoadMoreProgressBar;
 import com.lib.common.widgt.swiprefresh.LogoProgressBar;
 import com.lib.common.widgt.swiprefresh.RefreshProgerssBar;
+import com.lib.common.widgt.swiprefresh.RefreshView;
 import com.lib.common.widgt.swiprefresh.intf.SwipeRefreshScrollInterface;
 
 
@@ -146,7 +147,8 @@ public class RefreshAllLayout extends ViewGroup implements SwipeRefreshScrollInt
         setWillNotDraw(false);
         slidingEventInterface = this;
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
-        topBar = new RefreshProgerssBar(this, Utils.sp2px(context, 34), Utils.sp2px(context, 3));
+//        topBar = new RefreshProgerssBar(this, Utils.sp2px(context, 34), Utils.sp2px(context, 3));
+        topBar=new RefreshView(this,Utils.sp2px(context, 14));
         bottomBar = new LoadMoreProgressBar(this, Utils.sp2px(context, 13));
         mProgressBarHeight = (int) (metrics.density * PROGRESS_BAR_HEIGHT);
         mProgressBarHeightBottom = (int) (metrics.density * PROGRESS_BAR_HEIGHT_BOTTOM);

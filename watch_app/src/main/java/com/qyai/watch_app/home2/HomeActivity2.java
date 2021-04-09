@@ -66,6 +66,8 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     MyDrawerLayout drawer_layout;
     @BindView(R2.id.nav_view)
     NavigationView nav_view;
+    @BindView(R2.id.tv_title)
+    TextView tv_title;
     @BindView(R2.id.tvTitle)
     Spinner tvTitle;
     @BindView(R2.id.ivLeft)
@@ -161,7 +163,9 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                         startActivityForResult(intent, Constants.REQUEST_CODE);
                         break;
                     case 3:
-                        ARouter.getInstance().build("/maplib/GMapActivity").navigation();
+                        ARouter.getInstance().build("/maplib/GMapActivity").
+                                withString("personId",model.getAuthorId()+"").
+                                navigation();
                         break;
                 }
             }
@@ -207,7 +211,11 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         MessageService.initService(mActivity);
         MessageService.setAlamListenser(this);
         getAllClass();
-        GpsLactionUtils.getInstance(mActivity).startGps();
+        try {
+            GpsLactionUtils.getInstance(mActivity).startGps();
+        }catch (Exception e){
+
+        }
     }
 
 
@@ -289,7 +297,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                 alarmAdapter.clearData();
                 if (result != null && result.getData().size() > 0&&result.getCode().equals("000000")) {
                     alarmAdapter.setData(result.getData());
-                }else if(result != null &&result.getCode().equals("402")){
+                }else if(result != null &&result.getCode().equals(Common.CATCH_CODE)){
                     OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
@@ -318,7 +326,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                     tv_online.setText("在线人数:" + result.getData().getPersonOnLineCount());
                     tv_today_alarm_all.setText("今日告警总数:" + result.getData().getToDayAlarmCount());
                     tv_today_nodo.setText("今日未处理告警:" + result.getData().getToDayPendingAlarmCount());
-                }else if(result != null &&result.getCode().equals("402")){
+                }else if(result != null &&result.getCode().equals(Common.CATCH_CODE)){
                     OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }
@@ -337,8 +345,14 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             @Override
             public void onSuccessful(int id, JusClassResult result) {
                 if (result != null && result.getData() != null&&result.getCode().equals("000000")) {
-                    jusClassAdapter.setData(result.getData());
-                }else if(result != null &&result.getCode().equals("402")){
+                    if(result.getData().size()>0){
+                        jusClassAdapter.setData(result.getData());
+                    }else {
+                        tv_title.setVisibility(View.VISIBLE);
+                        tv_title.setText("暂无");
+                        OnlyUserUtils.catchOut(mActivity,"当前用户不是辖区管理员，无法使用此功能");
+                    }
+                }else if(result != null &&result.getCode().equals(Common.CATCH_CODE)){
                     OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
             }

@@ -41,7 +41,7 @@
         android:layout_alignParentBottom="true"
         android:paddingLeft="14dp"
         android:paddingBottom="20dp"
-        android:src="@mipmap/icon_my_postion"
+        android:src="@mipmap/icon_mypostion"
         android:visibility="visible" />
 
     <include

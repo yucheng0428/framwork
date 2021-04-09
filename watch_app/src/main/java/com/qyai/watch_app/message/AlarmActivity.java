@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.base.BaseActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
@@ -94,7 +96,9 @@ public class AlarmActivity extends BaseActivity {
                         startActivityForResult(intent, Constants.REQUEST_CODE);
                         break;
                     case 3:
-                        ARouter.getInstance().build("/maplib/GMapActivity").navigation();
+                        ARouter.getInstance().build("/maplib/GMapActivity").
+                                withString("personId",model.getAuthorId()+"").
+                                navigation();
                         break;
                 }
             }
@@ -179,7 +183,7 @@ public class AlarmActivity extends BaseActivity {
                 alarmAdapter.clearData();
                 if (result != null && result.getData().size() > 0&&result.getCode().equals("000000")) {
                     alarmAdapter.setData(result.getData());
-                }else if(result != null &&result.getCode().equals("402")){
+                }else if(result != null &&result.getCode().equals(Common.CATCH_CODE)){
                     OnlyUserUtils.catchOut(mActivity,result.getMsg());
                 }
                 swipeRefreshLayout.setRefreshing(false);

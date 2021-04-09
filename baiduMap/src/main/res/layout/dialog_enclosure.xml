@@ -26,7 +26,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="26dp"
         android:textColor="@color/color_333333"
-        android:drawableLeft="@mipmap/icon_adree"
+        android:drawableLeft="@mipmap/icon_adress"
         android:drawablePadding="@dimen/padding_15"
         android:text="地址"
         android:textSize="14sp" />

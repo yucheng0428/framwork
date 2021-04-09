@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.base.BaseHeadActivity;
-import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.FileUtils;
-import com.lib.common.baseUtils.PhoneUtils;
+import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
-import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
+import com.lib.common.widgt.RefreshAllLayout;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.contacts.ContactsDialog;
@@ -34,10 +34,13 @@ import butterknife.BindView;
  * 辖区守护
  */
 public class XiaQuActivity extends BaseHeadActivity {
+    @BindView(R2.id.swipeRefreshLayout)
+    RefreshAllLayout swipeRefreshLayout;
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
     XiaQuAdapter adapter;
-     int classId;
+    int classId;
+    static int pageNo = 1;
 
 
     @Override
@@ -48,7 +51,7 @@ public class XiaQuActivity extends BaseHeadActivity {
     @Override
     protected void initUIData() {
         setTvTitle("辖区守护");
-        classId = getIntent().getIntExtra("classId",0);
+        classId = getIntent().getIntExtra("classId", 0);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -68,56 +71,78 @@ public class XiaQuActivity extends BaseHeadActivity {
                         break;
                     case 2:
                         //2是点击打电话;
-                        ContactsDialog dialog=new ContactsDialog(mActivity, changeList(model));
+                        ContactsDialog dialog = new ContactsDialog(mActivity, changeList(model));
                         dialog.show();
 //                        PhoneUtils.dialPhone(mActivity, model.getPhone());
                         break;
                     case 3:
-                        ARouter.getInstance().build("/maplib/GMapActivity").navigation();
+                        LogUtil.e("map==>",model.getPersonId()+"");
+                        ARouter.getInstance().build("/maplib/GMapActivity")
+                                .withString("personId",model.getPersonId()+"")
+                                .navigation();
                         //2是点击打电话;
                         break;
                     case 4:
-                        if(SPValueUtil.isEmpty(model.getImg())){
+                        if (SPValueUtil.isEmpty(model.getImg())) {
                             new LookBigPictureDialog(mActivity, FileUtils.base64ChangeBitmap(model.getImg())).show();
                         }
                         break;
                 }
             }
         });
-        getUserList();
-
+        initRefreshLayout();
+        pageNo=1;
+        getUserList(pageNo);
     }
 
-    public List<ContactsInfo> changeList(XiaQuResult.DataBean.ListBean dtoBean){
-        List<ContactsInfo> infos=new ArrayList<>();
-        ContactsInfo contactsInfo=new ContactsInfo("当前联系人",dtoBean.getPhone(),dtoBean.getName());
+    private void initRefreshLayout() {
+        swipeRefreshLayout.setCanRefresh(true);
+        swipeRefreshLayout.setCanLoadMore(false);
+        swipeRefreshLayout.setLoadListener(new RefreshAllLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                getUserList(pageNo);
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new RefreshAllLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pageNo=1;
+                getUserList(pageNo);
+            }
+        });
+    }
+
+    public List<ContactsInfo> changeList(XiaQuResult.DataBean.ListBean dtoBean) {
+        List<ContactsInfo> infos = new ArrayList<>();
+        ContactsInfo contactsInfo = new ContactsInfo("当前联系人", dtoBean.getPhone(), dtoBean.getName());
         infos.add(contactsInfo);
-        if(dtoBean!=null){
-            String arr[]=dtoBean.getEmergencyMan().split(",");
-            String phone[]=dtoBean.getEmergencyPhone().split(",");
-            if(arr.length>0&&phone.length>0&&arr.length==phone.length){
-                for(int i=0;i<arr.length;i++){
-                    switch (i){
+        if (dtoBean != null) {
+            String arr[] = dtoBean.getEmergencyMan().split(",");
+            String phone[] = dtoBean.getEmergencyPhone().split(",");
+            if (arr.length > 0 && phone.length > 0 && arr.length == phone.length) {
+                for (int i = 0; i < arr.length; i++) {
+                    switch (i) {
                         case 0:
-                            infos.add(new ContactsInfo("第一紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第一紧急联系人", phone[i], arr[i]));
                             break;
                         case 1:
-                            infos.add(new ContactsInfo("第二紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第二紧急联系人", phone[i], arr[i]));
                             break;
                         case 2:
-                            infos.add(new ContactsInfo("第三紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第三紧急联系人", phone[i], arr[i]));
                             break;
                         case 3:
-                            infos.add(new ContactsInfo("第四紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第四紧急联系人", phone[i], arr[i]));
                             break;
                         case 4:
-                            infos.add(new ContactsInfo("第五紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第五紧急联系人", phone[i], arr[i]));
                             break;
                         case 5:
-                            infos.add(new ContactsInfo("第六紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第六紧急联系人", phone[i], arr[i]));
                             break;
                         default:
-                            infos.add(new ContactsInfo("第"+(i+1)+"紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第" + (i + 1) + "紧急联系人", phone[i], arr[i]));
                             break;
                     }
                 }
@@ -125,36 +150,46 @@ public class XiaQuActivity extends BaseHeadActivity {
         }
         return infos;
     }
+
     /**
      * 获取辖区人员信息
      * /jurisdiction/selectUserJurisdictionList
      * 查询辖区人员列表
      */
-    public void getUserList() {
-        if(classId==0){
+    public void getUserList(int page) {
+        if (classId == 0) {
             return;
         }
         HashMap req = new HashMap();
         req.put("limit", 10);
-        req.put("page", 1);
-        List<String> count=new ArrayList<>();
-        count.add(classId+"");
-        req.put("personClassId",count);
+        req.put("page", page);
+        List<String> count = new ArrayList<>();
+        count.add(classId + "");
+        req.put("personClassId", count);
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "jurisdiction/selectUserJurisdictionList", req, new OnHttpCallBack<XiaQuResult>() {
             @Override
             public void onSuccessful(int id, XiaQuResult result) {
-                if(result!=null&&result.getCode().equals("000000")){
-                    if(result.getData().getList()!=null&&result.getData().getList().size()>0){
+                if (result != null && result.getCode().equals("000000")) {
+                    if (result.getData().getList() != null && result.getData().getList().size() > 0) {
                         adapter.setData(result.getData().getList());
+                        if (pageNo < result.getData().getPageNum()&&result.getData().isHasNextPage()) {
+                            pageNo++;
+                            swipeRefreshLayout.setCanLoadMore(true);
+                        } else {
+                            swipeRefreshLayout.setCanLoadMore(false);
+                        }
                     }
-                }else if(result!=null&&result.getCode().equals("402")){
-                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
+                } else if (result != null && result.getCode().equals(Common.CATCH_CODE)) {
+                    OnlyUserUtils.catchOut(mActivity, result.getMsg());
                 }
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setLoading(false);
             }
 
             @Override
             public void onFaild(int id, XiaQuResult o, String err) {
-
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setLoading(false);
             }
         }, XiaQuResult.class);
     }

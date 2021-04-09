@@ -57,6 +57,8 @@ public class Common {
     public final static int REQUEST_IMAGE = 10;
     public final static String INTENT_ZXING_CONFIG = "coded";
 
+    public  final  static String CATCH_CODE="601";
+
 
     public final static int OVERLAY_PERMISSION_REQ_CODE = 111;
     public final static String CODED_CONTENT = "codedContent";

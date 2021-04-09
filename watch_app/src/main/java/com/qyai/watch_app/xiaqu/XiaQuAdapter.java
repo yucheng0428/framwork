@@ -41,12 +41,22 @@ public class XiaQuAdapter extends SimpleRecAdapter<XiaQuResult.DataBean.ListBean
        XiaQuResult.DataBean.ListBean info=data.get(position);
        holder.tv_name.setText(info.getName());
        holder.tv_sex.setText(info.getSexName());
-       if(info.getHealthInfo()!=null&&info.getHealthInfo().equals("0")){
-           holder.tv_stat.setText("健康特征正常！");
-           holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_green));
+       if(info.getHealthInfo()!=null){
+           switch (info.getHealthInfo()){
+               case "0":
+                   holder.tv_stat.setText("健康特征正常！");
+                   holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_green));
+                   break;
+               case "1":
+                   holder.tv_stat.setText("健康特征异常！");
+                   holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_red));
+                   break;
+               case "2":
+                   holder.tv_stat.setText("");
+                   break;
+           }
        }else {
-           holder.tv_stat.setText("健康特征异常！");
-           holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_red));
+           holder.tv_stat.setText("");
        }
         Glide.with(context).load(FileUtils.base64ChangeBitmap(info.getImg())).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(holder.iv_head);
        holder.iv_head.setOnClickListener(new View.OnClickListener() {

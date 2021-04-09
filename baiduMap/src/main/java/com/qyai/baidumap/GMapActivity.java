@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -35,8 +36,19 @@ import com.baidu.mapapi.search.share.ShareUrlSearch;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
+import com.lib.common.baseUtils.LogUtil;
+import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.baseUtils.baseModle.BaseResult;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
+import com.lib.common.netHttp.HttpReq;
+import com.lib.common.netHttp.HttpServiec;
+import com.lib.common.netHttp.OnHttpCallBack;
+import com.nostra13.universalimageloader.utils.L;
+import com.qyai.baidumap.postion.bean.LoctionBean;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -70,6 +82,8 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
 
     //坐标和经纬度转换工具
     Projection projection;
+    @Autowired(name = "personId")
+    public String personId;
     @Override
     public int layoutId() {
         return R.layout.activity_g_map;
@@ -83,6 +97,11 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
             aMap = mapView.getMap();
             setUpMap();
         }
+        LogUtil.e("map==>",personId+"");
+        if(SPValueUtil.isEmpty(personId)){
+            getHttpLocation(personId);
+        }
+
     }
     @OnClick({R2.id.tv_fuz,R2.id.tv_share})
     public void onClick(View view){
@@ -91,7 +110,6 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
             cmb.setText(tv_adress.getText().toString());
             UIHelper.ToastMessage(mActivity,"已复制地址");
         }else if(view.getId()==R.id.tv_share){
-//            layout_adress.setVisibility(View.GONE);
             ShareUtils shareUtils=new ShareUtils();
             shareUtils.shareMessage("分享",tv_adress.getText().toString(),null,null,"");
 
@@ -103,7 +121,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
     private void setUpMap() {
         aMap.setLocationSource(this);// 设置定位监听
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
-        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+        aMap.setMyLocationEnabled(false);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.setOnMapTouchListener(this);
     }
     @Override
@@ -165,8 +183,8 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
                 if(locationMarker == null) {
                     //首次定位
                     locationMarker = aMap.addMarker(new MarkerOptions().position(latLng)
-                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_my_postion))
-                            .anchor(0.5f, 0.5f));
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_mypostion))
+                            .anchor(1f, 1f));
 
                     //首次定位,选择移动到地图中心点并修改级别到15级
                     aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
@@ -295,5 +313,37 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
             mlocationClient.onDestroy();
         }
         mlocationClient = null;
+    }
+
+
+    public  void getHttpLocation(String personId){
+        Map<String,String> map=new HashMap<>();
+        HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp()+"personHealth/getPosition/"+personId, map, new OnHttpCallBack<LoctionBean>() {
+            @Override
+            public void onSuccessful(int id, LoctionBean bean) {
+                if(bean!=null&&bean.getCode().equals("000000")){
+                    if(SPValueUtil.isEmpty(bean.getData().getLocX()+"")||SPValueUtil.isEmpty(bean.getData().getLocY()+"")){
+                        LatLng latLng=new LatLng(bean.getData().getLocY(),bean.getData().getLocX(),false);
+                        if(locationMarker == null) {
+                            //首次定位
+                            locationMarker = aMap.addMarker(new MarkerOptions().position(latLng)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_mypostion))
+                                    .anchor(1f, 1f));
+
+                            //首次定位,选择移动到地图中心点并修改级别到15级
+                            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                            tv_adress.setText(bean.getData().getPositionAddress());
+                        }
+                    }else {
+                        aMap.setMyLocationEnabled(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onFaild(int id, LoctionBean bean, String err) {
+                   UIHelper.ToastMessage(mActivity,err);
+            }
+        },LoctionBean.class);
     }
 }

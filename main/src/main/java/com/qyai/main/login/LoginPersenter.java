@@ -69,11 +69,7 @@ public class LoginPersenter extends BasePresenter<LoginView> {
                     getMvpView().loginNext(JSONObject.parseObject((String) baseResponse, UserEvent.class));
                 } else {
                     if (event != null) {
-                        if (event.getCode().equals("502")) {
-                            getMvpView().showErrMsg("密码错误");
-                        } else {
-                            getMvpView().showErrMsg(event.getMsg());
-                        }
+                        getMvpView().showErrMsg(event.getMsg());
                     }
 
                 }
