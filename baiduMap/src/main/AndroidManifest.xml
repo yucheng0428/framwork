@@ -41,6 +41,7 @@
         <activity android:name=".postion.AddEnclosureActivity" />
         <activity android:name=".postion.PostionActivity" />
         <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name=".service.LocationService"></service>
     </application>
 
 </manifest>

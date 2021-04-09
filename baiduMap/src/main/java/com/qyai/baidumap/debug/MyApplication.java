@@ -16,13 +16,11 @@ import com.qyai.baidumap.service.LocationService;
  * 单独调试时的初始化 application
  */
 public class MyApplication extends BaseApp {
-    public LocationService locationService;
     public Vibrator mVibrator;
     @Override
     public void onCreate() {
         super.onCreate();
         LogUtil.e("init", "初始化地图sdk");
-        locationService = new LocationService(BaseApp.getIns());
         mVibrator = (Vibrator) BaseApp.getIns().getSystemService(Service.VIBRATOR_SERVICE);
         SDKInitializer.initialize(BaseApp.getIns());
         SDKInitializer.setCoordType(CoordType.BD09LL);

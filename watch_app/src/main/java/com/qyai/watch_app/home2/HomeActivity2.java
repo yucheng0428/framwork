@@ -37,6 +37,7 @@ import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.lib.common.widgt.MyDrawerLayout;
 import com.lib.common.widgt.RoundImageView;
+import com.qyai.baidumap.service.LocationService;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.AlarmActivity;
@@ -208,14 +209,10 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                 // Another interface callback
             }
         });
-        MessageService.initService(mActivity);
-        MessageService.setAlamListenser(this);
+//        MessageService.initService(mActivity);
+//        MessageService.setAlamListenser(this);
+        LocationService.initService(mActivity);
         getAllClass();
-        try {
-            GpsLactionUtils.getInstance(mActivity).startGps();
-        }catch (Exception e){
-
-        }
     }
 
 
@@ -262,7 +259,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     protected void onDestroy() {
         super.onDestroy();
         MessageService.stopService(mActivity);
-        GpsLactionUtils.getInstance(mActivity).stopGps();
+        LocationService.stopService(mActivity);
     }
 
 
