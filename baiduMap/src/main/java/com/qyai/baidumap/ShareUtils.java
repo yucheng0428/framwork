@@ -1,7 +1,10 @@
 package com.qyai.baidumap;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.lib.common.base.BaseApp;
 import com.mob.MobSDK;
 
 import java.util.HashMap;
@@ -16,6 +19,7 @@ import cn.sharesdk.whatsapp.WhatsApp;
 public class ShareUtils {
 
     public static void shareMessage(String title, String content, String imageUrl, String url, String phone) {
+        Bitmap logo = BitmapFactory.decodeResource(BaseApp.getIns().getResources(), R.mipmap.app_icon_log_b);
         OnekeyShare oks = new OnekeyShare();
         oks.addHiddenPlatform(WechatMoments.NAME);
         oks.addHiddenPlatform(WhatsApp.NAME);
@@ -31,8 +35,8 @@ public class ShareUtils {
                 if ("Wechat".equals(platform.getName())) {
                     paramsToShare.setTitle(title);
                     paramsToShare.setText(content);
-                    paramsToShare.setImageUrl("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.biaobaiju.com%2Fuploads%2F20180111%2F00%2F1515603525-qwkFGlSYdP.jpg&refer=http%3A%2F%2Fimage.biaobaiju.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1617157877&t=d67d7df351c3aafc756ae0e21c0e7ea3");
-                    paramsToShare.setUrl("https://www.amap.com/");
+                    paramsToShare.setImageData(logo);
+                    paramsToShare.setUrl(url);
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
                     Log.d("ShareSDK", paramsToShare.toMap().toString());
                 }
@@ -42,7 +46,7 @@ public class ShareUtils {
                     paramsToShare.setText(content);
             /*Bitmap imageData = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
             paramsToShare.setImageData(imageData);*/
-                    paramsToShare.setImageUrl(imageUrl);
+                    paramsToShare.setImageData(logo);
                     paramsToShare.setShareType(Platform.SHARE_IMAGE);
                     Log.d("ShareSDK", paramsToShare.toMap().toString());
                 }
@@ -51,21 +55,21 @@ public class ShareUtils {
                     paramsToShare.setTitle(title);
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setText(content);
-                    paramsToShare.setImageUrl(imageUrl);
+                    paramsToShare.setImageData(logo);
                     Log.d("ShareSDK", paramsToShare.toMap().toString());
                 }
                 //支付宝好友分享网页
                 if ("Alipay".equals(platform.getName())) {
                     paramsToShare.setTitle(title);
                     paramsToShare.setText(content);
-                    paramsToShare.setImageUrl(imageUrl);
+                    paramsToShare.setImageData(logo);
                     paramsToShare.setUrl(url);
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
                     Log.d("ShareSDK", paramsToShare.toMap().toString());
                 }
                 //WhatsApp分享图片
                 if ("WhatsApp".equals(platform.getName())) {
-                    paramsToShare.setImageUrl(imageUrl);
+                    paramsToShare.setImageData(logo);;
                 }
                 //短信分享文本
                 if ("ShortMessage".equals(platform.getName())) {

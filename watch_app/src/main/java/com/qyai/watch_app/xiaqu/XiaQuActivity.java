@@ -39,7 +39,7 @@ public class XiaQuActivity extends BaseHeadActivity {
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
     XiaQuAdapter adapter;
-    int classId;
+    String classId;
     static int pageNo = 1;
 
 
@@ -51,7 +51,7 @@ public class XiaQuActivity extends BaseHeadActivity {
     @Override
     protected void initUIData() {
         setTvTitle("辖区守护");
-        classId = getIntent().getIntExtra("classId", 0);
+        classId = getIntent().getStringExtra("classId");
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -157,7 +157,7 @@ public class XiaQuActivity extends BaseHeadActivity {
      * 查询辖区人员列表
      */
     public void getUserList(int page) {
-        if (classId == 0) {
+        if (!SPValueUtil.isEmpty(classId)) {
             return;
         }
         HashMap req = new HashMap();
@@ -171,8 +171,12 @@ public class XiaQuActivity extends BaseHeadActivity {
             public void onSuccessful(int id, XiaQuResult result) {
                 if (result != null && result.getCode().equals("000000")) {
                     if (result.getData().getList() != null && result.getData().getList().size() > 0) {
-                        adapter.setData(result.getData().getList());
-                        if (pageNo < result.getData().getPageNum()&&result.getData().isHasNextPage()) {
+                        if(pageNo==1){
+                            adapter.setData(result.getData().getList());
+                        }else {
+                            adapter.addData(result.getData().getList());
+                        }
+                        if (pageNo < result.getData().getPages()&&result.getData().isHasNextPage()) {
                             pageNo++;
                             swipeRefreshLayout.setCanLoadMore(true);
                         } else {

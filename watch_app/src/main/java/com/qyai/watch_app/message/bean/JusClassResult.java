@@ -43,8 +43,7 @@ public class JusClassResult extends BaseResult implements Serializable{
          * userPhone : null
          * pid : 0
          */
-
-        private int id;
+        private String id;
         private String name;
         private Object operateId;
         private long operateTime;
@@ -58,15 +57,8 @@ public class JusClassResult extends BaseResult implements Serializable{
         private Object z;
         private String userName;
         private Object userPhone;
-        private int pid;
+        private String pid;
 
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
 
         public String getName() {
             return name;
@@ -172,11 +164,19 @@ public class JusClassResult extends BaseResult implements Serializable{
             this.userPhone = userPhone;
         }
 
-        public int getPid() {
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getPid() {
             return pid;
         }
 
-        public void setPid(int pid) {
+        public void setPid(String pid) {
             this.pid = pid;
         }
     }

@@ -113,7 +113,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     long mExitTime = 1000;
     UserEvent.UserData userData;
     JusClassAdapter jusClassAdapter;
-    int classId = 0;
+    String classId = "";
 
     @Override
     protected int layoutId() {
@@ -177,7 +177,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int pos, long id) {
-                if (pos == 0 && classId == 0) {
+                if (pos == 0 && classId .equals("0") ) {
                     if (SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT))) {
                         JusClassResult.DataBean dataBean = JSONObject.parseObject(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT), JusClassResult.DataBean.class);
                         if (dataBean != null) {
@@ -209,8 +209,8 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                 // Another interface callback
             }
         });
-//        MessageService.initService(mActivity);
-//        MessageService.setAlamListenser(this);
+        MessageService.initService(mActivity);
+        MessageService.setAlamListenser(this);
         LocationService.initService(mActivity);
         getAllClass();
     }
@@ -279,7 +279,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     }
 
     //查询告警
-    public void getAlarmList(int clas) {
+    public void getAlarmList(String clas) {
         HashMap req = new HashMap();
         req.put("dealStatus", "0");
         req.put("page", "-1");
@@ -308,7 +308,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
 
 
     //获取告警统计信息
-    public void getCount(int clas) {
+    public void getCount(String clas) {
         HashMap req = new HashMap();
         List<String> count = new ArrayList<>();
         count.add(clas + "");
@@ -363,7 +363,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
 
     //更新列表
     public void reshData() {
-        if (classId != 0) {
+        if (SPValueUtil.isEmpty(classId) ) {
             getCount(classId);
             getAlarmList(classId);
         }
