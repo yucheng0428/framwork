@@ -227,7 +227,7 @@ public class XiaQuResult extends BaseResult implements Serializable {
             private int personId;
             private String name;
             private String sex;
-            private int personType;
+            private String personType;
             private String personTypeName;
             private String phone;
             private String emergencyMan;
@@ -275,11 +275,11 @@ public class XiaQuResult extends BaseResult implements Serializable {
                 this.sex = sex;
             }
 
-            public int getPersonType() {
+            public String getPersonType() {
                 return personType;
             }
 
-            public void setPersonType(int personType) {
+            public void setPersonType(String personType) {
                 this.personType = personType;
             }
 

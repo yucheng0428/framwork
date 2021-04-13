@@ -12,8 +12,8 @@ public class MyApplication extends BaseApp {
     public void onCreate() {
         super.onCreate();
         Common.initARouter(this);
-        HttpReq.getInstence().setIp(Common.HTTP_REQ);
-//        HttpReq.getInstence().setIp("http://172.16.1.232:16800/");
+//        HttpReq.getInstence().setIp(Common.HTTP_REQ);
+        HttpReq.getInstence().setIp("http://172.16.1.232:16800/");
     }
 
 

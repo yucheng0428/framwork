@@ -32,7 +32,6 @@ import com.lib.common.dialog.IphoneDialog;
 import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
-import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.lib.common.widgt.MyDrawerLayout;
@@ -50,7 +49,6 @@ import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.AlarmResult;
 import com.qyai.watch_app.message.bean.JusClassResult;
 import com.qyai.watch_app.message.websocket.AlamListenser;
-import com.qyai.watch_app.utils.GpsLactionUtils;
 import com.qyai.watch_app.utils.OnlyUserUtils;
 import com.qyai.watch_app.xiaqu.XiaQuActivity;
 
@@ -165,7 +163,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                         break;
                     case 3:
                         ARouter.getInstance().build("/maplib/GMapActivity").
-                                withString("personId",model.getAuthorId()+"").
+                                withString("personId", model.getAuthorId() + "").
                                 navigation();
                         break;
                 }
@@ -177,7 +175,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int pos, long id) {
-                if (pos == 0 && classId .equals("0") ) {
+                if (pos == 0 && classId.equals("0")) {
                     if (SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT))) {
                         JusClassResult.DataBean dataBean = JSONObject.parseObject(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT), JusClassResult.DataBean.class);
                         if (dataBean != null) {
@@ -243,7 +241,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             IphoneDialog iphoneDialog = new IphoneDialog(mActivity, new IphoneDialog.IphoneListener() {
                 @Override
                 public void upContent(String string) {
-                   OnlyUserUtils.loginOut(mActivity);
+                    OnlyUserUtils.loginOut(mActivity);
                 }
             }, false, "提示", "是否要退出登录");
             iphoneDialog.show();
@@ -286,22 +284,24 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         List<String> count = new ArrayList<>();
         count.add(clas + "");
         req.put("classId", count);
-        req.put("type","-1");
+        req.put("type", "-1");
         //查询告警
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarm", req, new OnHttpCallBack<AlarmResult>() {
             @Override
             public void onSuccessful(int id, AlarmResult result) {
                 alarmAdapter.clearData();
-                if (result != null && result.getData().size() > 0&&result.getCode().equals("000000")) {
+                if (result != null && result.getData().size() > 0 && result.getCode().equals("000000")) {
                     alarmAdapter.setData(result.getData());
-                }else if(result != null &&result.getCode().equals(Common.CATCH_CODE)){
-                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
+                } else if (result != null && result.getCode().equals(Common.CATCH_CODE)) {
+                    OnlyUserUtils.catchOut(mActivity, result.getMsg());
                 }
             }
 
             @Override
             public void onFaild(int id, AlarmResult o, String err) {
-                UIHelper.ToastMessage(HomeActivity2.this, err);
+                if (SPValueUtil.isEmpty(err)) {
+                    UIHelper.ToastMessage(HomeActivity2.this, err);
+                }
             }
         }, AlarmResult.class);
     }
@@ -316,15 +316,15 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "alarm/queryAlarmCount", req, new OnHttpCallBack<AlarmCountResult>() {
             @Override
             public void onSuccessful(int id, AlarmCountResult result) {
-                if (result != null && result.getData() != null&&result.getCode().equals("000000")) {
+                if (result != null && result.getData() != null && result.getCode().equals("000000")) {
                     tv_all.setText("总人数:" + result.getData().getPersonCount());
                     tv_alarm_all.setText("告警总数:" + result.getData().getAlarmCount());
                     tv_nodo.setText("未处理告警:" + result.getData().getPendingAlarmCount());
                     tv_online.setText("在线人数:" + result.getData().getPersonOnLineCount());
                     tv_today_alarm_all.setText("今日告警总数:" + result.getData().getToDayAlarmCount());
                     tv_today_nodo.setText("今日未处理告警:" + result.getData().getToDayPendingAlarmCount());
-                }else if(result != null &&result.getCode().equals(Common.CATCH_CODE)){
-                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
+                } else if (result != null && result.getCode().equals(Common.CATCH_CODE)) {
+                    OnlyUserUtils.catchOut(mActivity, result.getMsg());
                 }
             }
 
@@ -341,16 +341,16 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "jurisdiction/queryAllClass/userClass", req, new OnHttpCallBack<JusClassResult>() {
             @Override
             public void onSuccessful(int id, JusClassResult result) {
-                if (result != null && result.getData() != null&&result.getCode().equals("000000")) {
-                    if(result.getData().size()>0){
+                if (result != null && result.getData() != null && result.getCode().equals("000000")) {
+                    if (result.getData().size() > 0) {
                         jusClassAdapter.setData(result.getData());
-                    }else {
+                    } else {
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("暂无");
-                        OnlyUserUtils.catchOut(mActivity,"当前用户不是辖区管理员，无法使用此功能");
+                        OnlyUserUtils.catchOut(mActivity, "当前用户不是辖区管理员，无法使用此功能");
                     }
-                }else if(result != null &&result.getCode().equals(Common.CATCH_CODE)){
-                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
+                } else if (result != null && result.getCode().equals(Common.CATCH_CODE)) {
+                    OnlyUserUtils.catchOut(mActivity, result.getMsg());
                 }
             }
 
@@ -363,7 +363,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
 
     //更新列表
     public void reshData() {
-        if (SPValueUtil.isEmpty(classId) ) {
+        if (SPValueUtil.isEmpty(classId)) {
             getCount(classId);
             getAlarmList(classId);
         }

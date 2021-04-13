@@ -116,7 +116,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
             ShareUtils shareUtils = new ShareUtils();
             String url = "http://uri.amap.com/marker?position="
                     + myLatLng.longitude + ","
-                    + myLatLng.latitude;
+                    + myLatLng.latitude+"&name="+tv_adress.getText().toString();
             shareUtils.shareMessage("分享", tv_adress.getText().toString(), null, url, "");
 
         }

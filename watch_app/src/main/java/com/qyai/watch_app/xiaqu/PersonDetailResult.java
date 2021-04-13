@@ -215,7 +215,7 @@ public class PersonDetailResult extends BaseResult implements Serializable {
             private String sex;
             private String company;
             private String duty;
-            private int personType;
+            private String personType;
             private String phone;
             private String idcard;
             private String status;
@@ -371,11 +371,11 @@ public class PersonDetailResult extends BaseResult implements Serializable {
                 this.duty = duty;
             }
 
-            public int getPersonType() {
+            public String getPersonType() {
                 return personType;
             }
 
-            public void setPersonType(int personType) {
+            public void setPersonType(String personType) {
                 this.personType = personType;
             }
 

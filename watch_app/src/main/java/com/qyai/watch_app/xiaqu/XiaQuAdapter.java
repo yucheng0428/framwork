@@ -52,7 +52,8 @@ public class XiaQuAdapter extends SimpleRecAdapter<XiaQuResult.DataBean.ListBean
                    holder.tv_stat.setTextColor(context.getResources().getColor(R.color.x_red));
                    break;
                case "2":
-                   holder.tv_stat.setText("");
+                   holder.tv_stat.setText("没有体征信息");
+                   holder.tv_stat.setTextColor(context.getResources().getColor(R.color.black));
                    break;
            }
        }else {

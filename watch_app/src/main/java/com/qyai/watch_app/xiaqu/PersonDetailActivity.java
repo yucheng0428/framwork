@@ -112,9 +112,11 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     if(SPValueUtil.isEmpty(result.getData().getPersonDTO().getcAddressName())){
                         tv_now_adress.setText(result.getData().getPersonDTO().getcAddressName()+result.getData().getPersonDTO().getCurrentAddress());
                     }
-                    if(SPValueUtil.isEmpty(result.getData().getPersonDTO().getpAddressName())){
-                        tv_hj_adress.setText(result.getData().getPersonDTO().getpAddressName()+result.getData().getPersonDTO().getPermanentAddress());
-                    }
+                    String addressName = result.getData().getPersonDTO().getpAddressName()==null?"":result.getData().getPersonDTO().getpAddressName();
+                    String permanetAddress = result.getData().getPersonDTO().getPermanentAddress()==null?"":result.getData().getPersonDTO().getPermanentAddress();
+
+                    tv_hj_adress.setText(addressName + permanetAddress);
+
                     if(result.getData().getSignNowDTO()!=null){
                         if(SPValueUtil.isEmpty(result.getData().getSignNowDTO().getTemperature())){
                             tv_mesure_value.setText(result.getData().getSignNowDTO().getTemperature());
@@ -125,7 +127,7 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     }
                     head_img = result.getData().getPersonDTO().getImg();
                     Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(head_img)).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
-                    tv_result_1.setText(result.getData().getSignNowDTO().getTemperatureState()==null?"正常":result.getData().getSignNowDTO().getTemperatureState());
+                    tv_result_1.setText(result.getData().getSignNowDTO().getTemperatureState()==null?"":result.getData().getSignNowDTO().getTemperatureState());
                     tv_result_2.setText(result.getData().getSignNowDTO().getHeartRateState()==null?"":result.getData().getSignNowDTO().getHeartRateState());
                     String[] arr1 = getZ(result.getData().getPersonDetailDTO().getAlarmOxygen());
                     if (result.getData().getSignNowDTO().getBloodPressureLow()!= null && result.getData().getSignNowDTO().getBloodPressureHigh()!=null) {
@@ -149,7 +151,10 @@ public class PersonDetailActivity extends BaseHeadActivity {
 
 
     public String[] getZ(String str) {
-        return str.split(",");
+        if (SPValueUtil.isEmpty(str)) {
+            return str.split(",");
+        }
+        return new String[]{};
     }
 
     public List<ContactsInfo> changeList(PersonDetailResult.DataBean.PersonDTOBean dtoBean){

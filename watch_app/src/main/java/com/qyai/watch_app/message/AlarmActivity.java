@@ -17,6 +17,7 @@ import com.lib.common.base.BaseActivity;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.LogUtil;
+import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
@@ -53,7 +54,7 @@ public class AlarmActivity extends BaseActivity {
     AlarmAdapter alarmAdapter;
     int itemType = 2;
     int type=0;
-    int classId = 0;
+    String classId = "";
 
     @Override
     protected int layoutId() {
@@ -63,7 +64,8 @@ public class AlarmActivity extends BaseActivity {
     @Override
     protected void initUIData(Bundle bundle) {
         setScreenModel(3);
-        classId=getIntent().getIntExtra("classId",0);
+        classId=getIntent().getStringExtra("classId");
+
         setTranslucentStatusColor(mActivity.getResources().getColor(R.color.white));
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         recyclerView.setLayoutManager(layoutManager);
@@ -159,7 +161,7 @@ public class AlarmActivity extends BaseActivity {
 
     //查询告警 0=未处理 1=已处理
     public void getAlarmList(int type) {
-        if(classId==0){
+        if(!SPValueUtil.isEmpty(classId)){
             return;
         }
         HashMap req = new HashMap();

@@ -39,7 +39,7 @@ public class FlowabBaseSubscribe<T> implements FlowableSubscriber<ResponseBody> 
                 callBack.onSuccessful(reqId,event);
             }catch (Exception e){
                 Log.e("解析出错了",""+e);
-                callBack.onFaild(reqId, null, "解析出错了");
+                callBack.onFaild(reqId, null, "");
             }
         } else {
             onException(HttpExceptionReason.LODING_ERROR);
@@ -65,7 +65,6 @@ public class FlowabBaseSubscribe<T> implements FlowableSubscriber<ResponseBody> 
         } else {
             onException(HttpExceptionReason.UNKNOWN_ERROR);
         }
-        callBack.onFaild(reqId, null, e.getMessage());
     }
 
     @Override
