@@ -11,4 +11,10 @@
         <item name="android:lines">1</item>
         <item name="android:textSize">14dp</item>
     </style>
+    <style name="editpasswrod_style">
+        <item name="android:textStyle">normal</item>
+        <item name="android:lines">1</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:maxLength">16</item>
+    </style>
 </resources>

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -32,22 +33,26 @@ import com.lib.common.dialog.IphoneDialog;
 import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
+import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.lib.common.widgt.MyDrawerLayout;
 import com.lib.common.widgt.RoundImageView;
+import com.lib.common.widgt.adress.AddressPicker;
 import com.qyai.baidumap.service.LocationService;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
 import com.qyai.watch_app.message.AlarmActivity;
 import com.qyai.watch_app.message.AlarmAdapter;
 import com.qyai.watch_app.message.AlarmDetailActivity;
+import com.qyai.watch_app.message.CheckJustClassIdAct;
 import com.qyai.watch_app.message.JusClassAdapter;
 import com.qyai.watch_app.message.MessageService;
 import com.qyai.watch_app.message.bean.AlarmCountResult;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.AlarmResult;
 import com.qyai.watch_app.message.bean.JusClassResult;
+import com.qyai.watch_app.message.bean.MenuTreeUtil;
 import com.qyai.watch_app.message.websocket.AlamListenser;
 import com.qyai.watch_app.utils.OnlyUserUtils;
 import com.qyai.watch_app.xiaqu.XiaQuActivity;
@@ -67,8 +72,6 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     NavigationView nav_view;
     @BindView(R2.id.tv_title)
     TextView tv_title;
-    @BindView(R2.id.tvTitle)
-    Spinner tvTitle;
     @BindView(R2.id.ivLeft)
     ImageView ivLeft;
     @BindView(R2.id.ivRight)
@@ -110,7 +113,6 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     TextView tv_xqsh;
     long mExitTime = 1000;
     UserEvent.UserData userData;
-    JusClassAdapter jusClassAdapter;
     String classId = "";
 
     @Override
@@ -163,48 +165,10 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                         break;
                     case 3:
                         ARouter.getInstance().build("/maplib/GMapActivity").
-                                withString("personId", model.getAuthorId() + "").
+                                withString("model", JSON.toJSONString(model)).
                                 navigation();
                         break;
                 }
-            }
-        });
-        jusClassAdapter = new JusClassAdapter(mActivity);
-        tvTitle.setAdapter(jusClassAdapter);
-        tvTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int pos, long id) {
-                if (pos == 0 && classId.equals("0")) {
-                    if (SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT))) {
-                        JusClassResult.DataBean dataBean = JSONObject.parseObject(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT), JusClassResult.DataBean.class);
-                        if (dataBean != null) {
-                            classId = dataBean.getId();
-                            int ps = 0;
-                            for (int i = 0; i < jusClassAdapter.getData().size(); i++) {
-                                if (dataBean.getId() == jusClassAdapter.getData().get(i).getId()) {
-                                    ps = i;
-                                }
-                            }
-                            tvTitle.setSelection(ps, true);
-
-                        }
-                    } else {
-                        JusClassResult.DataBean dataBean = (JusClassResult.DataBean) jusClassAdapter.getItem(pos);
-                        SPValueUtil.saveStringValue(mActivity, Common.JUSCLASSRESULT, JSONObject.toJSONString(dataBean));
-                        classId = dataBean.getId();
-                    }
-                } else {
-                    JusClassResult.DataBean dataBean = (JusClassResult.DataBean) jusClassAdapter.getItem(pos);
-                    SPValueUtil.saveStringValue(mActivity, Common.JUSCLASSRESULT, JSONObject.toJSONString(dataBean));
-                    classId = dataBean.getId();
-                }
-                reshData();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Another interface callback
             }
         });
         MessageService.initService(mActivity);
@@ -216,7 +180,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
 
     @OnClick({
             R2.id.ivLeft, R2.id.tv_xqsh,
-            R2.id.ivRight, R2.id.tv_about, R2.id.tv_out_login, R2.id.tv_changePassword, R2.id.iv_head,})
+            R2.id.ivRight, R2.id.tv_about, R2.id.tv_out_login, R2.id.tv_changePassword, R2.id.iv_head, R2.id.tv_title})
     public void onClick(View view) {
         Intent intent = new Intent();
         if (view.getId() == R.id.ivLeft) {
@@ -249,6 +213,9 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             if (SPValueUtil.isEmpty(userData.getUserInDeptDTO().getIcon())) {
                 new LookBigPictureDialog(mActivity, FileUtils.base64ChangeBitmap(userData.getUserInDeptDTO().getIcon())).show();
             }
+        } else if (view.getId() == R.id.tv_title) {
+            intent.setClass(mActivity, CheckJustClassIdAct.class);
+            startActivityForResult(intent, Common.CHECK_SUCCESSFUL);
         }
     }
 
@@ -269,6 +236,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                 UIHelper.ToastMessage(this, "再按一次退出程序");
                 mExitTime = System.currentTimeMillis();
             } else {
+                OnlyUserUtils.loginOutApp(mActivity);
                 ViewManager.getInstance().exitApp(this);
             }
             return true;
@@ -294,6 +262,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                     alarmAdapter.setData(result.getData());
                 } else if (result != null && result.getCode().equals(Common.CATCH_CODE)) {
                     OnlyUserUtils.catchOut(mActivity, result.getMsg());
+
                 }
             }
 
@@ -343,12 +312,23 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             public void onSuccessful(int id, JusClassResult result) {
                 if (result != null && result.getData() != null && result.getCode().equals("000000")) {
                     if (result.getData().size() > 0) {
-                        jusClassAdapter.setData(result.getData());
+                        classId = result.getData().get(0).getId();
+                        tv_title.setText(result.getData().get(0).getName());
+                        if (SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT))) {
+                            JusClassResult.DataBean dataBean = JSONObject.parseObject(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT), JusClassResult.DataBean.class);
+                            for(JusClassResult.DataBean bean:result.getData()){
+                                if(dataBean.getId().equals(bean.getId())){
+                                    tv_title.setText(dataBean.getName());
+                                    classId = dataBean.getId();
+                                }
+                            }
+                        }
                     } else {
                         tv_title.setVisibility(View.VISIBLE);
                         tv_title.setText("暂无");
                         OnlyUserUtils.catchOut(mActivity, "当前用户不是辖区管理员，无法使用此功能");
                     }
+                    reshData();
                 } else if (result != null && result.getCode().equals(Common.CATCH_CODE)) {
                     OnlyUserUtils.catchOut(mActivity, result.getMsg());
                 }
@@ -380,7 +360,14 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.REQUEST_CODE) {
             reshData();
+        } else if (resultCode == Common.CHECK_SUCCESSFUL) {
+            if (SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT))) {
+                JusClassResult.DataBean dataBean = JSONObject.parseObject(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT), JusClassResult.DataBean.class);
+                tv_title.setText(dataBean.getName());
+                classId = dataBean.getId();
+            }
         }
+
     }
 
     @Override

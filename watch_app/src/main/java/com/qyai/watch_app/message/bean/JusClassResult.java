@@ -58,7 +58,20 @@ public class JusClassResult extends BaseResult implements Serializable{
         private String userName;
         private Object userPhone;
         private String pid;
+        private List<DataBean> childList;
+        public boolean openList=false;//是否展开
+        public boolean checkItem=false;//是否选中
+        public int leve=0;
 
+
+
+        public List<DataBean> getChildList() {
+            return childList;
+        }
+
+        public void setChildList(List<DataBean> childList) {
+            this.childList = childList;
+        }
 
         public String getName() {
             return name;
@@ -179,5 +192,32 @@ public class JusClassResult extends BaseResult implements Serializable{
         public void setPid(String pid) {
             this.pid = pid;
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", operateId=" + operateId +
+                    ", operateTime=" + operateTime +
+                    ", type='" + type + '\'' +
+                    ", userId=" + userId +
+                    ", modelNum=" + modelNum +
+                    ", appCode=" + appCode +
+                    ", mapId=" + mapId +
+                    ", x=" + x +
+                    ", y=" + y +
+                    ", z=" + z +
+                    ", userName='" + userName + '\'' +
+                    ", userPhone=" + userPhone +
+                    ", pid='" + pid + '\'' +
+                    ", childList=" + childList +
+                    ", openList=" + openList +
+                    ", checkItem=" + checkItem +
+                    ", leve=" + leve +
+                    '}';
+        }
     }
+
+
 }

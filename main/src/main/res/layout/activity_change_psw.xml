@@ -52,13 +52,14 @@
 
         <EditText
             android:id="@+id/et_password"
-            style="@style/edittext_style"
+            style="@style/editpasswrod_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@null"
+            android:maxLength="16"
             android:hint="请输入新密码"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
@@ -84,7 +85,7 @@
 
         <EditText
             android:id="@+id/et_password_agan"
-            style="@style/edittext_style"
+            style="@style/editpasswrod_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

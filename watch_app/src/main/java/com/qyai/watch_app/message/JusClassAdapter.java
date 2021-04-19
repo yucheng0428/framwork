@@ -51,7 +51,7 @@ public class JusClassAdapter extends BaseAdapter {
         TextView text;
         LayoutInflater inflater = LayoutInflater.from(context);
         if (convertView == null) {
-            view = inflater.inflate(R.layout.item_text_check, parent, false);
+            view = inflater.inflate(R.layout.item_more_text_check, parent, false);
         } else {
             view = convertView;
         }

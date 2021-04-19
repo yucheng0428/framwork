@@ -28,6 +28,8 @@
             android:background="@null"
             android:hint="请输入用户名"
             android:imeOptions="actionNext"
+            android:textColor="@color/color_444444"
+            android:textColorHint="@color/color_999999"
             android:inputType="text"
             android:textSize="14dp" />
     </RelativeLayout>
@@ -41,13 +43,15 @@
 
         <EditText
             android:id="@+id/et_password"
-            style="@style/edittext_style"
+            style="@style/editpasswrod_style"
             android:layout_width="219dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="22dp"
             android:background="@null"
             android:hint="请输入密码"
+            android:textColor="@color/color_444444"
+            android:textColorHint="@color/color_999999"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:textSize="14dp" />

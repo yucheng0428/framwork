@@ -1,8 +1,8 @@
-package com.qyai.watch_app.message.bean;
+package com.qyai.baidumap.postion.bean;
 
 import java.io.Serializable;
 
-public class AlarmPushBean implements Serializable {
+public class ApBean {
 
 
     /**
@@ -43,43 +43,43 @@ public class AlarmPushBean implements Serializable {
      * typeName : SOS
      */
 
-    public String id;
-    public String authorId;
-    public String authorName;
-    public String authorType;
-    public String areaId;
-    public String areaVersion;
-    public String deviceId;
-    public String posX;
-    public String posY;
-    public String posZ;
-    public int type;
-    public int dealStatus;
-    public String content;
-    public String dealContent;
-    public int source;
-    public String createTime;
-    public String dealTime;
-    public String dealUser;
-    public String dealOpinion;
-    public String fenceId;
-    public String fenceVersion;
-    public String fenceName;
-    public String areaShape;
-    public String areaPath;
-    public String areaCircle;
-    public String areaZLoc;
-    public String fenceColor;
-    public String areaName;
-    public String healthType;
-    public String address;
-    public String smcContent;
-    public String dealUserName;
-    public String dealStatusName;
-    public String dealOpinionName;
-    public String typeName;
-    public  String temperature;
-    public  String heartRate;
+    private String id;
+    private String authorId;
+    private String authorName;
+    private String authorType;
+    private String areaId;
+    private String areaVersion;
+    private String deviceId;
+    private double posX;
+    private double posY;
+    private double posZ;
+    private int type;
+    private int dealStatus;
+    private String content;
+    private String dealContent;
+    private int source;
+    private String createTime;
+    private String dealTime;
+    private String dealUser;
+    private String dealOpinion;
+    private String fenceId;
+    private String fenceVersion;
+    private String fenceName;
+    private String areaShape;
+    private String areaPath;
+    private String areaCircle;
+    private String areaZLoc;
+    private String fenceColor;
+    private String areaName;
+    private String healthType;
+    private String address;
+    private String smcContent;
+    private String dealUserName;
+    private String dealStatusName;
+    private String dealOpinionName;
+    private String typeName;
+    private  String temperature;
+    private  String heartRate;
 
     public String getTemperature() {
         return temperature;
@@ -153,27 +153,27 @@ public class AlarmPushBean implements Serializable {
         this.deviceId = deviceId;
     }
 
-    public String getPosX() {
+    public double getPosX() {
         return posX;
     }
 
-    public void setPosX(String posX) {
+    public void setPosX(double posX) {
         this.posX = posX;
     }
 
-    public String getPosY() {
+    public double getPosY() {
         return posY;
     }
 
-    public void setPosY(String posY) {
+    public void setPosY(double posY) {
         this.posY = posY;
     }
 
-    public String getPosZ() {
+    public double getPosZ() {
         return posZ;
     }
 
-    public void setPosZ(String posZ) {
+    public void setPosZ(double posZ) {
         this.posZ = posZ;
     }
 
@@ -375,5 +375,48 @@ public class AlarmPushBean implements Serializable {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    @Override
+    public String toString() {
+        return "AlarmPushBean{" +
+                "id='" + id + '\'' +
+                ", authorId='" + authorId + '\'' +
+                ", authorName='" + authorName + '\'' +
+                ", authorType='" + authorType + '\'' +
+                ", areaId='" + areaId + '\'' +
+                ", areaVersion='" + areaVersion + '\'' +
+                ", deviceId='" + deviceId + '\'' +
+                ", posX=" + posX +
+                ", posY=" + posY +
+                ", posZ=" + posZ +
+                ", type=" + type +
+                ", dealStatus=" + dealStatus +
+                ", content='" + content + '\'' +
+                ", dealContent='" + dealContent + '\'' +
+                ", source=" + source +
+                ", createTime='" + createTime + '\'' +
+                ", dealTime='" + dealTime + '\'' +
+                ", dealUser='" + dealUser + '\'' +
+                ", dealOpinion='" + dealOpinion + '\'' +
+                ", fenceId='" + fenceId + '\'' +
+                ", fenceVersion='" + fenceVersion + '\'' +
+                ", fenceName='" + fenceName + '\'' +
+                ", areaShape='" + areaShape + '\'' +
+                ", areaPath='" + areaPath + '\'' +
+                ", areaCircle='" + areaCircle + '\'' +
+                ", areaZLoc='" + areaZLoc + '\'' +
+                ", fenceColor='" + fenceColor + '\'' +
+                ", areaName='" + areaName + '\'' +
+                ", healthType='" + healthType + '\'' +
+                ", address='" + address + '\'' +
+                ", smcContent='" + smcContent + '\'' +
+                ", dealUserName='" + dealUserName + '\'' +
+                ", dealStatusName='" + dealStatusName + '\'' +
+                ", dealOpinionName='" + dealOpinionName + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", temperature='" + temperature + '\'' +
+                ", heartRate='" + heartRate + '\'' +
+                '}';
     }
 }

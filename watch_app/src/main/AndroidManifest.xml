@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application android:requestLegacyExternalStorage="true">
         <activity
@@ -33,9 +34,12 @@
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name=".message.MessageDetailAct" />
-        <service android:name=".message.MessageService"
+        <activity android:name=".message.CheckJustClassIdAct" />
+
+        <service
+            android:name=".message.MessageService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>

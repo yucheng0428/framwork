@@ -84,7 +84,6 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
     @Override
     protected void initUIData(Bundle bundle) {
         setTranslucentNavigationColor(getResources().getColor(R.color.half_transparent));
-        et_password.setText(SPValueUtil.getStringValue(mActivity,Common.USER_PASSWORD));
         et_user.setText(SPValueUtil.getStringValue(mActivity,Common.USER_NAME));
         loginType(viewType);
         setScreenModel(2);

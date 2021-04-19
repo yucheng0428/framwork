@@ -14,13 +14,6 @@ import java.util.Locale;
 public class RecorderUtlis {
     public MediaRecorder mMediaRecorder;
 
-
-
-
-
-
-
-
     public void startRecord(Activity activity) {
         // 开始录音
         /* ①Initial：实例化MediaRecorder对象 */

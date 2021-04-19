@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSON;
 import com.lib.common.base.BaseActivity;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
@@ -99,7 +100,7 @@ public class AlarmActivity extends BaseActivity {
                         break;
                     case 3:
                         ARouter.getInstance().build("/maplib/GMapActivity").
-                                withString("personId",model.getAuthorId()+"").
+                                withString("model", JSON.toJSONString(model)).
                                 navigation();
                         break;
                 }

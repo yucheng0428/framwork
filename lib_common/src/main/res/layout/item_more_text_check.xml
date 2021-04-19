@@ -5,19 +5,41 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/layout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="50dp"
         android:padding="@dimen/padding_5">
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:scaleType="centerInside"
+            android:src="@mipmap/iv_open"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:gravity="center"
+            android:layout_toRightOf="@+id/iv_more"
+            android:gravity="left"
             android:textColor="@color/color_248bfe"
+            android:layout_toLeftOf="@+id/iv_check"
             android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/albumset_selected"
+            android:visibility="invisible"/>
     </RelativeLayout>
 
     <View

@@ -46,6 +46,8 @@ public class AlarmAdapter extends SimpleRecAdapter<AlarmPushBean,AlarmAdapter.Vi
                 holder.tv_do.setVisibility(View.VISIBLE);
             }else if(info.getDealStatus()==1){
                 holder.tv_do.setVisibility(View.INVISIBLE);
+            }else if(info.getDealStatus()==2){
+                holder.tv_do.setVisibility(View.INVISIBLE);
             }
         holder.tv_do.setOnClickListener(new View.OnClickListener() {
             @Override

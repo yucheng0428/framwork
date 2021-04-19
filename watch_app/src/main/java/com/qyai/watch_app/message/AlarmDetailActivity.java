@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
@@ -101,6 +103,8 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
     @Override
     protected void initUIData() {
         info = (AlarmPushBean) getIntent().getSerializableExtra("info");
+        setIvRightSrc(R.mipmap.img_postion_img);
+        hideIvRight(View.VISIBLE);
         //处理结果，1已处理，0未处理, 2忽略
         if(info!=null&&info.getDealStatus()==0){
             setTvTitle("告警处理");
@@ -129,6 +133,13 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
             }
         });
         setViewMsg();
+    }
+
+    @Override
+    public void setOnClickIvRight() {
+        ARouter.getInstance().build("/maplib/GMapActivity").
+                withString("model", JSON.toJSONString(info)).
+                navigation();
     }
 
     public void setViewMsg() {
@@ -204,11 +215,17 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
         HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "/alarm/queryCommonWords", para, new OnHttpCallBack<CommonResult>() {
             @Override
             public void onSuccessful(int id, CommonResult result) {
-                if (result != null && result.getData().size() > 0&&result.getCode().equals("000000")) {
-                    adapter.setData(result.getData());
-                    ed_remaks.setText(result.getData().get(0).getContent());
-                }else if(result!=null&&result.getCode().equals(Common.CATCH_CODE)){
-                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
+                if(result!=null){
+                    if (result.getCode().equals("000000")) {
+                        if(result.getData().size() > 0){
+                        adapter.setData(result.getData());
+                        ed_remaks.setText(result.getData().get(0).getContent());
+                        }else {
+                            spinner.setVisibility(View.GONE);
+                        }
+                    }else if(result.getCode().equals(Common.CATCH_CODE)){
+                        OnlyUserUtils.catchOut(mActivity,result.getMsg());
+                    }
                 }
             }
 

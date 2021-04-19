@@ -55,6 +55,7 @@ public class Common {
     public final static int FLASH_OPEN = 8;
     public final static int FLASH_CLOSE = 9;
     public final static int REQUEST_IMAGE = 10;
+    public final static int CHECK_SUCCESSFUL=11111;
     public final static String INTENT_ZXING_CONFIG = "coded";
 
     public  final  static String CATCH_CODE="601";

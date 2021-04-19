@@ -67,7 +67,7 @@ public class PersonDetailActivity extends BaseHeadActivity {
     TextView tv_result_2;
     int personId;
     String head_img;
-   List<ContactsInfo> contactsInfos;
+    List<ContactsInfo> contactsInfos;
 
     @Override
     public int layoutId() {
@@ -87,9 +87,9 @@ public class PersonDetailActivity extends BaseHeadActivity {
     public void onClcik(View view) {
         if (view.getId() == R.id.iv_postion) {
             ARouter.getInstance().build("/maplib/GMapActivity").
-                    withString("personId",personId+"").navigation();
+                    withString("personId", personId + "").navigation();
         } else if (view.getId() == R.id.iv_phone) {
-            ContactsDialog dialog=new ContactsDialog(mActivity, contactsInfos);
+            ContactsDialog dialog = new ContactsDialog(mActivity, contactsInfos);
             dialog.show();
         } else if (view.getId() == R.id.iv_head) {
             if (SPValueUtil.isEmpty(head_img)) {
@@ -109,36 +109,38 @@ public class PersonDetailActivity extends BaseHeadActivity {
                     tv_mz.setText(result.getData().getPersonDTO().getNationName());
                     tv_name.setText(result.getData().getPersonDTO().getName());
                     tv_sex.setText(result.getData().getPersonDTO().getSexName());
-                    if(SPValueUtil.isEmpty(result.getData().getPersonDTO().getcAddressName())){
-                        tv_now_adress.setText(result.getData().getPersonDTO().getcAddressName()+result.getData().getPersonDTO().getCurrentAddress());
+                    if (SPValueUtil.isEmpty(result.getData().getPersonDTO().getcAddressName())) {
+                        tv_now_adress.setText(result.getData().getPersonDTO().getcAddressName() + result.getData().getPersonDTO().getCurrentAddress());
                     }
-                    String addressName = result.getData().getPersonDTO().getpAddressName()==null?"":result.getData().getPersonDTO().getpAddressName();
-                    String permanetAddress = result.getData().getPersonDTO().getPermanentAddress()==null?"":result.getData().getPersonDTO().getPermanentAddress();
+                    String addressName = result.getData().getPersonDTO().getpAddressName() == null ? "" : result.getData().getPersonDTO().getpAddressName();
+                    String permanetAddress = result.getData().getPersonDTO().getPermanentAddress() == null ? "" : result.getData().getPersonDTO().getPermanentAddress();
 
                     tv_hj_adress.setText(addressName + permanetAddress);
 
-                    if(result.getData().getSignNowDTO()!=null){
-                        if(SPValueUtil.isEmpty(result.getData().getSignNowDTO().getTemperature())){
+                    if (result.getData().getSignNowDTO() != null) {
+                        if (SPValueUtil.isEmpty(result.getData().getSignNowDTO().getTemperature())) {
                             tv_mesure_value.setText(result.getData().getSignNowDTO().getTemperature());
                         }
-                        if(SPValueUtil.isEmpty(result.getData().getSignNowDTO().getHeartRate())){
+                        if (SPValueUtil.isEmpty(result.getData().getSignNowDTO().getHeartRate())) {
                             tv_mesure_value2.setText(result.getData().getSignNowDTO().getHeartRate());
                         }
                     }
                     head_img = result.getData().getPersonDTO().getImg();
                     Glide.with(mActivity).load(FileUtils.base64ChangeBitmap(head_img)).placeholder(R.mipmap.icon_head).skipMemoryCache(true).into(iv_head);
-                    tv_result_1.setText(result.getData().getSignNowDTO().getTemperatureState()==null?"":result.getData().getSignNowDTO().getTemperatureState());
-                    tv_result_2.setText(result.getData().getSignNowDTO().getHeartRateState()==null?"":result.getData().getSignNowDTO().getHeartRateState());
-                    String[] arr1 = getZ(result.getData().getPersonDetailDTO().getAlarmOxygen());
-                    if (result.getData().getSignNowDTO().getBloodPressureLow()!= null && result.getData().getSignNowDTO().getBloodPressureHigh()!=null) {
-                        cpv.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getTemperature()) / Float.valueOf(result.getData().getSignNowDTO().getBloodPressureHigh()) * 100)),2000);
+                    if (result.getData().getSignNowDTO() != null) {
+                        tv_result_1.setText(result.getData().getSignNowDTO().getTemperatureState() == null ? "" : result.getData().getSignNowDTO().getTemperatureState());
+                        tv_result_2.setText(result.getData().getSignNowDTO().getHeartRateState() == null ? "" : result.getData().getSignNowDTO().getHeartRateState());
+                        String[] arr1 = getZ(result.getData().getPersonDetailDTO().getAlarmOxygen());
+                        if (result.getData().getSignNowDTO().getBloodPressureLow() != null && result.getData().getSignNowDTO().getBloodPressureHigh() != null) {
+                            cpv.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getTemperature()) / Float.valueOf(result.getData().getSignNowDTO().getBloodPressureHigh()) * 100)), 2000);
+                        }
+                        if (arr1 != null && arr1.length > 0 && result.getData().getSignNowDTO().getHeartRate() != null) {
+                            cpv2.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getHeartRate()) / Float.valueOf(arr1[1])) * 100), 2000);
+                        }
                     }
-                    if (arr1 != null && arr1.length > 0&&result.getData().getSignNowDTO().getHeartRate()!=null) {
-                        cpv2.setProgress((int) ((Float.valueOf(result.getData().getSignNowDTO().getHeartRate()) / Float.valueOf(arr1[1])) * 100),2000);
-                    }
-                    contactsInfos=changeList(result.getData().getPersonDTO());
-                }else if(result!=null&&result.getCode().equals(Common.CATCH_CODE)){
-                    OnlyUserUtils.catchOut(mActivity,result.getMsg());
+                    contactsInfos = changeList(result.getData().getPersonDTO());
+                } else if (result != null && result.getCode().equals(Common.CATCH_CODE)) {
+                    OnlyUserUtils.catchOut(mActivity, result.getMsg());
                 }
             }
 
@@ -157,41 +159,41 @@ public class PersonDetailActivity extends BaseHeadActivity {
         return new String[]{};
     }
 
-    public List<ContactsInfo> changeList(PersonDetailResult.DataBean.PersonDTOBean dtoBean){
-        List<ContactsInfo> infos=new ArrayList<>();
-        ContactsInfo contactsInfo=new ContactsInfo("当前联系人",dtoBean.getPhone(),dtoBean.getName());
+    public List<ContactsInfo> changeList(PersonDetailResult.DataBean.PersonDTOBean dtoBean) {
+        List<ContactsInfo> infos = new ArrayList<>();
+        ContactsInfo contactsInfo = new ContactsInfo("当前联系人", dtoBean.getPhone(), dtoBean.getName());
         infos.add(contactsInfo);
-        if(dtoBean!=null){
-            String arr[]=dtoBean.getEmergencyMan().split(",");
-            String phone[]=dtoBean.getEmergencyPhone().split(",");
-            if(arr.length>0&&phone.length>0&&arr.length==phone.length){
-                for(int i=0;i<arr.length;i++){
-                    switch (i){
+        if (dtoBean != null) {
+            String arr[] = dtoBean.getEmergencyMan().split(",");
+            String phone[] = dtoBean.getEmergencyPhone().split(",");
+            if (arr.length > 0 && phone.length > 0 && arr.length == phone.length) {
+                for (int i = 0; i < arr.length; i++) {
+                    switch (i) {
                         case 0:
-                            infos.add(new ContactsInfo("第一紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第一紧急联系人", phone[i], arr[i]));
                             break;
                         case 1:
-                            infos.add(new ContactsInfo("第二紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第二紧急联系人", phone[i], arr[i]));
                             break;
                         case 2:
-                            infos.add(new ContactsInfo("第三紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第三紧急联系人", phone[i], arr[i]));
                             break;
                         case 3:
-                            infos.add(new ContactsInfo("第四紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第四紧急联系人", phone[i], arr[i]));
                             break;
                         case 4:
-                            infos.add(new ContactsInfo("第五紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第五紧急联系人", phone[i], arr[i]));
                             break;
                         case 5:
-                            infos.add(new ContactsInfo("第六紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第六紧急联系人", phone[i], arr[i]));
                             break;
                         default:
-                            infos.add(new ContactsInfo("第"+(i+1)+"紧急联系人",phone[i],arr[i]));
+                            infos.add(new ContactsInfo("第" + (i + 1) + "紧急联系人", phone[i], arr[i]));
                             break;
                     }
                 }
             }
         }
-       return infos;
+        return infos;
     }
 }
