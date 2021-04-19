@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.lib.common.base.BaseFragment;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
 import com.lib.common.baseUtils.IntentKey;
@@ -278,7 +279,7 @@ public class PickImageUtils {
 
                     break;
                 case PICK_CAMERA:
-                    String imagePath = SPValueUtil.getStringValue(mContext, Constants.CAMERA_TEMP_PATH);
+                    String imagePath = SPValueUtil.getStringValue(mContext, Common.CAMERA_TEMP_PATH);
                     File file = compressFile(new File(imagePath),mContext);
                     Bitmap bitmap1 = BitmapFactory.decodeFile(file.getAbsolutePath());
                     Log.i("TAG", "picDlg.getImagePath():");

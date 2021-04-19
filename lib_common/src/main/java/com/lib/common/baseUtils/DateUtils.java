@@ -51,7 +51,7 @@ public class DateUtils {
      * @return
      */
     public static String getCurrentTime_Today() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date());
     }
 

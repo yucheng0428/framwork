@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.recyclerView.RecyclerItemCallback;
@@ -46,7 +47,7 @@ public class ContactsActivity extends BaseHeadActivity {
                 switch (tag){
                     case ContactsAdapter.add:
                         Intent intent =new Intent(mActivity,AddContactsActivity.class);
-                        startActivityForResult(intent, Constants.REQUEST_CODE);
+                        startActivityForResult(intent, Common.REQUEST_CODE);
                         break;
                     case ContactsAdapter.delect:
                         adapter.getDataSource().remove(position);
@@ -68,7 +69,7 @@ public class ContactsActivity extends BaseHeadActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==Constants.REQUEST_CODE){
+        if(requestCode==Common.REQUEST_CODE){
             if(data!=null){
                 ContactsInfo info= (ContactsInfo) data.getSerializableExtra("data");
                 if(info!=null){

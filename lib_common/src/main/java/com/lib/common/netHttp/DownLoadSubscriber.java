@@ -4,6 +4,7 @@ package com.lib.common.netHttp;
 
 import android.os.AsyncTask;
 
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.LogUtil;
 
@@ -44,7 +45,7 @@ public abstract class DownLoadSubscriber implements Observer<ResponseBody> {
     @Override
     public void onNext(ResponseBody t) {
         fileName = "android.apk";
-        File dir = new File(Constants.STORAGE_FILE);
+        File dir = new File(Common.STORAGE_FILE);
         if (!dir.exists()) {
             dir.mkdirs();
         }

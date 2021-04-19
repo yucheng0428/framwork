@@ -59,7 +59,7 @@ public class TakeFileDialog extends Dialog implements View.OnClickListener {
         p.width = d.getWidth();
         p.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(p);
-        PermissionCheckUtils.requestPermissions(context, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(context, Common.REQUEST_CODE, Common.permissionList); // 动态请求权限
     }
 
     @Override

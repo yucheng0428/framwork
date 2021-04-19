@@ -47,7 +47,7 @@ public class MapActivity extends BaseHeadActivity {
         setIvRightSrc(R.mipmap.icon_share);
         hideIvRight(View.VISIBLE);
         initViews();
-        PermissionCheckUtils.requestPermissions(MapActivity.this, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(MapActivity.this, Common.REQUEST_CODE, Common.permissionList1); // 动态请求权限
         // 定位初始化
         mClient = new LocationClient(this);
         LocationClientOption mOption = new LocationClientOption();

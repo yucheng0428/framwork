@@ -26,6 +26,8 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.lib.common.base.BaseApp;
 import com.lib.common.baseUtils.Common;
+import com.lib.common.baseUtils.DateUtils;
+import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
@@ -33,6 +35,7 @@ import com.lib.common.netHttp.OnHttpCallBack;
 import com.qyai.baidumap.R;
 
 /**
+ * 高德地图   后台定位服务
  * 定位服务LocationClient 相关
  *
  * @author baidu
@@ -134,7 +137,21 @@ public class LocationService extends Service {
     }
 
     /**
-     * 定位监听
+     * 0 定位失败
+     *
+     * 1 GPS定位结果
+     *
+     * 2 前次定位结果     网络定位请求低于1秒、或两次定位之间设备位置变化非常小时返回，设备位移通过传感器感知。
+     *
+     * 4 缓存定位结果     返回一段时间前设备在同样的位置缓存下来的网络定位结果
+     *
+     * 5 Wifi定位结果    属于网络定位，定位精度相对基站定位会更好，定位精度较高，在5米－200米之间。
+     *
+     * 6 基站定位结果    纯粹依赖移动、联通、电信等移动网络定位，定位精度在500米-5000米之间。
+     *
+     * 8 离线定位结果
+     *
+     * 9  最后位置缓存   定位监听
      */
     AMapLocationListener locationListener = new AMapLocationListener() {
         @Override
@@ -151,7 +168,7 @@ public class LocationService extends Service {
 //                    sb.append("精    度    : " + location.getAccuracy() + "米" + "\n");
 //                    sb.append("提供者    : " + location.getProvider() + "\n");
                     sendLoaction(location.getLongitude()+"",location.getLatitude()+"");
-
+                    LogUtil.writE("location",DateUtils.getCurrentTime_Today() +"===>lng="+location.getLongitude()+"&lat="+location.getLatitude()+"===>定位来源"+location.getLocationType());
                 }
             }
         }
@@ -183,6 +200,10 @@ public class LocationService extends Service {
      */
     private AMapLocationClientOption getDefaultOption() {
         AMapLocationClientOption mOption = new AMapLocationClientOption();
+        //高精度定位模式：会同时使用网络定位和GPS定位，优先返回最高精度的定位结果，以及对应的地址描述信息。
+        //低功耗定位模式：不会使用GPS和其他传感器，只会使用网络定位（Wi-Fi和基站定位）
+        //仅用设备定位模式：不需要连接网络，只使用GPS进行定位，这种模式下不支持室内环境的定位，
+        // 需要在室外环境下才可以成功定位。仅设备定位模式下支持返回地址描述信息。
         mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
         mOption.setGpsFirst(true);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
         mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
@@ -193,7 +214,7 @@ public class LocationService extends Service {
         AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTP);//可选， 设置网络请求的协议。可选HTTP或者HTTPS。默认为HTTP
         mOption.setSensorEnable(false);//可选，设置是否使用传感器。默认是false
         mOption.setWifiScan(true); //可选，设置是否开启wifi扫描。默认为true，如果设置为false会同时停止主动刷新，停止以后完全依赖于系统刷新，定位位置可能存在误差
-        mOption.setLocationCacheEnable(true); //可选，设置是否使用缓存定位，默认为true
+        mOption.setLocationCacheEnable(false); //可选，设置是否使用缓存定位，默认为true
         return mOption;
     }
 

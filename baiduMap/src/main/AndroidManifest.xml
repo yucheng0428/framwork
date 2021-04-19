@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 读取缓存数据 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 获取模拟定位信息 -->
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <!--用于申请调用A-GPS模块-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <application>
@@ -42,7 +42,8 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".postion.AddEnclosureActivity" />
         <activity android:name=".postion.PostionActivity" />
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService"
+            android:foregroundServiceType="location"></service>
         <service android:name=".service.LocationService"></service>
     </application>
 

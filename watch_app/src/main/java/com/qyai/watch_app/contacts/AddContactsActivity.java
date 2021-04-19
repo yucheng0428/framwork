@@ -52,13 +52,13 @@ public class AddContactsActivity extends BaseHeadActivity {
                     SPValueUtil.isEmpty(et_name.getText().toString())) {
                 Intent intent = new Intent();
                 intent.putExtra("data", new ContactsInfo("", et_phone_no.getText().toString(), et_name.getText().toString()));
-                setResult(Constants.REQUEST_CODE, intent);
+                setResult(Common.REQUEST_CODE, intent);
                 mActivity.finish();
             } else {
                 UIHelper.ToastMessage(mActivity, "请输入完整信息");
             }
         }else if(view.getId() == R.id.iv_contacts){
-            PermissionCheckUtils.requestPermissions(mActivity,Constants.REQUEST_PERMISSION,new String[]{"android.Manifest.permission.READ_CONTACTS)"});
+            PermissionCheckUtils.requestPermissions(mActivity,Common.REQUEST_PERMISSION,new String[]{"android.Manifest.permission.READ_CONTACTS)"});
             startActivityForResult(MyIntent.getToContact(), Common.DECODE_SUCCEEDED);
         }
     }

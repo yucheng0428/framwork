@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.lib.common.R;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.UIHelper;
 
@@ -79,12 +80,12 @@ public class ShareSaveDialog extends Dialog implements View.OnClickListener {
     }
 
     public String GenerateImage(String imgStr, boolean flag) {// 对字节数组字符串进行Base64解码并生成图片
-        File dirFile = new File(Constants.STORAGE_PICTURE);
+        File dirFile = new File(Common.STORAGE_PICTURE);
         if (!dirFile.exists()) {
             dirFile.mkdir();
         }
         String fileName = "share" + ".jpg";
-        File file=new File(Constants.STORAGE_PICTURE,fileName);
+        File file=new File(Common.STORAGE_PICTURE,fileName);
         if (imgStr == null) // 图像数据为空
             UIHelper.ToastMessage(context,"图像数据为空");
 //        BASE64Decoder decoder = new BASE64Decoder();
@@ -114,12 +115,12 @@ public class ShareSaveDialog extends Dialog implements View.OnClickListener {
     }
 
     public void downLoadImage(String imagePateh){
-        File dirFile = new File(Constants.STORAGE_PICTURE);
+        File dirFile = new File(Common.STORAGE_PICTURE);
         if (!dirFile.exists()) {
             dirFile.mkdir();
         }
         String fileName = "share" + ".jpg";
-        File file=new File(Constants.STORAGE_PICTURE,fileName);
+        File file=new File(Common.STORAGE_PICTURE,fileName);
         // TODO: 2018/9/28  这里需要写一个图片下载的功能 
 //        HttpUtils util = new HttpUtils();
 //        util.download(imagePateh, file.getAbsolutePath(), false,false, new RequestCallBack<File>()

@@ -149,7 +149,7 @@ public class Utils {
      * @param mention     提示信息
      */
     public static void grantedPermissions(final Context context, final String[] permissions, String mention) {
-        PermissionCheckUtils.requestPermissions((Activity) context, Constants.REQUEST_PERMISSION,permissions);
+        PermissionCheckUtils.requestPermissions((Activity) context, Common.REQUEST_PERMISSION,permissions);
 //        EasyPermission.requestPermissions(context, mention, Common.PERMISSIONS_REQUEST, permissions);
 
     }

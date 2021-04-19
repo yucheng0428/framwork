@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initUIData(Bundle bundle) {
         setTranslucentNavigationColor(getResources().getColor(R.color.half_transparent));
-        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(mActivity, Common.REQUEST_CODE, Common.permissionList1); // 动态请求权限
         if (Utils.hasPermission(mActivity, android.Manifest.permission.CAMERA,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==Constants.REQUEST_CODE){
+        if(requestCode==Common.REQUEST_CODE){
             adLoading();
         }
     }

@@ -104,7 +104,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
         setTvTitle("位置信息");
         setTvRightMsg("分享");
         hideTvRight(View.VISIBLE);
-        PermissionCheckUtils.requestPermissions(GMapActivity.this, Constants.REQUEST_CODE, Common.permissionList1); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(GMapActivity.this, Common.REQUEST_CODE, Common.permissionList1); // 动态请求权限
         if (aMap == null) {
             aMap = mapView.getMap();
             setUpMap();

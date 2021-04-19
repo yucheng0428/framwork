@@ -167,7 +167,7 @@ public class MessageAct extends BaseHeadActivity implements BraceletReceiver.Rec
     }
     private void initService() {
         Common.openGPSSEtting(mActivity);
-        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Constants.permissionList); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(mActivity, Common.REQUEST_CODE, Common.permissionList); // 动态请求权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mActivity.startForegroundService(serviceIntent);
         } else {

@@ -256,7 +256,7 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
             public void onSuccessful(int id, BaseResult result) {
                 if(result!=null&&result.getCode().equals("000000")){
                     UIHelper.ToastMessage(mActivity,result.getMsg());
-                    setResult(Constants.REQUEST_CODE);
+                    setResult(Common.REQUEST_CODE);
                     mActivity.finish();
                 }else if(result!=null&&result.getCode().equals(Common.CATCH_CODE)){
                     OnlyUserUtils.catchOut(mActivity,result.getMsg());

@@ -1,6 +1,7 @@
 package com.qyai.watch_app.message.websocket;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
@@ -29,13 +30,34 @@ public class WebSocketUtlts {
     private StompClient mStompClient;
     private CompositeDisposable compositeDisposable;
     private PushListener pushListener;
+    private int intervalTime = 10000;
 
+    /**
+     * 轮询服务
+     * 如果长链接关闭了 10秒轮询开启一次
+     */
+    private Handler connectStompHandler = new Handler();
+    /**
+     * 消息通知轮询线程
+     */
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            //提交请求
+            connectStompHandler.removeCallbacksAndMessages(null);
+            connectStomp();
+
+        }
+
+    };
     public WebSocketUtlts(Context mContext, PushListener pushListener) {
         this.mContext = mContext;
         this.pushListener = pushListener;
     }
 
     public void stompConnect(){
+        LogUtil.e(TAG,"打开websocket");
         mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, HttpReq.getInstence().getIp()+"websocket");
         connectStomp();
     }
@@ -52,10 +74,11 @@ public class WebSocketUtlts {
                             break;
                         case ERROR:
                             LogUtil.e(TAG,"Stomp connection error");
+                            connectStompHandler.postDelayed(runnable,intervalTime);
                             break;
                         case CLOSED:
                             LogUtil.e(TAG,"Stomp connection closed");
-                            resetSubscriptions();
+                            connectStompHandler.postDelayed(runnable,intervalTime);
                             break;
                         case FAILED_SERVER_HEARTBEAT:
                             LogUtil.e(TAG,"Stomp failed server heartbeat");
@@ -99,6 +122,7 @@ public class WebSocketUtlts {
 
 
     public void stopConnect(){
+        connectStompHandler.removeCallbacksAndMessages(null);
         mStompClient.disconnect();
         if (compositeDisposable != null)
             compositeDisposable.dispose();

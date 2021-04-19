@@ -7,6 +7,7 @@ import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.LogUtil;
 
@@ -23,10 +24,10 @@ public class PermissionCheckUtils {
         // 得到还没申请过的权限
         String[] deniedPermissions = findDeniedPermissions(activity, permissions);
         if (deniedPermissions.length > 0) {
-            LogUtil.w(Constants.TAG,"需要获取的权限是:"+deniedPermissions[0]);
+            LogUtil.w("PermissionCheckUtils","需要获取的权限是:"+deniedPermissions[0]);
             ActivityCompat.requestPermissions(activity,
                     deniedPermissions,
-                    Constants.REQUEST_CODE);
+                    Common.REQUEST_CODE);
             return false;
         }else{
             return true;

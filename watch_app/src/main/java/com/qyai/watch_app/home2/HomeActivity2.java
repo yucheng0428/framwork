@@ -157,11 +157,11 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                 intent.putExtra("info", model);
                 switch (tag) {
                     case 1:
-                        startActivityForResult(intent, Constants.REQUEST_CODE);
+                        startActivityForResult(intent, Common.REQUEST_CODE);
                         break;
                     case 2:
                         //2是点击处理按钮;
-                        startActivityForResult(intent, Constants.REQUEST_CODE);
+                        startActivityForResult(intent, Common.REQUEST_CODE);
                         break;
                     case 3:
                         ARouter.getInstance().build("/maplib/GMapActivity").
@@ -358,7 +358,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constants.REQUEST_CODE) {
+        if (resultCode == Common.REQUEST_CODE) {
             reshData();
         } else if (resultCode == Common.CHECK_SUCCESSFUL) {
             if (SPValueUtil.isEmpty(SPValueUtil.getStringValue(mActivity, Common.JUSCLASSRESULT))) {

@@ -86,17 +86,17 @@ public class AlarmActivity extends BaseActivity {
                     case 1:
                         if (model.getDealStatus() == 1) {
                             intent.putExtra("type", 1);
-                            startActivityForResult(intent, Constants.REQUEST_CODE);
+                            startActivityForResult(intent, Common.REQUEST_CODE);
                         } else {
                             //2是点击处理按钮;
                             intent.putExtra("type", 2);
-                            startActivityForResult(intent, Constants.REQUEST_CODE);
+                            startActivityForResult(intent, Common.REQUEST_CODE);
                         }
                         break;
                     case 2:
                         //2是点击处理按钮;
                         intent.putExtra("type", 2);
-                        startActivityForResult(intent, Constants.REQUEST_CODE);
+                        startActivityForResult(intent, Common.REQUEST_CODE);
                         break;
                     case 3:
                         ARouter.getInstance().build("/maplib/GMapActivity").
@@ -203,7 +203,7 @@ public class AlarmActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constants.REQUEST_CODE) {
+        if (resultCode == Common.REQUEST_CODE) {
             changeItem();
         }
     }

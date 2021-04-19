@@ -16,6 +16,9 @@ import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import cn.sharesdk.wechat.moments.WechatMoments;
 import cn.sharesdk.whatsapp.WhatsApp;
 
+/**
+ * 友盟分享
+ */
 public class ShareUtils {
 
     public static void shareMessage(String title, String content, String imageUrl, String url, String phone) {

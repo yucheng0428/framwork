@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
 import com.lib.common.base.BaseFragment;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
 import com.lib.common.baseUtils.IntentKey;
@@ -154,7 +155,7 @@ public class PicpickDlg extends Dialog implements
             Intent intent = new Intent(this.context, CameraActivity.class);
 
             SPValueUtil.saveStringValue(this.context,
-                    Constants.CAMERA_TEMP_PATH, imagepath);
+                    Common.CAMERA_TEMP_PATH, imagepath);
             intent.putExtra(CameraActivity.CameraIntentKey.CAMERA_PIC_WATERMASK, showWaterMask);
             intent.putExtra(CameraActivity.CameraIntentKey.CAMERA_PIC_PATH, imagepath);
             intent.putExtra(CameraActivity.CameraIntentKey.CAMERA_PIC_PROJNAME, projName);
@@ -182,7 +183,7 @@ public class PicpickDlg extends Dialog implements
             // 返回大图
             imagepath = FileUtils.createFilePng(context.getContext()).getAbsolutePath();
             SPValueUtil.saveStringValue(this.context,
-                    Constants.CAMERA_TEMP_PATH, imagepath);
+                    Common.CAMERA_TEMP_PATH, imagepath);
             intent.putExtra(CameraActivity.CameraIntentKey.CAMERA_PIC_WATERMASK, showWaterMask);
             intent.putExtra(CameraActivity.CameraIntentKey.CAMERA_PIC_PATH, imagepath);
             intent.putExtra(CameraActivity.CameraIntentKey.CAMERA_PIC_PROJNAME, projName);

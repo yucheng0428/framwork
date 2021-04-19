@@ -35,7 +35,7 @@ public class SechAct extends BaseHeadActivity {
     @Override
     protected void initUIData() {
         Common.openGPSSEtting(mActivity);
-        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(mActivity, Common.REQUEST_CODE, Common.permissionList); // 动态请求权限
         setTvTitle("设备列表");
         setTvRightMsg("搜索");
         hideTvRight(View.VISIBLE);

@@ -129,12 +129,12 @@ public class ImageUtil {
 	 * 存放身份证拍摄图片
 	 */
 	public static void saveIdCardIamge(Bitmap bitmap){
-		final File dirFile = new File(Constants.STORAGE_PICTURE);
+		final File dirFile = new File(Common.STORAGE_PICTURE);
 		if (!dirFile.exists()) {
 			dirFile.mkdir();
 		}
 		String fileName="idCard.jpg";
-		File file=new File(Constants.STORAGE_PICTURE,fileName);
+		File file=new File(Common.STORAGE_PICTURE,fileName);
         OutputStream outputStream = null;
         try {
             outputStream=new FileOutputStream(file);
@@ -155,11 +155,11 @@ public class ImageUtil {
      * @return
      */
     public static Bitmap showIdCardBitmap(){
-        final File dirFile = new File(Constants.STORAGE_PICTURE);
+        final File dirFile = new File(Common.STORAGE_PICTURE);
         if (!dirFile.exists()) {
             dirFile.mkdir();
         }
-        String fileName=Constants.STORAGE_PICTURE+"/idCard.jpg";
+        String fileName=Common.STORAGE_PICTURE+"/idCard.jpg";
        return BitmapFactory.decodeFile(fileName);
     }
 

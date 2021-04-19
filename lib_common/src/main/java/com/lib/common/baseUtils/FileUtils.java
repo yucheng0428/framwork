@@ -382,7 +382,7 @@ public class FileUtils
 	    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 		String time = formatter.format(new Date());
 		String fileName =  time + ".jpg";
-		String path = FileUtils.getFilePath(Constants.STORAGE_PICTURE,context);
+		String path = FileUtils.getFilePath(Common.STORAGE_PICTURE,context);
 		File file = new File(path+"/"+fileName);
 		if(!file.exists()) {
 			try {
@@ -404,7 +404,7 @@ public class FileUtils
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
 		String time = formatter.format(new Date());
 		String fileName =  time + ".mp3";
-		String path = FileUtils.getFilePath(Constants.STORAGE_PICTURE,context);
+		String path = FileUtils.getFilePath(Common.STORAGE_PICTURE,context);
 		File file = new File(path+"/"+fileName);
 		if(!file.exists()) {
 			try {

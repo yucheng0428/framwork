@@ -2,6 +2,8 @@ package com.lib.common.baseUtils;
 
 import android.os.Environment;
 
+import com.lib.common.base.BaseApp;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -199,6 +201,12 @@ public final class LogUtil {
         return android.util.Log.getStackTraceString(tr);
     }
 
+    public static  int writE(String tag, String msg){
+        if (!LOGE_ENABLE ) return 0;
+        if(Common.LOG_SDCARD_ENABLE) fileLog(tag,msg);
+        return android.util.Log.e(tag, msg);
+
+    }
     /**
      * Low-level logging call.
      * @param priority The priority/type of this log message
@@ -215,14 +223,14 @@ public final class LogUtil {
 	 * 打印日志到文件
 	 * @param tag
 	 * @param msg
-	 * @param logFileName
+	 * @param
 	 */
 	public static void fileLog(String tag, String msg){
 		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 			return;
 		}
 		try {
-			File logFile = new File(Environment.getExternalStorageDirectory(), Common.LOG_FILE_NAME);
+            File logFile = new File(FileUtils.getFilePath(Common.STORAGE_FILE, BaseApp.getIns()), "errLog.txt");
 			if(!logFile.exists()){
 				File dir = logFile.getParentFile();
 				if(!dir.exists()) {

@@ -88,7 +88,7 @@ public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements L
         loginType(viewType);
         setScreenModel(2);
         Common.openGPSSEtting(mActivity);
-        PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(mActivity, Common.REQUEST_CODE, Common.permissionList); // 动态请求权限
     }
 
     //设置登录界面样式

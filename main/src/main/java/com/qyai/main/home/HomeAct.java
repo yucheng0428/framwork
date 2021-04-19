@@ -59,7 +59,7 @@ public class HomeAct extends BaseMvpAct<HomeIView, HomePersenter> implements Hom
         setScreenModel(3);
         userData = JSONObject.parseObject(SPValueUtil.getStringValue(mActivity, Common.USER_DATA), UserEvent.UserData.class);
         Common.openGPSSEtting(HomeAct.this);
-        PermissionCheckUtils.requestPermissions(HomeAct.this, Constants.REQUEST_CODE, Common.permissionList); // 动态请求权限
+        PermissionCheckUtils.requestPermissions(HomeAct.this, Common.REQUEST_CODE, Common.permissionList); // 动态请求权限
         changeBtn(0);
     }
 

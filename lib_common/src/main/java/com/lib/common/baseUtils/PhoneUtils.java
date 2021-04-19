@@ -376,7 +376,7 @@ public class PhoneUtils {
      * 直接打电话
      **/
     public static void callPhone(Activity act, String mobile) {
-        PermissionCheckUtils.requestPermissions(act,Constants.REQUEST_PERMISSION, Manifest.permission.CALL_PHONE);
+        PermissionCheckUtils.requestPermissions(act,Common.REQUEST_PERMISSION, Manifest.permission.CALL_PHONE);
         Intent phoneIntent = new Intent("android.intent.action.CALL",
                 Uri.parse("tel:" + mobile));
         //启动

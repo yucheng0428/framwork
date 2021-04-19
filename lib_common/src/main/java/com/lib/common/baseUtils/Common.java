@@ -19,16 +19,24 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 public class Common {
 
-    public final static  int viewType=2;
-    public final static String HTTP_REQ="http://124.71.140.164:16808/";
+    public static final String CAMERA_TEMP_PATH = "camera_temp_path";
+    public static String STORAGE_PICTURE = "/pic";// 相关图片存放路径
+    public static String STORAGE_VIDEO = "/video";// 相关视频存放路径
+    public static String STORAGE_FILE = "/file";// 相关文件存放路径
+
+    public static final String DATE_PATTERN_Y_M_D = "yyyy-MM-dd";//日期类型-年月日
+    public static final String DATE_PATTERN_Y_M_D_H = "yyyy-MM-dd HH:00:00";//日期类型-年月日时分
+
+
+    public final static int viewType = 2;
     public final static String USER_DATA = "user_data";
     public final static String USER_TOKEN = "user_tonken";
-    public final static  String USER_ID="user_id";
+    public final static String USER_ID = "user_id";
     public final static String USER_NAME = "userName";
     public final static String USER_PASSWORD = "userpsw";
     public final static String BRACELET_MAC = "bracelet_mac";
     public final static String VIEWTYPE = "viewType";
-    public final static String JUSCLASSRESULT="JusClassResult";
+    public final static String JUSCLASSRESULT = "JusClassResult";
     /**
      * 帮助文档
      */
@@ -42,10 +50,9 @@ public class Common {
     //是否打印到sd卡上
     public static boolean LOG_SDCARD_ENABLE = true;
 
-    public static String LOG_FILE_NAME = "FramApp/log.txt";
-
-
-    public final static int PERMISSIONS_REQUEST = 199;//权限获取返回
+    public final static String CATCH_CODE = "601";
+    public final static int REQUEST_CODE = 10001;
+    public final static int REQUEST_PERMISSION = 11111;
     public final static int DECODE = 1;
     public final static int DECODE_FAILED = 2;
     public final static int DECODE_SUCCEEDED = 3;
@@ -55,24 +62,23 @@ public class Common {
     public final static int FLASH_OPEN = 8;
     public final static int FLASH_CLOSE = 9;
     public final static int REQUEST_IMAGE = 10;
-    public final static int CHECK_SUCCESSFUL=11111;
+    public final static int CHECK_SUCCESSFUL = 15;
     public final static String INTENT_ZXING_CONFIG = "coded";
 
-    public  final  static String CATCH_CODE="601";
-
-
-    public final static int OVERLAY_PERMISSION_REQ_CODE = 111;
+    public final static int OVERLAY_PERMISSION_REQ_CODE = 16;
     public final static String CODED_CONTENT = "codedContent";
     public final static String APP_KEY = "appkey";
     public final static int REQ_LIST = 1001;
     public final static int PAGE_SIZE = 10;
-    public static final int GPS_REQUEST_CODE = 13222;
+    public static final int GPS_REQUEST_CODE = 10101;
+
+
     public static final String[] permissionList1 = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.CAMERA,
-//            Manifest.permission.FOREGROUND_SERVICE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.BLUETOOTH_ADMIN
@@ -81,12 +87,10 @@ public class Common {
     public static final String[] permissionList = new String[]{
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.CAMERA,
-//            Manifest.permission.FOREGROUND_SERVICE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
 
     };
-    int ADD_PIC = 102;
 
     //打开GPS 设置
     public static void openGPSSEtting(final Activity activity) {

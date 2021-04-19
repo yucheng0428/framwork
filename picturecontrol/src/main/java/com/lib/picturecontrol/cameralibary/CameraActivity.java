@@ -22,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import com.lib.common.base.BaseActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
 import com.lib.common.baseUtils.IntentKey;
@@ -114,7 +115,7 @@ public class CameraActivity extends BaseActivity implements CameraOpenListener {
             @Override
             protected List<String> doInBackground(String... params) {
                 filePathList.clear();
-                ergodicFiles(FileUtils.getFilePath(Constants.STORAGE_PICTURE, mActivity));
+                ergodicFiles(FileUtils.getFilePath(Common.STORAGE_PICTURE, mActivity));
                 return filePathList;
             }
 
@@ -145,7 +146,7 @@ public class CameraActivity extends BaseActivity implements CameraOpenListener {
                 String fileName = sub.getName();
                 if (fileName.trim().toLowerCase().endsWith(".jpg") || fileName.trim().toLowerCase().endsWith(".jpeg")
                         || fileName.trim().toLowerCase().endsWith(".png") || fileName.trim().toLowerCase().endsWith(".gif")) {
-                    filePathList.add(FileUtils.getFilePath(Constants.STORAGE_PICTURE, mActivity) + fileName);
+                    filePathList.add(FileUtils.getFilePath(Common.STORAGE_PICTURE, mActivity) + fileName);
                 }
             }
         }
@@ -214,7 +215,7 @@ public class CameraActivity extends BaseActivity implements CameraOpenListener {
                             bt_graffiti.setVisibility(View.GONE);
                             bt_change.setVisibility(View.VISIBLE);
                             filePath = FileUtils.createFilePng(CameraActivity.this).getAbsolutePath();
-                            SPValueUtil.saveStringValue(CameraActivity.this, Constants.CAMERA_TEMP_PATH, filePath);
+                            SPValueUtil.saveStringValue(CameraActivity.this, Common.CAMERA_TEMP_PATH, filePath);
                             SAVEPIC_FLAG = 0;
                             tempBitmap.recycle();
                             tempBitmap = null;

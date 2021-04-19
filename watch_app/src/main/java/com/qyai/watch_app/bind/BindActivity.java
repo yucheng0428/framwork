@@ -73,7 +73,7 @@ public class BindActivity extends BaseHeadActivity {
                 intent.putExtra(Common.INTENT_ZXING_CONFIG, config);
                 startActivityForResult(intent, IntentKey.SCAN_CODE);
             }else {
-                PermissionCheckUtils.requestPermissions(mActivity, Constants.REQUEST_CODE,permissions); // 动态请求权限
+                PermissionCheckUtils.requestPermissions(mActivity, Common.REQUEST_CODE,permissions); // 动态请求权限
             }
         } else if (view.getId() == R.id.btn_ok) {
             if (SPValueUtil.isEmpty(et_no.getText().toString())) {
