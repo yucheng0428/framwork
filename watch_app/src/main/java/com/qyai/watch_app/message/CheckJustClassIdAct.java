@@ -74,7 +74,7 @@ public class CheckJustClassIdAct extends BaseHeadActivity {
                                 }
                             }
                         }
-                        List<JusClassResult.DataBean> treeList =MenuTreeUtil.getInstance().changeTreeList(result.getData(),"",1);
+                        List<JusClassResult.DataBean> treeList =MenuTreeUtil.getInstance().changeTreeList(result.getData(),result.getData().get(0).getPid(),1);
                         adapter.setData(MenuTreeUtil.getInstance().openTreeList(treeList));
                     }
                 } else if (result != null && result.getCode().equals(Common.CATCH_CODE)) {

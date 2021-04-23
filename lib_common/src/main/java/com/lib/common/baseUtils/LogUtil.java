@@ -204,7 +204,7 @@ public final class LogUtil {
     public static  int writE(String tag, String msg){
         if (!LOGE_ENABLE ) return 0;
         if(Common.LOG_SDCARD_ENABLE) fileLog(tag,msg);
-        return android.util.Log.e(tag, msg);
+        return android.util.Log.i(tag, msg);
 
     }
     /**

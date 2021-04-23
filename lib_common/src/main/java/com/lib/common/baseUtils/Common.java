@@ -73,6 +73,7 @@ public class Common {
     public static final int GPS_REQUEST_CODE = 10101;
 
 
+
     public static final String[] permissionList1 = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -85,10 +86,13 @@ public class Common {
 
     };
     public static final String[] permissionList = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.BLUETOOTH_ADMIN
 
     };
 

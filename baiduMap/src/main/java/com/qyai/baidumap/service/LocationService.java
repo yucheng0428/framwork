@@ -8,11 +8,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Build;
 import android.os.IBinder;
-import android.webkit.WebView;
-import android.widget.Spinner;
+import android.provider.Settings;
+import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
@@ -20,19 +19,22 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.baidu.location.BDAbstractLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.location.LocationClientOption.LocationMode;
+import com.amap.api.location.AMapLocationQualityReport;
 import com.lib.common.base.BaseApp;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.DateUtils;
 import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
+import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
+import com.qyai.baidumap.GMapActivity;
 import com.qyai.baidumap.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  * 高德地图   后台定位服务
@@ -77,6 +79,7 @@ public class LocationService extends Service {
     }
 
     public static void initService(Activity activity) {
+        Common.openGPSSEtting(activity);
         Intent serviceIntent = new Intent(activity, LocationService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             activity.startForegroundService(serviceIntent);
@@ -103,6 +106,7 @@ public class LocationService extends Service {
      *
      */
     private void startLocation(){
+
         // 设置定位参数
         locationClient.setLocationOption(locationOption);
         // 启动定位
@@ -157,19 +161,37 @@ public class LocationService extends Service {
         @Override
         public void onLocationChanged(AMapLocation location) {
             if (null != location) {
-
-
+                StringBuffer sb = new StringBuffer();
                 //errCode等于0代表定位成功，其他的为定位失败，具体的可以参照官网定位错误码说明
-                if (location.getErrorCode() == 0) {
-
-//                    sb.append("定位类型: " + location.getLocationType() + "\n");
-//                    sb.append("经    度    : " + location.getLongitude() + "\n");
-//                    sb.append("纬    度    : " + location.getLatitude() + "\n");
-//                    sb.append("精    度    : " + location.getAccuracy() + "米" + "\n");
-//                    sb.append("提供者    : " + location.getProvider() + "\n");
+                if(location.getErrorCode() == 0){
                     sendLoaction(location.getLongitude()+"",location.getLatitude()+"");
-                    LogUtil.writE("location",DateUtils.getCurrentTime_Today() +"===>lng="+location.getLongitude()+"&lat="+location.getLatitude()+"===>定位来源"+location.getLocationType());
+                    sb.append("定位成功" + "\n");
+                    sb.append("定位类型: " + location.getLocationType() + "\n");
+                    sb.append("经    度    : " + location.getLongitude() + "\n");
+                    sb.append("纬    度    : " + location.getLatitude() + "\n");
+                    sb.append("精    度    : " + location.getAccuracy() + "米" + "\n");
+                    sb.append("提供者    : " + location.getProvider() + "\n");
+
+                    sb.append("速    度    : " + location.getSpeed() + "米/秒" + "\n");
+                    sb.append("角    度    : " + location.getBearing() + "\n");
+                    //定位完成的时间
+                    sb.append("定位时间: " + formatUTC(location.getTime(), "yyyy-MM-dd HH:mm:ss") + "\n");
+                } else {
+                    //定位失败
+                    sb.append("定位失败" + "\n");
+                    sb.append("错误码:" + location.getErrorCode() + "\n");
+                    sb.append("错误信息:" + location.getErrorInfo() + "\n");
+                    sb.append("错误描述:" + location.getLocationDetail() + "\n");
                 }
+                sb.append("***定位质量报告***").append("\n");
+                sb.append("* WIFI开关：").append(location.getLocationQualityReport().isWifiAble() ? "开启":"关闭").append("\n");
+                sb.append("* GPS状态：").append(getGPSStatusString(location.getLocationQualityReport().getGPSStatus())).append("\n");
+                sb.append("* GPS星数：").append(location.getLocationQualityReport().getGPSSatellites()).append("\n");
+                sb.append("****************").append("\n");
+                //定位之后的回调时间
+                sb.append("回调时间: " + formatUTC(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "\n");
+                LogUtil.writE("Loaction",sb.toString());
+
             }
         }
     };
@@ -200,6 +222,18 @@ public class LocationService extends Service {
      */
     private AMapLocationClientOption getDefaultOption() {
         AMapLocationClientOption mOption = new AMapLocationClientOption();
+        /**
+         * 设置签到场景，相当于设置为：
+         * option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+         * option.setOnceLocation(false);
+         * option.setOnceLocationLatest(false);
+         * option.setMockEnable(false);
+         * option.setWifiScan(true);
+         *
+         * 其他属性均为模式属性。
+         * 如果要改变其中的属性，请在在设置定位场景之后进行
+         */
+        mOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);
         //高精度定位模式：会同时使用网络定位和GPS定位，优先返回最高精度的定位结果，以及对应的地址描述信息。
         //低功耗定位模式：不会使用GPS和其他传感器，只会使用网络定位（Wi-Fi和基站定位）
         //仅用设备定位模式：不需要连接网络，只使用GPS进行定位，这种模式下不支持室内环境的定位，
@@ -225,5 +259,48 @@ public class LocationService extends Service {
         mManager.cancel(10001);
         stopLocation();
 
+    }
+
+    public   String formatUTC(long l, String strPattern) {
+        SimpleDateFormat sdf = null;
+        if (TextUtils.isEmpty(strPattern)) {
+            strPattern = "yyyy-MM-dd HH:mm:ss";
+        }
+        if (sdf == null) {
+            try {
+                sdf = new SimpleDateFormat(strPattern, Locale.CHINA);
+            } catch (Throwable e) {
+            }
+        } else {
+            sdf.applyPattern(strPattern);
+        }
+        return sdf == null ? "NULL" : sdf.format(l);
+    }
+
+    /**
+     * 获取GPS状态的字符串
+     * @param statusCode GPS状态码
+     * @return
+     */
+    private String getGPSStatusString(int statusCode){
+        String str = "";
+        switch (statusCode){
+            case AMapLocationQualityReport.GPS_STATUS_OK:
+                str = "GPS状态正常";
+                break;
+            case AMapLocationQualityReport.GPS_STATUS_NOGPSPROVIDER:
+                str = "手机中没有GPS Provider，无法进行GPS定位";
+                break;
+            case AMapLocationQualityReport.GPS_STATUS_OFF:
+                str = "GPS关闭，建议开启GPS，提高定位质量";
+                break;
+            case AMapLocationQualityReport.GPS_STATUS_MODE_SAVING:
+                str = "选择的定位模式中不包含GPS定位，建议选择包含GPS定位的模式，提高定位质量";
+                break;
+            case AMapLocationQualityReport.GPS_STATUS_NOGPSPERMISSION:
+                str = "没有GPS定位权限，建议开启gps定位权限";
+                break;
+        }
+        return str;
     }
 }

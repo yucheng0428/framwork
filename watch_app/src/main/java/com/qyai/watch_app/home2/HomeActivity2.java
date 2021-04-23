@@ -1,5 +1,6 @@
 package com.qyai.watch_app.home2;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -7,7 +8,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,8 +30,10 @@ import com.lib.common.base.ViewManager;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
+import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
+import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.dialog.IphoneDialog;
 import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.netHttp.HttpReq;
@@ -39,9 +44,11 @@ import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.lib.common.widgt.MyDrawerLayout;
 import com.lib.common.widgt.RoundImageView;
 import com.lib.common.widgt.adress.AddressPicker;
+import com.qyai.baidumap.GMapActivity;
 import com.qyai.baidumap.service.LocationService;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
+import com.qyai.watch_app.home.HomeActivity;
 import com.qyai.watch_app.message.AlarmActivity;
 import com.qyai.watch_app.message.AlarmAdapter;
 import com.qyai.watch_app.message.AlarmDetailActivity;
@@ -171,9 +178,15 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                 }
             }
         });
+        if (Build.VERSION.SDK_INT >= 29) {
+            if(PermissionCheckUtils.requestPermissions(HomeActivity2.this, Common.REQUEST_CODE, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION})){
+                LocationService.initService(mActivity);
+            } // 动态请求权限
+        }else {
+            LocationService.initService(mActivity);
+        }
         MessageService.initService(mActivity);
         MessageService.setAlamListenser(this);
-        LocationService.initService(mActivity);
         getAllClass();
     }
 
@@ -370,6 +383,8 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
 
     }
 
+
+
     @Override
     public void reshAlamList() {
         reshData();
@@ -379,6 +394,15 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
     public void pushMsgReshList(AlarmPushBean bean) {
         if (bean != null && bean.getDealStatus() == 0) {
             reshData();
+        }
+    }
+
+    //获取权限回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == Common.REQUEST_CODE) {
+            LocationService.initService(mActivity);
         }
     }
 }

@@ -206,7 +206,7 @@ public class MessageService extends Service {
             @Override
             public void pushMsg(AlarmPushBean bean) {
                 // TODO: 2021/3/4 这里要做一个ClassId 的判断
-                if (SPValueUtil.isEmpty(bean.getFenceName())&& SPValueUtil.isEmpty(bean.getContent())) {
+                if (SPValueUtil.isEmpty(bean.getContent())) {
                     createNotification(bean);
                     mAlamListenser.pushMsgReshList(bean);
                 }

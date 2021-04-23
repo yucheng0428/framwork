@@ -19,7 +19,7 @@ public class MyApplication extends BaseApp {
         Common.initARouter(this);
         HttpReq.getInstence().setIp(Constants.HTTP_REQ);
 //        http://124.70.205.113:16869/
-        HttpReq.getInstence().setIp("http://172.16.1.232:16800/");
+        HttpReq.getInstence().setIp("http://minghang.cn1.utools.club/");
 
 }
 

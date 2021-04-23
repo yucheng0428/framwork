@@ -3,6 +3,7 @@ package com.qyai.baidumap;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,11 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
+import com.amap.api.navi.AmapPageType;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.Constants;
@@ -45,7 +51,9 @@ import com.qyai.baidumap.postion.bean.ApBean;
 import com.qyai.baidumap.postion.bean.DevBean;
 import com.qyai.baidumap.postion.bean.LoctionBean;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -54,7 +62,6 @@ import butterknife.OnClick;
 @Route(path = "/maplib/GMapActivity")
 public class GMapActivity extends BaseHeadActivity implements LocationSource,
         AMapLocationListener, AMap.OnMapTouchListener {
-
     @BindView(R2.id.layout_adress)
     RelativeLayout layout_adress;
 
@@ -85,15 +92,18 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
     @Autowired(name = "personId")
     public String personId;
     @Autowired(name = "model")
-    public  String modle;
+    public String modle;
     public ApBean model;
     public LatLng myLatLng;
+
+
     /**
      * 轮询服务器消息(3秒一次)
      * 获取消息通知，如新警情、预警任务的提醒
      */
     private Handler queryAlarmInSignHandler = new Handler();
     private int intervalTime = 60000;
+
     @Override
     public int layoutId() {
         return R.layout.activity_g_map;
@@ -105,6 +115,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
         setTvRightMsg("分享");
         hideTvRight(View.VISIBLE);
         PermissionCheckUtils.requestPermissions(GMapActivity.this, Common.REQUEST_CODE, Common.permissionList1); // 动态请求权限
+        Common.openGPSSEtting(GMapActivity.this);
         if (aMap == null) {
             aMap = mapView.getMap();
             setUpMap();
@@ -120,16 +131,16 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
          * 告警状态 未处理 根据设备ID 请求坐标
          * 告警状态已处理  直接去告警坐标信息 如果没有坐标信息 取当前地图定位信息
          */
-        if(SPValueUtil.isEmpty(modle)){
-            ApBean bean= JSON.parseObject(modle, ApBean.class);
-            if(bean.getDealStatus()==0){
+        if (SPValueUtil.isEmpty(modle)) {
+            ApBean bean = JSON.parseObject(modle, ApBean.class);
+            if (bean.getDealStatus() == 0) {
                 getHttpDevice(bean.getDeviceId());
-            }else {
-                if (bean.getPosX()!=0.0 && bean.getPosY()!=0.0) {
+            } else {
+                if (bean.getPosX() != 0.0 && bean.getPosY() != 0.0) {
                     LatLng latLng = new LatLng(bean.getPosY(), bean.getPosX(), false);
                     myLatLng = latLng;
-                    setLatLng(latLng);
-                }else{
+                    setMarkerLatLng(latLng);
+                } else {
                     startLocationMap();
                 }
             }
@@ -142,7 +153,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
         layout_adress.setVisibility(View.VISIBLE);
     }
 
-    @OnClick({R2.id.tv_fuz, R2.id.tv_share,R2.id.tv_close})
+    @OnClick({R2.id.tv_fuz, R2.id.tv_share, R2.id.tv_close})
     public void onClick(View view) {
         if (view.getId() == R.id.tv_fuz) {
             ClipboardManager cmb = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -155,8 +166,9 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
                     + myLatLng.latitude + "&name=" + tv_adress.getText().toString();
             shareUtils.shareMessage("分享", tv_adress.getText().toString(), null, url, "");
 
-        }else if(view.getId()==R.id.tv_close){
-            layout_adress.setVisibility(View.GONE);
+        } else if (view.getId() == R.id.tv_close) {
+            Intent intent = new Intent(mActivity, SelectLoctionActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -168,7 +180,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.setMyLocationEnabled(false);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.setOnMapTouchListener(this);
-        mUiSettings=aMap.getUiSettings();
+        mUiSettings = aMap.getUiSettings();
     }
 
     @Override
@@ -234,7 +246,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
                 //展示自定义定位小蓝点
                 if (locationMarker == null) {
                     //首次定位
-                    setLatLng(latLng);
+                    setMarkerLatLng(latLng);
                 } else {
                     if (useMoveToLocationWithMapMode) {
                         //二次以后定位，使用sdk中没有的模式，让地图和小蓝点一起移动到中心点（类似导航锁车时的效果）
@@ -367,6 +379,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
 
     /**
      * 根据人员信息获取坐标
+     *
      * @param personId
      */
     public void getHttpPerson(String personId) {
@@ -380,7 +393,8 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
                         myLatLng = latLng;
                         if (locationMarker == null) {
                             //首次定位
-                            setLatLng(latLng);
+                            setMarkerLatLng(latLng);
+                            layout_adress.setVisibility(View.VISIBLE);
                             tv_adress.setText(bean.getData().getPositionAddress());
                         }
                     } else {
@@ -405,21 +419,22 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
 
     /**
      * 根据设备获取坐标
+     *
      * @param devId
      */
-    public void getHttpDevice(String devId){
+    public void getHttpDevice(String devId) {
         Map<String, String> map = new HashMap<>();
         HttpServiec.getInstance().getFlowbleData(100, HttpReq.getInstence().getIp() + "alarmRealTime/queryDevicePath/" + devId, map, new OnHttpCallBack<DevBean>() {
             @Override
             public void onSuccessful(int id, DevBean bean) {
                 if (bean != null && bean.getCode().equals("000000")) {
-                    if (bean.getData().getLocX() != 0.0 && bean.getData().getLocY()!=0.0) {
+                    if (bean.getData().getLocX() != 0.0 && bean.getData().getLocY() != 0.0) {
                         LatLng latLng = new LatLng(bean.getData().getLocY(), bean.getData().getLocX(), false);
                         myLatLng = latLng;
                         getLocationMessage(latLng);
                         if (locationMarker == null) {
                             //首次定位
-                            setLatLng(latLng);
+                            setMarkerLatLng(latLng);
                         }
                     } else {
                         startLocationMap();
@@ -431,7 +446,7 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
             public void onFaild(int id, DevBean bean, String err) {
                 startLocationMap();
             }
-        }, DevBean .class);
+        }, DevBean.class);
         queryAlarmInSignHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -442,16 +457,18 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
 
     /**
      * 根据经纬度获取地理名称
+     *
      * @param latLng
      */
-    public void getLocationMessage(LatLng latLng){
+    public void getLocationMessage(LatLng latLng) {
         Map<String, String> map = new HashMap<>();
-        map.put("x",latLng.longitude+"");
-        map.put("y",latLng.latitude+"");
+        map.put("x", latLng.longitude + "");
+        map.put("y", latLng.latitude + "");
         HttpServiec.getInstance().postFlowableData(100, HttpReq.getInstence().getIp() + "regeo", map, new OnHttpCallBack<BaseResult>() {
             @Override
             public void onSuccessful(int id, BaseResult bean) {
-                if(bean.getCode().equals("000000")){
+                if (bean.getCode().equals("000000")) {
+                    layout_adress.setVisibility(View.VISIBLE);
                     tv_adress.setText(bean.getMsg());
                 }
 
@@ -494,16 +511,17 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
 
     /**
      * 根据经纬度 在地图上展示当前定位
+     *
      * @param latLng
      */
-    public void setLatLng(LatLng latLng) {
+    public void setMarkerLatLng(LatLng latLng) {
         //展示自定义定位小蓝点
-            //首次定位
-            locationMarker = aMap.addMarker(new MarkerOptions().position(latLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_mypostion))
-                    .anchor(1f, 1f));
+        //首次定位
+        locationMarker = aMap.addMarker(new MarkerOptions().position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_mypostion))
+                .anchor(1f, 1f));
 
-            //首次定位,选择移动到地图中心点并修改级别到15级
-            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        //首次定位,选择移动到地图中心点并修改级别到15级
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
     }
 }

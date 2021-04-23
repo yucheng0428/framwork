@@ -15,14 +15,19 @@
     <application android:requestLegacyExternalStorage="true">
         <activity
             android:name=".home2.HomeActivity2"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name=".home.MyWatchActivity" />
         <activity android:name=".contacts.AddContactsActivity" />
         <activity android:name=".contacts.ContactsActivity" />
         <activity android:name=".message.MessageActivity" />
-        <activity android:name=".message.AlarmDetailActivity" />
+        <activity
+            android:name=".message.AlarmDetailActivity"
+            android:launchMode="singleInstance" />
         <activity android:name=".xiaqu.PersonDetailActivity" />
-        <activity android:name=".message.AlarmActivity" />
+        <activity
+            android:name=".message.AlarmActivity"
+            android:launchMode="singleInstance" />
         <activity android:name=".xiaqu.XiaQuActivity" />
         <activity
             android:name=".measure.MeasureActivity"
@@ -34,7 +39,9 @@
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity android:name=".message.MessageDetailAct" />
-        <activity android:name=".message.CheckJustClassIdAct" />
+        <activity
+            android:name=".message.CheckJustClassIdAct"
+            android:launchMode="singleInstance" />
 
         <service
             android:name=".message.MessageService"

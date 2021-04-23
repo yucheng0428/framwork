@@ -25,9 +25,7 @@ public class PermissionCheckUtils {
         String[] deniedPermissions = findDeniedPermissions(activity, permissions);
         if (deniedPermissions.length > 0) {
             LogUtil.w("PermissionCheckUtils","需要获取的权限是:"+deniedPermissions[0]);
-            ActivityCompat.requestPermissions(activity,
-                    deniedPermissions,
-                    Common.REQUEST_CODE);
+            ActivityCompat.requestPermissions(activity, deniedPermissions, Common.REQUEST_CODE);
             return false;
         }else{
             return true;

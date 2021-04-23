@@ -17,7 +17,6 @@ public class MapApplicationDelegate implements ApplicationDelegate {
 
     @Override
     public void onCreate() {
-        LogUtil.e("init", "初始化地图sdk");
         Common.initARouter(BaseApp.getIns());
     }
 

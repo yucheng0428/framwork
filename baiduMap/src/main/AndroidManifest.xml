@@ -18,12 +18,14 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 读取缓存数据 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 获取模拟定位信息 -->
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-    <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
     <application>
-        <activity android:name=".GMapActivity"></activity>
-        <!-- 声明service组件 -->
+        <activity android:name=".SelectLoctionActivity"></activity>
+        <activity
+            android:name=".GMapActivity"
+            android:launchMode="singleInstance" /> <!-- 声明service组件 -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -31,7 +33,8 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="kZYL5woMPE2l8HBFi44aDMjFWhG4s0RC" />
-        <!-- 高德key
+        <!--
+ 高德key
          正式key:f359330a60e43cd16d62deaa12aaa2b6
          debug:cfbb26010c4aa3328d9055af5056baad
         -->
@@ -42,9 +45,15 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".postion.AddEnclosureActivity" />
         <activity android:name=".postion.PostionActivity" />
-        <service android:name="com.amap.api.location.APSService"
-            android:foregroundServiceType="location"></service>
-        <service android:name=".service.LocationService"></service>
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|navigation"
+            android:theme="@android:style/Theme.NoTitleBar" />
+
+        <service
+            android:name="com.amap.api.location.APSService"
+            android:foregroundServiceType="location" />
+        <service android:name=".service.LocationService" />
     </application>
 
 </manifest>
