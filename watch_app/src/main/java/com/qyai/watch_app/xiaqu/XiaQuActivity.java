@@ -1,6 +1,7 @@
 package com.qyai.watch_app.xiaqu;
 
 import android.content.Intent;
+import android.widget.ListView;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
+import com.lib.common.widgt.IndexView;
 import com.lib.common.widgt.RefreshAllLayout;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
@@ -38,10 +40,14 @@ public class XiaQuActivity extends BaseHeadActivity {
     RefreshAllLayout swipeRefreshLayout;
     @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R2.id.id_indexview)
+    IndexView indexView;// 右边字母定位的自定义控件
     XiaQuAdapter adapter;
     String classId;
     static int pageNo = 1;
-
+    private String[] alphabet = new String[]{"A", "B", "C", "D", "E", "F",
+            "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+            "T", "U", "V", "W", "X", "Y", "Z", "#",};
 
     @Override
     public int layoutId() {
@@ -51,6 +57,8 @@ public class XiaQuActivity extends BaseHeadActivity {
     @Override
     protected void initUIData() {
         setTvTitle("辖区守护");
+        indexView.setIndex(alphabet);
+        indexView.setOnTouchIndexChangedListener(indexListener);
         classId = getIntent().getStringExtra("classId");
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         recyclerView.setLayoutManager(layoutManager);
@@ -196,5 +204,47 @@ public class XiaQuActivity extends BaseHeadActivity {
                 swipeRefreshLayout.setLoading(false);
             }
         }, XiaQuResult.class);
+    }
+
+    /**
+     * 字母导航回调
+     **/
+    private IndexView.OnTouchIndexListener indexListener = new IndexView.OnTouchIndexListener() {
+
+        @Override
+        public void onTouchingIndexChanged(IndexView.TouchStatus touchStatus, String s) {
+
+            int position = adapter.getPositionForSection(getSectionByStr(s));
+//            if (position < 0) {
+//                position = ListView.getSelectedItemPosition() - 1;
+//            }
+            if (IndexView.TouchStatus.ACTION_DOWN == touchStatus) {
+
+                if (0 <= position && position < adapter.getDataSource().size()) {
+                    recyclerView.scrollToPosition(position + 1);
+                }
+
+                if (-1 == position) {
+                    return;
+                }
+                recyclerView.scrollToPosition(position + 1);
+//                recyclerView.smoothScrollToPosition(position);
+            }
+        }
+    };
+
+    /**
+     * 根据触摸的值确定字母值
+     *
+     * @param world
+     * @return 数组中与之对应的字母
+     */
+    private String getSectionByStr(String world) {
+        for (int index = 0, len = alphabet.length; index < len; index++) {
+            if (world.equalsIgnoreCase(alphabet[index])) {
+                return alphabet[index];
+            }
+        }
+        return "0000x000";
     }
 }

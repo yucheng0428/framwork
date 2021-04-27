@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lib.common.widgt.RefreshAllLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipeRefreshLayout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.lib.common.widgt.RefreshAllLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/padding_10"
-        android:paddingRight="@dimen/padding_10" />
-</com.lib.common.widgt.RefreshAllLayout>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_30" />
+    </com.lib.common.widgt.RefreshAllLayout>
+
+    <LinearLayout
+        android:layout_width="30dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <com.lib.common.widgt.IndexView
+            android:id="@+id/id_indexview"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</RelativeLayout>

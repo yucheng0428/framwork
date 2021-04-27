@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application android:requestLegacyExternalStorage="true">
+        <activity android:name=".contacts.test.ContactsTestActivity"></activity>
         <activity
             android:name=".home2.HomeActivity2"
             android:launchMode="singleInstance"

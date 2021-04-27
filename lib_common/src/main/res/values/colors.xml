@@ -32,4 +32,6 @@
     <color name="color_e2e4e8">#e2e4e8</color>
     <color name="color_e5e5e5">#e5e5e5</color>
     <color name="color_41ED61">#41ED61</color>
+
+    <color name="dark_red">#8B1A1A</color>
 </resources>

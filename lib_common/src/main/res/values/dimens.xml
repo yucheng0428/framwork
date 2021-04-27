@@ -4,9 +4,11 @@
     <dimen name="padding_5">5dp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="padding_20">20dp</dimen>
+    <dimen name="padding_30">30dp</dimen>
     <dimen name="common_circle_width">50dp</dimen>
     <dimen name="progress_circle_radius">10dp</dimen>
     <dimen name="attach_item_width">70dp</dimen>
     <dimen name="padding_3">3dp</dimen>
     <dimen name="textsize_17">17dp</dimen>
+    <dimen name="sp_10">10sp</dimen>
 </resources>

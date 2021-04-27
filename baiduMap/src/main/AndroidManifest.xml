@@ -50,6 +50,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize|navigation"
             android:theme="@android:style/Theme.NoTitleBar" />
 
+        <activity android:name=".DriverListActivity"/>
+        <activity android:name=".WalkRouteCalculateActivity"/>
+        <activity android:name=".RideRouteCalculateActivity"/>
+
         <service
             android:name="com.amap.api.location.APSService"
             android:foregroundServiceType="location" />

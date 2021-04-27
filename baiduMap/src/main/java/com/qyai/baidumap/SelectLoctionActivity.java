@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,12 +28,14 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.AmapPageType;
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
+import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
@@ -44,7 +47,6 @@ import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.lib.common.base.BaseHeadActivity;
-import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.qyai.baidumap.postion.bean.PoiOverlay;
@@ -95,6 +97,10 @@ public class SelectLoctionActivity extends BaseHeadActivity implements AMapLocat
     TextView tv_end;
     @BindView(R2.id.tv_go)
     TextView tv_go;
+    @BindView(R2.id.tv_ride)
+    TextView tv_ride;
+    @BindView(R2.id.tv_walk)
+    TextView tv_walk;
     int wichType = 0;
 
     @Override
@@ -111,41 +117,15 @@ public class SelectLoctionActivity extends BaseHeadActivity implements AMapLocat
     @Override
     protected void initUIData() {
         setTvTitle("地图选点");
-        setTvRightMsg("导航");
-        hideTvRight(View.VISIBLE);
         if (aMap == null) {
             aMap = mMapView.getMap();
             setUpMap();
         }
-
         startLocationMap();
     }
 
-    @Override
-    public void setOnClickTvRight() {
-        if (endMarker != null) {
-            endMarker.remove();
-        }
-        tv_end.setText("");
-        if (layout_nav.getVisibility() == View.GONE) {
-            layout_nav.setVisibility(View.VISIBLE);
-            layout_adress.setVisibility(View.GONE);
-            if(startMarker!=null&&startLatLng!=null){
-                setStartMarker(startLatLng);
-            }
-        } else {
-            wichType=0;
-            layout_nav.setVisibility(View.GONE);
-            layout_adress.setVisibility(View.VISIBLE);
-            if(mLatlng!=null){
-                aMap.animateCamera(CameraUpdateFactory.newCameraPosition(
-                        new CameraPosition(mLatlng, 15, 0, 0)), 300, null); //设置地图中心点
-                setStartMarker(mLatlng);
-            }
-        }
-    }
 
-    @OnClick({R2.id.tv_start, R2.id.tv_end, R2.id.tv_go})
+    @OnClick({R2.id.tv_start, R2.id.tv_end, R2.id.tv_go,R2.id.tv_ride,R2.id.tv_walk})
     public void onClick(View view) {
         if (view.getId() == R.id.tv_start) {
             wichType = 0;
@@ -154,21 +134,37 @@ public class SelectLoctionActivity extends BaseHeadActivity implements AMapLocat
             wichType = 1;
             setEndMarker(endLatLng);
         } else if (view.getId() == R.id.tv_go) {
-            if(!SPValueUtil.isEmpty(tv_end.getText().toString())){
-                UIHelper.ToastMessage(mActivity,"请选择目的地");
+            if (!SPValueUtil.isEmpty(tv_end.getText().toString())) {
+                UIHelper.ToastMessage(mActivity, "请选择目的地");
                 return;
             }
-            startNav(new Poi(tv_start.getText().toString(),startLatLng,""),new Poi(tv_end.getText().toString(),endLatLng,""));
+            startNav(startLatLng,  endLatLng,1);
+        }else if(view.getId()==R.id.tv_ride){
+            startNav(startLatLng,  endLatLng,3);
+        }else if(view.getId()==R.id.tv_walk){
+            startNav(startLatLng,  endLatLng,2);
         }
     }
 
     /**
      * 启动路线导航
      */
-    public void startNav(Poi startLatLng, Poi endLatng) {
-        AmapNaviParams params = new AmapNaviParams(startLatLng, null, endLatng, AmapNaviType.DRIVER, AmapPageType.ROUTE);
-        params.setUseInnerVoice(true);
-        AmapNaviPage.getInstance().showRouteActivity(mActivity, params, SelectLoctionActivity.this);
+    public void startNav(LatLng startLatLng, LatLng endLatng, int type) {
+        Intent intent=new Intent();
+        // 起点信息
+        NaviLatLng start = new NaviLatLng(startLatLng.latitude, startLatLng.longitude);
+        // 终点信息
+        NaviLatLng end = new NaviLatLng(endLatng.latitude, endLatng.longitude);
+        intent.putExtra("start",start);
+        intent.putExtra("end",end);
+       if(type==1){
+           intent.setClass(mActivity,DriverListActivity.class);
+       }else if(type==2){
+           intent.setClass(mActivity,WalkRouteCalculateActivity.class);
+       }else if(type==3){
+           intent.setClass(mActivity,RideRouteCalculateActivity.class);
+       }
+       startActivity(intent);
     }
 
     /**
@@ -192,10 +188,12 @@ public class SelectLoctionActivity extends BaseHeadActivity implements AMapLocat
         } else {
             startLatLng = target;
         }
-        startMarker = aMap.addMarker(new MarkerOptions().position(target).
-                title("").snippet("").
-                icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_start_maker)).
+        setMapCenter(startLatLng);
+        startMarker = aMap.addMarker(new MarkerOptions().position(startLatLng).
+                title("起始位置").snippet("").
+                icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_mypostion)).
                 anchor(1f, 1f));
+        startMarker.showInfoWindow();
     }
 
     private void setEndMarker(LatLng target) {
@@ -205,20 +203,18 @@ public class SelectLoctionActivity extends BaseHeadActivity implements AMapLocat
         } else {
             endLatLng = target;
         }
-        endMarker = aMap.addMarker(new MarkerOptions().position(target).
-                title("").snippet("").
+        setMapCenter(endLatLng);
+        endMarker = aMap.addMarker(new MarkerOptions().position(endLatLng).
+                title("目的地").snippet("").
                 icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_end_maker)).
                 anchor(1f, 1f));
+        endMarker.showInfoWindow();
     }
 
 
-    private void setMapCenter(AMapLocation amapLocation) {
-        mLatlng = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+    private void setMapCenter(LatLng latLng) {
         aMap.animateCamera(CameraUpdateFactory.newCameraPosition(
-                new CameraPosition(mLatlng, 15, 0, 0)), 300, null); //设置地图中心点
-        setStartMarker(mLatlng);
-        layout_adress.setVisibility(View.VISIBLE);
-        tv_adress.setText(amapLocation.getAddress());
+                new CameraPosition(latLng, 15, 0, 0)), 300, null); //设置地图中心点
     }
 
 
@@ -323,7 +319,11 @@ public class SelectLoctionActivity extends BaseHeadActivity implements AMapLocat
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null
                     && amapLocation.getErrorCode() == 0) {
-                setMapCenter(amapLocation);
+                mLatlng = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                setMapCenter(mLatlng);
+                setStartMarker(mLatlng);
+                layout_adress.setVisibility(View.VISIBLE);
+                tv_adress.setText(amapLocation.getAddress());
                 mlocationClient.stopLocation();
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
@@ -349,7 +349,11 @@ public class SelectLoctionActivity extends BaseHeadActivity implements AMapLocat
 
     @Override
     public void onCameraChangeFinish(CameraPosition cameraPosition) {
-        mLatlng=cameraPosition.target;
+        if (wichType == 0) {
+            setStartMarker(cameraPosition.target);
+        } else {
+            setEndMarker(cameraPosition.target);
+        }
         getGeocodeSearch(cameraPosition.target);
     }
 

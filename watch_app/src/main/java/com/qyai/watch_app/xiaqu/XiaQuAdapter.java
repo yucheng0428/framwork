@@ -114,5 +114,20 @@ public class XiaQuAdapter extends SimpleRecAdapter<XiaQuResult.DataBean.ListBean
             ButterKnife.bind(this, itemView);
         }
     }
+
+    /**
+     * 根据分类的首字母的Char 值获取其第一次出现该首字母的位置
+     */
+    public int getPositionForSection(String str) {
+        for (int i = 0; i < data.size(); i++) {
+            String sortStr = data.get(i).getFirstLetter();
+            if (sortStr.equalsIgnoreCase(str)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
 }
 

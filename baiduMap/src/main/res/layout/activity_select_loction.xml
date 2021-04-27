@@ -84,9 +84,35 @@
                 android:textColorHint="@color/color_999999"
                 android:textSize="14dp" />
         </RelativeLayout>
-
+        <TextView
+            android:id="@+id/tv_ride"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/layout_pws"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding_10"
+            android:text="骑行"
+            android:textColor="@color/color_217AFF"
+            android:textSize="14dp" />
         <TextView
             android:id="@+id/tv_go"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/layout_pws"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding_10"
+            android:text="导航"
+            android:textColor="@color/color_217AFF"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tv_walk"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
@@ -94,7 +120,7 @@
             android:layout_below="@+id/layout_pws"
             android:gravity="center"
             android:paddingRight="@dimen/padding_10"
-            android:text="开始导航"
+            android:text="步行"
             android:textColor="@color/color_217AFF"
             android:textSize="14dp" />
     </RelativeLayout>

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/half_transparent">
 
     <RelativeLayout
         android:id="@+id/head"
@@ -15,6 +16,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:orientation="horizontal"
+            android:layout_marginTop="1dp"
             android:paddingBottom="5dp">
             <TextView
                 android:id="@+id/tv_no_do"
@@ -46,6 +48,7 @@
             android:src="@mipmap/icon_retrun" />
     </RelativeLayout>
     <com.lib.common.widgt.RefreshAllLayout
+        android:layout_marginTop="1dp"
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
