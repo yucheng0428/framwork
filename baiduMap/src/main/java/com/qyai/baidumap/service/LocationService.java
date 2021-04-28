@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
@@ -22,15 +21,10 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
 import com.lib.common.base.BaseApp;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.DateUtils;
-import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
-import com.lib.common.baseUtils.UIHelper;
-import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
-import com.qyai.baidumap.GMapActivity;
 import com.qyai.baidumap.R;
 
 import java.text.SimpleDateFormat;
@@ -190,7 +184,7 @@ public class LocationService extends Service {
                 sb.append("****************").append("\n");
                 //定位之后的回调时间
                 sb.append("回调时间: " + formatUTC(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "\n");
-                LogUtil.writE("Loaction",sb.toString());
+//                LogUtil.writE("Loaction",sb.toString());
 
             }
         }

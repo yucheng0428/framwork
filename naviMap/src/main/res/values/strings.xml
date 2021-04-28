@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">导航地图Lib</string>
+    <string name="startforeground">开始后台定位</string>
+    <string name="stopforeground">停止后台定位</string>
+</resources>

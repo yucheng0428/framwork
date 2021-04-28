@@ -1,13 +1,10 @@
 package com.qyai.watch_app.message;
 
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -17,21 +14,17 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.baseModle.BaseResult;
 import com.lib.common.dialog.IphoneDialog;
-import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
-import com.qyai.watch_app.message.bean.AlarmInfo;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.CommonResult;
 import com.qyai.watch_app.utils.OnlyUserUtils;
@@ -137,7 +130,7 @@ public class AlarmDetailActivity extends BaseHeadActivity implements RadioGroup.
 
     @Override
     public void setOnClickIvRight() {
-        ARouter.getInstance().build("/maplib/GMapActivity").
+        ARouter.getInstance().build(Common.MAP_LOCTION).
                 withString("model", JSON.toJSONString(info)).
                 navigation();
     }

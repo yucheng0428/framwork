@@ -3,7 +3,6 @@ package com.qyai.baidumap;
 
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -32,14 +32,8 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.Poi;
-import com.amap.api.navi.AmapNaviPage;
-import com.amap.api.navi.AmapNaviParams;
-import com.amap.api.navi.AmapNaviType;
-import com.amap.api.navi.AmapPageType;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.baseModle.BaseResult;
@@ -51,15 +45,13 @@ import com.qyai.baidumap.postion.bean.ApBean;
 import com.qyai.baidumap.postion.bean.DevBean;
 import com.qyai.baidumap.postion.bean.LoctionBean;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Route(path = "/maplib/GMapActivity")
+@Route(path = Common.MAP_LOCTION)
 public class GMapActivity extends BaseHeadActivity implements LocationSource,
         AMapLocationListener, AMap.OnMapTouchListener {
     @BindView(R2.id.layout_adress)
@@ -167,8 +159,8 @@ public class GMapActivity extends BaseHeadActivity implements LocationSource,
             shareUtils.shareMessage("分享", tv_adress.getText().toString(), null, url, "");
 
         } else if (view.getId() == R.id.tv_close) {
-            Intent intent = new Intent(mActivity, SelectLoctionActivity.class);
-            startActivity(intent);
+            ARouter.getInstance().build(Common.NAVI_MAP)
+                    .navigation();
         }
     }
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="152dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_enclosuer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="18dp"
+        android:background="@null"
+        android:drawableLeft="@mipmap/icon_enclosure"
+        android:drawablePadding="@dimen/padding_15"
+        android:textColor="@color/color_333333"
+        android:text="围栏"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_adress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="26dp"
+        android:textColor="@color/color_333333"
+        android:drawableLeft="@mipmap/icon_adress"
+        android:drawablePadding="@dimen/padding_15"
+        android:text="地址"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_seekBar_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="26dp"
+            android:drawableLeft="@mipmap/icon_unit"
+            android:drawablePadding="@dimen/padding_15"
+            android:textColor="@color/color_333333"
+            android:textSize="14sp" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginRight="@dimen/padding_20"
+            android:layout_marginTop="26dp"
+            android:maxHeight="2dp"
+            android:max="100"
+            android:progress="30"
+            android:progressDrawable="@drawable/seek_bar_bg"
+            android:thumb="@drawable/seek_bar_thumb"/>
+    </LinearLayout>
+</LinearLayout>

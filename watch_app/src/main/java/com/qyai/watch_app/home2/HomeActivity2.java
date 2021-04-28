@@ -1,5 +1,14 @@
 package com.qyai.watch_app.home2;
 
+import android.Manifest;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
@@ -7,17 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.Manifest;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -28,9 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.lib.common.base.BaseActivity;
 import com.lib.common.base.ViewManager;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
-import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
@@ -38,28 +34,22 @@ import com.lib.common.dialog.IphoneDialog;
 import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
-import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.lib.common.netHttp.OnHttpCallBack;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.lib.common.widgt.MyDrawerLayout;
 import com.lib.common.widgt.RoundImageView;
-import com.lib.common.widgt.adress.AddressPicker;
-import com.qyai.baidumap.GMapActivity;
 import com.qyai.baidumap.service.LocationService;
 import com.qyai.watch_app.R;
 import com.qyai.watch_app.R2;
-import com.qyai.watch_app.home.HomeActivity;
 import com.qyai.watch_app.message.AlarmActivity;
 import com.qyai.watch_app.message.AlarmAdapter;
 import com.qyai.watch_app.message.AlarmDetailActivity;
 import com.qyai.watch_app.message.CheckJustClassIdAct;
-import com.qyai.watch_app.message.JusClassAdapter;
 import com.qyai.watch_app.message.MessageService;
 import com.qyai.watch_app.message.bean.AlarmCountResult;
 import com.qyai.watch_app.message.bean.AlarmPushBean;
 import com.qyai.watch_app.message.bean.AlarmResult;
 import com.qyai.watch_app.message.bean.JusClassResult;
-import com.qyai.watch_app.message.bean.MenuTreeUtil;
 import com.qyai.watch_app.message.websocket.AlamListenser;
 import com.qyai.watch_app.utils.OnlyUserUtils;
 import com.qyai.watch_app.xiaqu.XiaQuActivity;
@@ -71,7 +61,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Route(path = "/watch/HomeActivity2")
+@Route(path = Common.HOME_VIEW)
 public class HomeActivity2 extends BaseActivity implements AlamListenser {
     @BindView(R2.id.drawer_layout)
     MyDrawerLayout drawer_layout;
@@ -171,7 +161,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
                         startActivityForResult(intent, Common.REQUEST_CODE);
                         break;
                     case 3:
-                        ARouter.getInstance().build("/maplib/GMapActivity").
+                        ARouter.getInstance().build(Common.MAP_LOCTION).
                                 withString("model", JSON.toJSONString(model)).
                                 navigation();
                         break;
@@ -211,9 +201,9 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
             intent.putExtra("classId", classId);
             startActivity(intent);
         } else if (view.getId() == R.id.tv_changePassword) {
-            ARouter.getInstance().build("/main/changePsw").navigation();
+            ARouter.getInstance().build(Common.CHANGER_PWS).navigation();
         } else if (view.getId() == R.id.tv_about) {
-            ARouter.getInstance().build("/main/about").navigation();
+            ARouter.getInstance().build(Common.ABOUT_VIEW).navigation();
         } else if (view.getId() == R.id.tv_out_login) {
             IphoneDialog iphoneDialog = new IphoneDialog(mActivity, new IphoneDialog.IphoneListener() {
                 @Override
@@ -229,6 +219,7 @@ public class HomeActivity2 extends BaseActivity implements AlamListenser {
         } else if (view.getId() == R.id.tv_title) {
             intent.setClass(mActivity, CheckJustClassIdAct.class);
             startActivityForResult(intent, Common.CHECK_SUCCESSFUL);
+
         }
     }
 

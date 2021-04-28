@@ -7,6 +7,7 @@ package com.lib.common.netHttp;
 
 import android.util.Log;
 
+import com.lib.common.baseUtils.Constants;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
@@ -33,7 +34,9 @@ public class MySSLSocketFactory {
         @Override
         public void log(String message) {
             //打印retrofit日志
+            if(Constants.printHttpLog){
                 Log.e("RetrofitLog", "retrofitBack = " + message);
+            }
         }
     }).setLevel(HttpLoggingInterceptor.Level.BODY);
 

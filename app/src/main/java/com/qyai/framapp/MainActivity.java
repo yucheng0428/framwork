@@ -1,29 +1,26 @@
 package com.qyai.framapp;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.base.BaseActivity;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.Utils;
 import com.lib.common.baseUtils.permssion.PermissionCheckUtils;
+import com.lib.common.bean.UserEvent;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.lib.common.netHttp.OnHttpCallBack;
-import com.qyai.main.login.bean.UserEvent;
-
-import android.os.Handler;
-import android.os.Message;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,10 +50,10 @@ public class MainActivity extends BaseActivity {
                     if (Common.viewType == 1) {
                         ARouter.getInstance().build("/watch/HomeActivity").navigation();
                     } else {
-                        ARouter.getInstance().build("/watch/HomeActivity2").navigation();
+                        ARouter.getInstance().build(Common.HOME_VIEW).navigation();
                     }
                 } else {
-                    ARouter.getInstance().build("/main/login")
+                    ARouter.getInstance().build(Common.LOGIN_PATH)
                             .withInt("viewType", Common.viewType)
                             .navigation();
                 }

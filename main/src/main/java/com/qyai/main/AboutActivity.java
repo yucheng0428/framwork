@@ -4,7 +4,9 @@ package com.qyai.main;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lib.common.base.BaseHeadActivity;
-@Route(path = "/main/about")
+import com.lib.common.baseUtils.Common;
+
+@Route(path = Common.ABOUT_VIEW)
 public class AboutActivity extends BaseHeadActivity {
 
 

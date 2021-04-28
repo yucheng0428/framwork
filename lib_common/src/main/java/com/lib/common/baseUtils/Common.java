@@ -27,6 +27,20 @@ public class Common {
     public static final String DATE_PATTERN_Y_M_D = "yyyy-MM-dd";//日期类型-年月日
     public static final String DATE_PATTERN_Y_M_D_H = "yyyy-MM-dd HH:00:00";//日期类型-年月日时分
 
+    /**
+     * Aouter跳转 路径
+     */
+    public final static String LOGIN_PATH = "/login/loginView";//登录页
+    public final static String REGISTER_VIEW = "/register/view";//注册页
+    public final static String FORGET_VIEW = "/forget/view";//忘记密码页
+    public final static String CHANGER_PWS = "/changepsw/view";//修改密码
+    public final static String ABOUT_VIEW = "/about/view";//关于页面
+    public final static String MAP_LOCTION = "/map/lcation";//地图定位
+    public final static String NAVI_MAP = "/navimap/view";//导航地图
+    public final static String HOME_VIEW = "/home/homeView";//首页
+    public final static String ADD_ENCLOSURE = "/map/AddEnclosure";//添加围栏
+    public final static String MAP_POSTION="/map/PostionActivity";//围栏位置信息
+
 
     public final static int viewType = 2;
     public final static String USER_DATA = "user_data";
@@ -71,7 +85,6 @@ public class Common {
     public final static int REQ_LIST = 1001;
     public final static int PAGE_SIZE = 10;
     public static final int GPS_REQUEST_CODE = 10101;
-
 
 
     public static final String[] permissionList1 = new String[]{
@@ -141,5 +154,9 @@ public class Common {
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
         ARouter.init(application); // 尽可能早，推荐在Application中初始化
+    }
+
+    public static void destroyARouter() {
+        ARouter.getInstance().destroy();
     }
 }

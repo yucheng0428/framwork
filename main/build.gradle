@@ -72,8 +72,4 @@ dependencies {
     implementation "com.alibaba:arouter-api:$rootProject.arouterVersion"
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.acompilerVersion"//ARouter
 
-    if(!isModuleWatch.toBoolean()){
-        implementation project(path: ':watch_app')
-    }
-
 }

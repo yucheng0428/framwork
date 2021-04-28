@@ -16,8 +16,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.lib.common.base.BaseActivity;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
-import com.lib.common.baseUtils.LogUtil;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.netHttp.HttpReq;
@@ -99,7 +97,7 @@ public class AlarmActivity extends BaseActivity {
                         startActivityForResult(intent, Common.REQUEST_CODE);
                         break;
                     case 3:
-                        ARouter.getInstance().build("/maplib/GMapActivity").
+                        ARouter.getInstance().build(Common.MAP_LOCTION).
                                 withString("model", JSON.toJSONString(model)).
                                 navigation();
                         break;

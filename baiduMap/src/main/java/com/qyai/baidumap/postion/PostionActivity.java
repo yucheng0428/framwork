@@ -28,6 +28,7 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.qyai.baidumap.R;
 import com.qyai.baidumap.R2;
@@ -37,7 +38,7 @@ import com.qyai.baidumap.postion.bean.EnclosureInfo;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-@Route(path = "/maplib/PostionActivity")
+@Route(path = Common.MAP_POSTION)
 public class PostionActivity extends BaseHeadActivity implements LocationSource,
         AMapLocationListener {
 

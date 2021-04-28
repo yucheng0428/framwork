@@ -110,9 +110,6 @@ dependencies {
     if(!isModuleWatch.toBoolean()){
         implementation project(path: ':watch_app')
     }
-    if (!isModuleMap.toBoolean()) {
-        implementation project(path: ':baiduMap')
-    }
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
     implementation "com.alibaba:arouter-api:$rootProject.arouterVersion"
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.acompilerVersion"//ARouter

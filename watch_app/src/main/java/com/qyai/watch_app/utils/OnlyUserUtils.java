@@ -10,7 +10,6 @@ import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
 import com.lib.common.netHttp.NetHeaderInterceptor;
 import com.lib.common.netHttp.OnHttpCallBack;
-import com.qyai.baidumap.service.LocationService;
 import com.qyai.watch_app.message.MessageService;
 
 import java.util.HashMap;
@@ -78,7 +77,7 @@ public class OnlyUserUtils {
         SPValueUtil.saveStringValue(mActivity, Common.USER_DATA, "");
         SPValueUtil.saveStringValue(mActivity, Common.USER_TOKEN, "");
         MessageService.stopService(mActivity);
-        LocationService.stopService(mActivity);
+//        LocationService.stopService(mActivity);
         mActivity.finish();
     }
 }

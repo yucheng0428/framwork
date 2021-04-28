@@ -7,9 +7,9 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lib.common.base.BaseHeadActivity;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.recyclerView.RecyclerItemCallback;
 import com.qyai.baidumap.R;
 import com.qyai.baidumap.R2;
@@ -20,7 +20,7 @@ import butterknife.BindView;
 /**
  * 添加围栏
  */
-@Route(path = "/maplib/AddEnclosure")
+@Route(path = Common.ADD_ENCLOSURE)
 public class AddEnclosureActivity extends BaseHeadActivity {
 
     @BindView(R2.id.recyclerView)

@@ -22,17 +22,9 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <application>
-        <activity android:name=".SelectLoctionActivity"></activity>
         <activity
             android:name=".GMapActivity"
-            android:launchMode="singleInstance" /> <!-- 声明service组件 -->
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" /> <!-- AK鉴权 -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="kZYL5woMPE2l8HBFi44aDMjFWhG4s0RC" />
+            android:launchMode="singleTop" /> <!-- 声明service组件 -->
         <!--
  高德key
          正式key:f359330a60e43cd16d62deaa12aaa2b6
@@ -42,17 +34,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="a6188740894f3901f5cd335e425de746" />
 
-        <activity android:name=".MapActivity" />
         <activity android:name=".postion.AddEnclosureActivity" />
         <activity android:name=".postion.PostionActivity" />
-        <activity
-            android:name="com.amap.api.navi.AmapRouteActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize|navigation"
-            android:theme="@android:style/Theme.NoTitleBar" />
-
-        <activity android:name=".DriverListActivity"/>
-        <activity android:name=".WalkRouteCalculateActivity"/>
-        <activity android:name=".RideRouteCalculateActivity"/>
 
         <service
             android:name="com.amap.api.location.APSService"

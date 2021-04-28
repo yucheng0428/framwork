@@ -9,12 +9,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.lib.common.base.BaseHeadActivity;
 import com.lib.common.baseUtils.Common;
-import com.lib.common.baseUtils.Constants;
 import com.lib.common.baseUtils.FileUtils;
-import com.lib.common.baseUtils.LogUtil;
-import com.lib.common.baseUtils.PhoneUtils;
 import com.lib.common.baseUtils.SPValueUtil;
-import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.dialog.LookBigPictureDialog;
 import com.lib.common.netHttp.HttpReq;
 import com.lib.common.netHttp.HttpServiec;
@@ -86,7 +82,7 @@ public class PersonDetailActivity extends BaseHeadActivity {
     @OnClick({R2.id.iv_phone, R2.id.iv_postion, R2.id.iv_head})
     public void onClcik(View view) {
         if (view.getId() == R.id.iv_postion) {
-            ARouter.getInstance().build("/maplib/GMapActivity").
+            ARouter.getInstance().build(Common.MAP_LOCTION).
                     withString("personId", personId + "").navigation();
         } else if (view.getId() == R.id.iv_phone) {
             ContactsDialog dialog = new ContactsDialog(mActivity, contactsInfos);

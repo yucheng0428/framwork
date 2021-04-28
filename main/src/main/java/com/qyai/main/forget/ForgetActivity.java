@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lib.common.BaseMvp.BaseMvpHeadAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.SPValueUtil;
 import com.lib.common.baseUtils.UIHelper;
 import com.qyai.main.R;
@@ -27,6 +29,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 @CreateMvpPresenter(ForgetPersenter.class)
+@Route(path = Common.FORGET_VIEW)
 public class ForgetActivity extends BaseMvpHeadAct<ForgetView, ForgetPersenter> implements ForgetView {
     @BindView(R2.id.et_user)
     EditText et_user;

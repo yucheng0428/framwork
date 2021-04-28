@@ -8,8 +8,8 @@ package com.lib.common.baseUtils;
 
 public class Constants {
 
-    public static boolean isDebug = false;
-
+    public static boolean isDebug = true;
+   public static boolean printHttpLog=false;
     public final static String HTTP_REQ = "http://124.71.140.164:16808/";
 
     public static final String fileUploadUrl = "";

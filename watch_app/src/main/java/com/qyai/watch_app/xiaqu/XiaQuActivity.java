@@ -1,7 +1,6 @@
 package com.qyai.watch_app.xiaqu;
 
 import android.content.Intent;
-import android.widget.ListView;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -85,7 +84,7 @@ public class XiaQuActivity extends BaseHeadActivity {
                         break;
                     case 3:
                         LogUtil.e("map==>",model.getPersonId()+"");
-                        ARouter.getInstance().build("/maplib/GMapActivity")
+                        ARouter.getInstance().build(Common.MAP_LOCTION)
                                 .withString("personId",model.getPersonId()+"")
                                 .navigation();
                         //2是点击打电话;

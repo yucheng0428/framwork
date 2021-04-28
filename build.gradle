@@ -26,6 +26,7 @@ allprojects {
             dirs 'libs'
             dirs project(':bracelet_lib').file('libs') //借助 project()函数的位置查找
             dirs project(':baiduMap').file('libs')
+//            dirs project(':naviMap').file('libs')
             //dirs '../baseapp/libs'  // 直接指明路径，注意前边的../, 要先回到根目录去查找别的module
         }
     }

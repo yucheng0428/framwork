@@ -7,13 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lib.common.BaseMvp.BaseMvpHeadAct;
 import com.lib.common.BaseMvp.factory.CreateMvpPresenter;
-import com.lib.common.baseUtils.SPValueUtil;
+import com.lib.common.baseUtils.Common;
 import com.lib.common.baseUtils.UIHelper;
 import com.lib.common.baseUtils.Utils;
 import com.lib.common.baseUtils.baseModle.BaseResult;
@@ -22,17 +21,13 @@ import com.qyai.main.R2;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 
 @CreateMvpPresenter(ChangePswPersenter.class)
-@Route(path = "/main/changePsw")
+@Route(path = Common.CHANGER_PWS)
 public class ChangePswActivity extends BaseMvpHeadAct<ChangePswView, ChangePswPersenter> implements ChangePswView {
     @BindView(R2.id.et_user)
     EditText et_user;

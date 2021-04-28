@@ -1,7 +1,6 @@
 package com.qyai.main.login;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -47,7 +45,7 @@ import io.reactivex.functions.Function;
 
 
 @CreateMvpPresenter(LoginPersenter.class)
-@Route(path = "/main/login")
+@Route(path = Common.LOGIN_PATH)
 public class LoginAct extends BaseMvpAct<LoginView, LoginPersenter> implements LoginView {
 
     @BindView(R2.id.et_user)
